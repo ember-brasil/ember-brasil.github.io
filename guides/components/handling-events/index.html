@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="theme-color" content="#e46652">
+
+    <title>Ember.js - Components: Handling Events</title>
+    <meta property="st:title" content="Components: Handling Events" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="../../../images/favicon.png" rel="icon" type="image/png" />
+    <!--[if lte IE 7 ]><link href="../../../stylesheets/fonts/fontello-ie7.css" rel="stylesheet" /><![endif]-->
+    <link href="../../../stylesheets/application.css" rel="stylesheet" />
+    <link href="//fonts.googleapis.com/css?family=Nunito:300,400,700" rel="stylesheet">
+    <!-- This TypeKit account is managed by @wifelette. Contact her with any issues. -->
+    <script src="https://use.typekit.net/stz3kpn.js"></script>
+    <script>try{Typekit.load({ async: true });}catch(e){}</script>
+
+    <link href="/blog/feed.xml" rel="alternate" type="application/atom+xml" title="Ember.js - Blog" />
+    
+  </head>
+
+  <body class="guides guides guides_components guides_components_handling-events guides_components_handling-events_index">
+
+    <!--[if lt IE 9]>
+      <script src="../../../javascripts/common-old-ie.js"></script>
+    <![endif]-->
+    <!--[if gte IE 9]><!-->
+      <script src="../../../javascripts/common-modern.js"></script>
+    <!--<![endif]-->
+
+    <main>
+      <header class="header">
+  <nav role="navigation" aria-label="main">
+    <ul class="header-nav">
+      <li class="header-logo">
+        <a href="/"><span class="visually-hidden">Ember homepage</span></a>
+      </li>
+      <li>
+        <a href="/">Home</a>
+      </li>
+      <li>
+        <a href="/guides/">Documentação</a>
+      </li>
+      <li>
+        <a href="/contribuidores/">Contribuidores</a>
+      </li>
+      <li>
+        <a href="/quem-usa-ember">Quem usa Ember?</a>
+      </li>
+      <li>
+        <a href="http://emberjs.com/api">Ember API</a>
+      </li>
+    </ul>
+  </nav>
+</header>
+
+
+      
+        <div class="content">
+            <aside class="sidebar">
+  <nav class='toc-container' aria-label='table of contents'><ol class='toc-level-0 selected'><li class='toc-level-0 '><a href="#">Começando</a><ol class='toc-level-1'><li class='toc-level-1 '><a href="../../getting-started/quick-start/">Começo rápido</a></li><li class='toc-level-1 '><a href="../../getting-started/">Instalando Ember</a></li><li class='toc-level-1 '><a href="../../getting-started/core-concepts/">Conceitos fundamentais</a></li></ol></li><li class='toc-level-0 '><a href="#">Tutorial</a><ol class='toc-level-1'><li class='toc-level-1 '><a href="../../tutorial/ember-cli/">Começando</a></li><li class='toc-level-1 '><a href="../../tutorial/acceptance-test/">Planejando seu aplicativo</a></li><li class='toc-level-1 '><a href="../../tutorial/routes-and-templates/">Routes e Templates</a></li><li class='toc-level-1 '><a href="../../tutorial/model-hook/">Model Hook</a></li><li class='toc-level-1 '><a href="../../tutorial/installing-addons/">Instalando Addons</a></li><li class='toc-level-1 '><a href="../../tutorial/simple-component/">Construindo um componente simples</a></li><li class='toc-level-1 '><a href="../../tutorial/hbs-helper/">Criando um Helper para Handlebars</a></li><li class='toc-level-1 '><a href="../../tutorial/ember-data/">Usando Ember Data</a></li><li class='toc-level-1 '><a href="../../tutorial/autocomplete-component/">Criando um componente complexo</a></li><li class='toc-level-1 '><a href="../../tutorial/service/">Services e Utils</a></li><li class='toc-level-1 '><a href="../../tutorial/subroutes/">Adicionando rotas aninhadas</a></li><li class='toc-level-1 '><a href="../../tutorial/deploying/">Publicando seu App</a></li></ol></li><li class='toc-level-0 '><a href="#">The Object Model</a><ol class='toc-level-1'><li class='toc-level-1 '><a href="../../object-model/">Objects in Ember</a></li><li class='toc-level-1 '><a href="../../object-model/classes-and-instances/">Classes and Instances</a></li><li class='toc-level-1 '><a href="../../object-model/reopening-classes-and-instances/">Reopening Classes and Instances</a></li><li class='toc-level-1 '><a href="../../object-model/computed-properties/">Computed Properties</a></li><li class='toc-level-1 '><a href="../../object-model/computed-properties-and-aggregate-data/">Computed Properties and Aggregate Data</a></li><li class='toc-level-1 '><a href="../../object-model/observers/">Observers</a></li><li class='toc-level-1 '><a href="../../object-model/bindings/">Bindings</a></li><li class='toc-level-1 '><a href="../../object-model/enumerables/">Enumerables</a></li></ol></li><li class='toc-level-0 '><a href="#">Routing</a><ol class='toc-level-1'><li class='toc-level-1 '><a href="../../routing/">Introduction</a></li><li class='toc-level-1 '><a href="../../routing/defining-your-routes/">Defining Your Routes</a></li><li class='toc-level-1 '><a href="../../routing/specifying-a-routes-model/">Specifying a Route's Model</a></li><li class='toc-level-1 '><a href="../../routing/rendering-a-template/">Rendering a Template</a></li><li class='toc-level-1 '><a href="../../routing/redirection/">Redirecting</a></li><li class='toc-level-1 '><a href="../../routing/preventing-and-retrying-transitions/">Preventing and Retrying Transitions</a></li><li class='toc-level-1 '><a href="../../routing/loading-and-error-substates/">Loading / Error Substates</a></li><li class='toc-level-1 '><a href="../../routing/query-params/">Query Parameters</a></li><li class='toc-level-1 '><a href="../../routing/asynchronous-routing/">Asynchronous Routing</a></li></ol></li><li class='toc-level-0 '><a href="#">Templates</a><ol class='toc-level-1'><li class='toc-level-1 '><a href="../../templates/handlebars-basics/">Handlebars Basics</a></li><li class='toc-level-1 '><a href="../../templates/built-in-helpers/">Built-in Helpers</a></li><li class='toc-level-1 '><a href="../../templates/conditionals/">Conditionals</a></li><li class='toc-level-1 '><a href="../../templates/displaying-a-list-of-items/">Displaying a List of Items</a></li><li class='toc-level-1 '><a href="../../templates/displaying-the-keys-in-an-object/">Displaying the Keys in an Object</a></li><li class='toc-level-1 '><a href="../../templates/binding-element-attributes/">Binding Element Attributes</a></li><li class='toc-level-1 '><a href="../../templates/links/">Links</a></li><li class='toc-level-1 '><a href="../../templates/actions/">Actions</a></li><li class='toc-level-1 '><a href="../../templates/input-helpers/">Input Helpers</a></li><li class='toc-level-1 '><a href="../../templates/development-helpers/">Development Helpers</a></li><li class='toc-level-1 '><a href="../../templates/writing-helpers/">Writing Helpers</a></li></ol></li><li class='toc-level-0 selected'><a href="#">Components</a><ol class='toc-level-1 selected'><li class='toc-level-1 '><a href="../defining-a-component/">Defining a Component</a></li><li class='toc-level-1 '><a href="../the-component-lifecycle/">The Component Lifecycle</a></li><li class='toc-level-1 '><a href="../passing-properties-to-a-component/">Passing Properties to a Component</a></li><li class='toc-level-1 '><a href="../wrapping-content-in-a-component/">Wrapping Content in a Component</a></li><li class='toc-level-1 '><a href="../customizing-a-components-element/">Customizing a Component's Element</a></li><li class='toc-level-1 '><a href="../block-params/">Using Block Params</a></li><li class='toc-level-1 selected'><a href="./">Handling Events</a></li><li class='toc-level-1 '><a href="../triggering-changes-with-actions/">Triggering Changes with Actions</a></li></ol></li><li class='toc-level-0 '><a href="#">Controllers</a><ol class='toc-level-1'><li class='toc-level-1 '><a href="../../controllers/">Introdução</a></li></ol></li><li class='toc-level-0 '><a href="#">Models</a><ol class='toc-level-1'><li class='toc-level-1 '><a href="../../models/">Introduction</a></li><li class='toc-level-1 '><a href="../../models/defining-models/">Defining Models</a></li><li class='toc-level-1 '><a href="../../models/finding-records/">Finding Records</a></li><li class='toc-level-1 '><a href="../../models/creating-updating-and-deleting-records/">Creating, Updating and Deleting</a></li><li class='toc-level-1 '><a href="../../models/relationships/">Relationships</a></li><li class='toc-level-1 '><a href="../../models/pushing-records-into-the-store/">Pushing Records into the Store</a></li><li class='toc-level-1 '><a href="../../models/handling-metadata/">Handling Metadata</a></li><li class='toc-level-1 '><a href="../../models/customizing-adapters/">Customizing Adapters</a></li><li class='toc-level-1 '><a href="../../models/customizing-serializers/">Customizing Serializers</a></li></ol></li><li class='toc-level-0 '><a href="#">Application Concerns</a><ol class='toc-level-1'><li class='toc-level-1 '><a href="../../applications/applications-and-instances/">Applications and Instances</a></li><li class='toc-level-1 '><a href="../../applications/dependency-injection/">Dependency Injection</a></li><li class='toc-level-1 '><a href="../../applications/initializers/">Initializers</a></li><li class='toc-level-1 '><a href="../../applications/services/">Services</a></li><li class='toc-level-1 '><a href="../../applications/run-loop/">The Run Loop</a></li></ol></li><li class='toc-level-0 '><a href="#">Testing</a><ol class='toc-level-1'><li class='toc-level-1 '><a href="../../testing/">Introduction</a></li><li class='toc-level-1 '><a href="../../testing/acceptance/">Acceptance Tests</a></li><li class='toc-level-1 '><a href="../../testing/unit-testing-basics/">Unit Testing Basics</a></li><li class='toc-level-1 '><a href="../../testing/testing-components/">Testing Components</a></li><li class='toc-level-1 '><a href="../../testing/testing-helpers/">Testing Helpers</a></li><li class='toc-level-1 '><a href="../../testing/testing-controllers/">Testing Controllers</a></li><li class='toc-level-1 '><a href="../../testing/testing-routes/">Testing Routes</a></li><li class='toc-level-1 '><a href="../../testing/testing-models/">Testing Models</a></li></ol></li><li class='toc-level-0 '><a href="#">Ember Inspector</a><ol class='toc-level-1'><li class='toc-level-1 '><a href="../../ember-inspector/">Introduction</a></li><li class='toc-level-1 '><a href="../../ember-inspector/installation/">Installing the Inspector</a></li><li class='toc-level-1 '><a href="../../ember-inspector/object-inspector/">Object Inspector</a></li><li class='toc-level-1 '><a href="../../ember-inspector/view-tree/">The View Tree</a></li><li class='toc-level-1 '><a href="../../ember-inspector/routes/">Inspecting Routes</a></li><li class='toc-level-1 '><a href="../../ember-inspector/data/">Data Tab</a></li><li class='toc-level-1 '><a href="../../ember-inspector/deprecations/">Tackling Deprecations</a></li><li class='toc-level-1 '><a href="../../ember-inspector/info/">Library Info</a></li><li class='toc-level-1 '><a href="../../ember-inspector/promises/">Debugging Promises</a></li><li class='toc-level-1 '><a href="../../ember-inspector/container/">Inspecting Objects via the Container</a></li><li class='toc-level-1 '><a href="../../ember-inspector/render-performance/">Rendering Performance</a></li><li class='toc-level-1 '><a href="../../ember-inspector/troubleshooting/">Troubleshooting</a></li></ol></li><li class='toc-level-0 '><a href="#">Addons and Dependencies</a><ol class='toc-level-1'><li class='toc-level-1 '><a href="../../addons-and-dependencies/managing-dependencies/">Managing Dependencies</a></li></ol></li><li class='toc-level-0 '><a href="#">Configuring Ember.js</a><ol class='toc-level-1'><li class='toc-level-1 '><a href="../../configuring-ember/configuring-your-app/">Configuring Your App</a></li><li class='toc-level-1 '><a href="../../configuring-ember/configuring-ember-cli/">Configuring Ember CLI</a></li><li class='toc-level-1 '><a href="../../configuring-ember/handling-deprecations/">Handling Deprecations</a></li><li class='toc-level-1 '><a href="../../configuring-ember/disabling-prototype-extensions/">Disabling Prototype Extensions</a></li><li class='toc-level-1 '><a href="../../configuring-ember/specifying-url-type/">Specifying the URL Type</a></li><li class='toc-level-1 '><a href="../../configuring-ember/embedding-applications/">Embedding Applications</a></li><li class='toc-level-1 '><a href="../../configuring-ember/feature-flags/">Feature Flags</a></li><li class='toc-level-1 '><a href="../../configuring-ember/build-targets/">Build targets</a></li><li class='toc-level-1 '><a href="../../configuring-ember/debugging/">Debugging</a></li></ol></li><li class='toc-level-0 '><a href="#">Contributing to Ember.js</a><ol class='toc-level-1'><li class='toc-level-1 '><a href="../../contributing/adding-new-features/">Adding New Features</a></li><li class='toc-level-1 '><a href="../../contributing/repositories/">Repositories</a></li></ol></li><li class='toc-level-0 '><a href="#">Glossário</a><ol class='toc-level-1'><li class='toc-level-1 '><a href="../../glossary/web-development/">Desenvolvimento WEB</a></li></ol></li></ol></nav>
+</aside>
+
+            <article>
+              <h1>
+                Handling Events
+                <a href="https://github.com/ember-brasil/website/edit/master/source/guides/components/handling-events.md"
+                   target="_blank" class="edit-page icon-pencil">Melhorar esta página</a>
+              </h1>
+              <hr>
+
+              <p>You can respond to user events on your component like double-clicking, hovering,
+and key presses through event handlers. Simply implement the name of the event
+you want to respond to as a method on your component.</p>
+
+<p>For example, imagine we have a template like this:</p>
+<div class="highlight hbs "><div class="ribbon"></div><div class="scroller"><table class="CodeRay"><tr>
+  <td class="line-numbers"><pre>1
+2
+3
+</pre></td>
+  <td class="code"><pre>{{#double-clickable}}
+  This is a double clickable area!
+{{/double-clickable}}
+</pre></td>
+</tr></table>
+</div></div>
+<p>Let&#39;s implement <code>double-clickable</code> such that when it is
+clicked, an alert is displayed:</p>
+<div class="highlight javascript "><div class="ribbon"></div><div class="scroller"><table class="CodeRay">
+  <thead>
+    <tr>
+      <td colspan="2">app/components/double-clickable.js</td>
+    </tr>
+  </thead>
+<tr>
+  <td class="line-numbers"><pre>1
+2
+3
+4
+5
+6
+7
+</pre></td>
+  <td class="code"><pre><span class="reserved">import</span> Ember from <span class="string"><span class="delimiter">'</span><span class="content">ember</span><span class="delimiter">'</span></span>;
+
+<span class="reserved">export</span> <span class="keyword">default</span> Ember.Component.extend({
+  doubleClick() {
+    alert(<span class="string"><span class="delimiter">&quot;</span><span class="content">DoubleClickableComponent was clicked!</span><span class="delimiter">&quot;</span></span>);
+  }
+});
+</pre></td>
+</tr></table>
+</div></div>
+<p>Browser events may bubble up the DOM which potentially target parent component(s)
+in succession. To enable bubbling <code>return true;</code> from the event handler method
+in your component.</p>
+<div class="highlight javascript "><div class="ribbon"></div><div class="scroller"><table class="CodeRay">
+  <thead>
+    <tr>
+      <td colspan="2">app/components/double-clickable.js</td>
+    </tr>
+  </thead>
+<tr>
+  <td class="line-numbers"><pre>1
+2
+3
+4
+5
+6
+7
+8
+</pre></td>
+  <td class="code"><pre><span class="reserved">import</span> Ember from <span class="string"><span class="delimiter">'</span><span class="content">ember</span><span class="delimiter">'</span></span>;
+
+<span class="reserved">export</span> <span class="keyword">default</span> Ember.Component.extend({
+  doubleClick() {
+    Ember.Logger.info(<span class="string"><span class="delimiter">&quot;</span><span class="content">DoubleClickableComponent was clicked!</span><span class="delimiter">&quot;</span></span>);
+    <span class="keyword">return</span> <span class="predefined-constant">true</span>;
+  }
+});
+</pre></td>
+</tr></table>
+</div></div>
+<p>See the list of event names at the end of this page. Any event can be defined
+as an event handler in your component.</p>
+<h2 class='anchorable-toc' id='toc_sending-actions'>Sending Actions</h2>
+<p>In some cases your component needs to define event handlers, perhaps to support
+various draggable behaviors. For example, a component may need to send an <code>id</code>
+when it receives a drop event:</p>
+<div class="highlight hbs "><div class="ribbon"></div><div class="scroller"><table class="CodeRay"><tr>
+  <td class="line-numbers"><pre>1
+</pre></td>
+  <td class="code"><pre>{{drop-target action=(action &quot;didDrop&quot;)}}
+</pre></td>
+</tr></table>
+</div></div>
+<p>You can define the component&#39;s event handlers to manage the drop event.
+And if you need to, you may also stop events from bubbling, by using
+<code>return false;</code>.</p>
+<div class="highlight javascript "><div class="ribbon"></div><div class="scroller"><table class="CodeRay">
+  <thead>
+    <tr>
+      <td colspan="2">app/components/drop-target.js</td>
+    </tr>
+  </thead>
+<tr>
+  <td class="line-numbers"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+<strong>10</strong>
+11
+12
+13
+14
+15
+</pre></td>
+  <td class="code"><pre><span class="reserved">import</span> Ember from <span class="string"><span class="delimiter">'</span><span class="content">ember</span><span class="delimiter">'</span></span>;
+
+<span class="reserved">export</span> <span class="keyword">default</span> Ember.Component.extend({
+  <span class="key">attributeBindings</span>: [<span class="string"><span class="delimiter">'</span><span class="content">draggable</span><span class="delimiter">'</span></span>],
+  <span class="key">draggable</span>: <span class="string"><span class="delimiter">'</span><span class="content">true</span><span class="delimiter">'</span></span>,
+
+  dragOver() {
+    <span class="keyword">return</span> <span class="predefined-constant">false</span>;
+  },
+
+  drop(event) {
+    let id = event.dataTransfer.getData(<span class="string"><span class="delimiter">'</span><span class="content">text/data</span><span class="delimiter">'</span></span>);
+    <span class="local-variable">this</span>.get(<span class="string"><span class="delimiter">'</span><span class="content">action</span><span class="delimiter">'</span></span>)(id);
+  }
+});
+</pre></td>
+</tr></table>
+</div></div>
+<p>In the above component, <code>didDrop</code> is the <code>action</code> passed in. This action is
+called from the <code>drop</code> event handler and passes one argument to the action -
+the <code>id</code> value found through the <code>drop</code> event object.</p>
+
+<p>Another way to preserve native event behaviors and use an action, is to
+assign a (closure) action to an inline event handler. Consider the
+template below which includes an <code>onclick</code> handler on a <code>button</code> element:</p>
+<div class="highlight hbs "><div class="ribbon"></div><div class="scroller"><table class="CodeRay"><tr>
+  <td class="line-numbers"><pre>1
+</pre></td>
+  <td class="code"><pre>&lt;button onclick={{action 'signUp'}}&gt;Sign Up&lt;/button&gt;
+</pre></td>
+</tr></table>
+</div></div>
+<p>The <code>signUp</code> action is simply a function defined on the <code>actions</code> hash
+of a component. Since the action is assigned to an inline handler, the
+function definition can define the event object as its first parameter.</p>
+<div class="highlight js "><div class="ribbon"></div><div class="scroller"><table class="CodeRay"><tr>
+  <td class="line-numbers"><pre>1
+2
+3
+4
+5
+6
+</pre></td>
+  <td class="code"><pre>actions: {
+  signUp(event){ 
+    <span class="comment">// Only when assigning the action to an inline handler, the event object</span>
+    <span class="comment">// is passed to the action as the first parameter.</span>
+  }
+}
+</pre></td>
+</tr></table>
+</div></div>
+<p>The normal behavior for a function defined in <code>actions</code> does not receive the
+browser event as an argument. So, the function definition for the action cannot
+define an event parameter. The following example demonstrates the
+default behavior using an action.</p>
+<div class="highlight hbs "><div class="ribbon"></div><div class="scroller"><table class="CodeRay"><tr>
+  <td class="line-numbers"><pre>1
+</pre></td>
+  <td class="code"><pre>&lt;button {{action 'signUp'}}&gt;Sign Up&lt;/button&gt;
+</pre></td>
+</tr></table>
+</div></div><div class="highlight js "><div class="ribbon"></div><div class="scroller"><table class="CodeRay"><tr>
+  <td class="line-numbers"><pre>1
+2
+3
+4
+5
+</pre></td>
+  <td class="code"><pre>actions: {
+  signUp(){
+    <span class="comment">// No event object is passed to the action.</span>
+  }
+}
+</pre></td>
+</tr></table>
+</div></div>
+<p>To utilize an <code>event</code> object as a function parameter: </p>
+
+<ul>
+<li>Define the event handler in the component (which is designed to receive the
+browser event object).</li>
+<li>Or, assign an action to an inline event handler in the template (which
+creates a closure action and does receive the event object as an argument).</li>
+</ul>
+<h2 class='anchorable-toc' id='toc_event-names'>Event Names</h2>
+<p>The event handling examples described above respond to one set of events.
+The names of the built-in events are listed below. Custom events can be
+registered by using <a href="http://emberjs.com/api/classes/Ember.Application.html#property_customEvents">Ember.Application.customEvents</a>.</p>
+
+<p>Touch events:</p>
+
+<ul>
+<li><code>touchStart</code></li>
+<li><code>touchMove</code></li>
+<li><code>touchEnd</code></li>
+<li><code>touchCancel</code></li>
+</ul>
+
+<p>Keyboard events</p>
+
+<ul>
+<li><code>keyDown</code></li>
+<li><code>keyUp</code></li>
+<li><code>keyPress</code></li>
+</ul>
+
+<p>Mouse events</p>
+
+<ul>
+<li><code>mouseDown</code></li>
+<li><code>mouseUp</code></li>
+<li><code>contextMenu</code></li>
+<li><code>click</code></li>
+<li><code>doubleClick</code></li>
+<li><code>mouseMove</code></li>
+<li><code>focusIn</code></li>
+<li><code>focusOut</code></li>
+<li><code>mouseEnter</code></li>
+<li><code>mouseLeave</code></li>
+</ul>
+
+<p>Form events:</p>
+
+<ul>
+<li><code>submit</code></li>
+<li><code>change</code></li>
+<li><code>focusIn</code></li>
+<li><code>focusOut</code></li>
+<li><code>input</code></li>
+</ul>
+
+<p>HTML5 drag and drop events:</p>
+
+<ul>
+<li><code>dragStart</code></li>
+<li><code>drag</code></li>
+<li><code>dragEnter</code></li>
+<li><code>dragLeave</code></li>
+<li><code>dragOver</code></li>
+<li><code>dragEnd</code></li>
+<li><code>drop</code></li>
+</ul>
+
+            </article>
+
+          </div>
+
+          <div class="footer">
+    <div class="container">
+
+      <div class="footer-statement">
+        <a href="https://ember-community-slackin.herokuapp.com/">Comunidade no Slack</a> &bull;
+        <a href="https://github.com/emberjs/ember.js">Github</a> &bull;
+        <a href="https://t.me/EmberBR">Telegram (Ember-BR)</a>
+      </div>
+
+      <div class="footer-statement footer-social">
+        <a href="http://twitter.com/emberjs"
+          title="Twitter">
+          <i class="icon-twitter"></i>
+        </a>
+        <a href="https://github.com/emberjs/ember.js"
+          title="GitHub">
+          <i class="icon-github"></i>
+        </a>
+        <a href="https://plus.google.com/communities/106387049790387471205"
+          title="Google+">
+          <i class="icon-gplus"></i>
+        </a>
+      </div>
+      <hr />
+      <div class="info">
+        <p>
+          Este site é parte de uma iniciativa da <b>Comunidade Brasileira Ember</b> e não tem nenhuma ligação direta com o projeto oficial. <br />
+          Ember é uma marca registrada da <a href="http://tilde.io">Tilde Inc.</a>.<br />
+          Para obter mais informações sobre licença de uso acesse <a href="http://emberjs.com/legal">Legal</a>.
+        </p>
+      </div>
+
+  </div>
+</div>
+
+
+          
+    </main>
+
+    <script type="text/javascript">
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-105665012-1', 'auto');
+    ga('send', 'pageview');
+</script>
+
+  </body>
+</html>

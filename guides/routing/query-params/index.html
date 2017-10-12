@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="theme-color" content="#e46652">
+
+    <title>Ember.js - Routing: Query Parameters</title>
+    <meta property="st:title" content="Routing: Query Parameters" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="../../../images/favicon.png" rel="icon" type="image/png" />
+    <!--[if lte IE 7 ]><link href="../../../stylesheets/fonts/fontello-ie7.css" rel="stylesheet" /><![endif]-->
+    <link href="../../../stylesheets/application.css" rel="stylesheet" />
+    <link href="//fonts.googleapis.com/css?family=Nunito:300,400,700" rel="stylesheet">
+    <!-- This TypeKit account is managed by @wifelette. Contact her with any issues. -->
+    <script src="https://use.typekit.net/stz3kpn.js"></script>
+    <script>try{Typekit.load({ async: true });}catch(e){}</script>
+
+    <link href="/blog/feed.xml" rel="alternate" type="application/atom+xml" title="Ember.js - Blog" />
+    
+  </head>
+
+  <body class="guides guides guides_routing guides_routing_query-params guides_routing_query-params_index">
+
+    <!--[if lt IE 9]>
+      <script src="../../../javascripts/common-old-ie.js"></script>
+    <![endif]-->
+    <!--[if gte IE 9]><!-->
+      <script src="../../../javascripts/common-modern.js"></script>
+    <!--<![endif]-->
+
+    <main>
+      <header class="header">
+  <nav role="navigation" aria-label="main">
+    <ul class="header-nav">
+      <li class="header-logo">
+        <a href="/"><span class="visually-hidden">Ember homepage</span></a>
+      </li>
+      <li>
+        <a href="/">Home</a>
+      </li>
+      <li>
+        <a href="/guides/">Documentação</a>
+      </li>
+      <li>
+        <a href="/contribuidores/">Contribuidores</a>
+      </li>
+      <li>
+        <a href="/quem-usa-ember">Quem usa Ember?</a>
+      </li>
+      <li>
+        <a href="http://emberjs.com/api">Ember API</a>
+      </li>
+    </ul>
+  </nav>
+</header>
+
+
+      
+        <div class="content">
+            <aside class="sidebar">
+  <nav class='toc-container' aria-label='table of contents'><ol class='toc-level-0 selected'><li class='toc-level-0 '><a href="#">Começando</a><ol class='toc-level-1'><li class='toc-level-1 '><a href="../../getting-started/quick-start/">Começo rápido</a></li><li class='toc-level-1 '><a href="../../getting-started/">Instalando Ember</a></li><li class='toc-level-1 '><a href="../../getting-started/core-concepts/">Conceitos fundamentais</a></li></ol></li><li class='toc-level-0 '><a href="#">Tutorial</a><ol class='toc-level-1'><li class='toc-level-1 '><a href="../../tutorial/ember-cli/">Começando</a></li><li class='toc-level-1 '><a href="../../tutorial/acceptance-test/">Planejando seu aplicativo</a></li><li class='toc-level-1 '><a href="../../tutorial/routes-and-templates/">Routes e Templates</a></li><li class='toc-level-1 '><a href="../../tutorial/model-hook/">Model Hook</a></li><li class='toc-level-1 '><a href="../../tutorial/installing-addons/">Instalando Addons</a></li><li class='toc-level-1 '><a href="../../tutorial/simple-component/">Construindo um componente simples</a></li><li class='toc-level-1 '><a href="../../tutorial/hbs-helper/">Criando um Helper para Handlebars</a></li><li class='toc-level-1 '><a href="../../tutorial/ember-data/">Usando Ember Data</a></li><li class='toc-level-1 '><a href="../../tutorial/autocomplete-component/">Criando um componente complexo</a></li><li class='toc-level-1 '><a href="../../tutorial/service/">Services e Utils</a></li><li class='toc-level-1 '><a href="../../tutorial/subroutes/">Adicionando rotas aninhadas</a></li><li class='toc-level-1 '><a href="../../tutorial/deploying/">Publicando seu App</a></li></ol></li><li class='toc-level-0 '><a href="#">The Object Model</a><ol class='toc-level-1'><li class='toc-level-1 '><a href="../../object-model/">Objects in Ember</a></li><li class='toc-level-1 '><a href="../../object-model/classes-and-instances/">Classes and Instances</a></li><li class='toc-level-1 '><a href="../../object-model/reopening-classes-and-instances/">Reopening Classes and Instances</a></li><li class='toc-level-1 '><a href="../../object-model/computed-properties/">Computed Properties</a></li><li class='toc-level-1 '><a href="../../object-model/computed-properties-and-aggregate-data/">Computed Properties and Aggregate Data</a></li><li class='toc-level-1 '><a href="../../object-model/observers/">Observers</a></li><li class='toc-level-1 '><a href="../../object-model/bindings/">Bindings</a></li><li class='toc-level-1 '><a href="../../object-model/enumerables/">Enumerables</a></li></ol></li><li class='toc-level-0 selected'><a href="#">Routing</a><ol class='toc-level-1 selected'><li class='toc-level-1 '><a href="../">Introduction</a></li><li class='toc-level-1 '><a href="../defining-your-routes/">Defining Your Routes</a></li><li class='toc-level-1 '><a href="../specifying-a-routes-model/">Specifying a Route's Model</a></li><li class='toc-level-1 '><a href="../rendering-a-template/">Rendering a Template</a></li><li class='toc-level-1 '><a href="../redirection/">Redirecting</a></li><li class='toc-level-1 '><a href="../preventing-and-retrying-transitions/">Preventing and Retrying Transitions</a></li><li class='toc-level-1 '><a href="../loading-and-error-substates/">Loading / Error Substates</a></li><li class='toc-level-1 selected'><a href="./">Query Parameters</a></li><li class='toc-level-1 '><a href="../asynchronous-routing/">Asynchronous Routing</a></li></ol></li><li class='toc-level-0 '><a href="#">Templates</a><ol class='toc-level-1'><li class='toc-level-1 '><a href="../../templates/handlebars-basics/">Handlebars Basics</a></li><li class='toc-level-1 '><a href="../../templates/built-in-helpers/">Built-in Helpers</a></li><li class='toc-level-1 '><a href="../../templates/conditionals/">Conditionals</a></li><li class='toc-level-1 '><a href="../../templates/displaying-a-list-of-items/">Displaying a List of Items</a></li><li class='toc-level-1 '><a href="../../templates/displaying-the-keys-in-an-object/">Displaying the Keys in an Object</a></li><li class='toc-level-1 '><a href="../../templates/binding-element-attributes/">Binding Element Attributes</a></li><li class='toc-level-1 '><a href="../../templates/links/">Links</a></li><li class='toc-level-1 '><a href="../../templates/actions/">Actions</a></li><li class='toc-level-1 '><a href="../../templates/input-helpers/">Input Helpers</a></li><li class='toc-level-1 '><a href="../../templates/development-helpers/">Development Helpers</a></li><li class='toc-level-1 '><a href="../../templates/writing-helpers/">Writing Helpers</a></li></ol></li><li class='toc-level-0 '><a href="#">Components</a><ol class='toc-level-1'><li class='toc-level-1 '><a href="../../components/defining-a-component/">Defining a Component</a></li><li class='toc-level-1 '><a href="../../components/the-component-lifecycle/">The Component Lifecycle</a></li><li class='toc-level-1 '><a href="../../components/passing-properties-to-a-component/">Passing Properties to a Component</a></li><li class='toc-level-1 '><a href="../../components/wrapping-content-in-a-component/">Wrapping Content in a Component</a></li><li class='toc-level-1 '><a href="../../components/customizing-a-components-element/">Customizing a Component's Element</a></li><li class='toc-level-1 '><a href="../../components/block-params/">Using Block Params</a></li><li class='toc-level-1 '><a href="../../components/handling-events/">Handling Events</a></li><li class='toc-level-1 '><a href="../../components/triggering-changes-with-actions/">Triggering Changes with Actions</a></li></ol></li><li class='toc-level-0 '><a href="#">Controllers</a><ol class='toc-level-1'><li class='toc-level-1 '><a href="../../controllers/">Introdução</a></li></ol></li><li class='toc-level-0 '><a href="#">Models</a><ol class='toc-level-1'><li class='toc-level-1 '><a href="../../models/">Introduction</a></li><li class='toc-level-1 '><a href="../../models/defining-models/">Defining Models</a></li><li class='toc-level-1 '><a href="../../models/finding-records/">Finding Records</a></li><li class='toc-level-1 '><a href="../../models/creating-updating-and-deleting-records/">Creating, Updating and Deleting</a></li><li class='toc-level-1 '><a href="../../models/relationships/">Relationships</a></li><li class='toc-level-1 '><a href="../../models/pushing-records-into-the-store/">Pushing Records into the Store</a></li><li class='toc-level-1 '><a href="../../models/handling-metadata/">Handling Metadata</a></li><li class='toc-level-1 '><a href="../../models/customizing-adapters/">Customizing Adapters</a></li><li class='toc-level-1 '><a href="../../models/customizing-serializers/">Customizing Serializers</a></li></ol></li><li class='toc-level-0 '><a href="#">Application Concerns</a><ol class='toc-level-1'><li class='toc-level-1 '><a href="../../applications/applications-and-instances/">Applications and Instances</a></li><li class='toc-level-1 '><a href="../../applications/dependency-injection/">Dependency Injection</a></li><li class='toc-level-1 '><a href="../../applications/initializers/">Initializers</a></li><li class='toc-level-1 '><a href="../../applications/services/">Services</a></li><li class='toc-level-1 '><a href="../../applications/run-loop/">The Run Loop</a></li></ol></li><li class='toc-level-0 '><a href="#">Testing</a><ol class='toc-level-1'><li class='toc-level-1 '><a href="../../testing/">Introduction</a></li><li class='toc-level-1 '><a href="../../testing/acceptance/">Acceptance Tests</a></li><li class='toc-level-1 '><a href="../../testing/unit-testing-basics/">Unit Testing Basics</a></li><li class='toc-level-1 '><a href="../../testing/testing-components/">Testing Components</a></li><li class='toc-level-1 '><a href="../../testing/testing-helpers/">Testing Helpers</a></li><li class='toc-level-1 '><a href="../../testing/testing-controllers/">Testing Controllers</a></li><li class='toc-level-1 '><a href="../../testing/testing-routes/">Testing Routes</a></li><li class='toc-level-1 '><a href="../../testing/testing-models/">Testing Models</a></li></ol></li><li class='toc-level-0 '><a href="#">Ember Inspector</a><ol class='toc-level-1'><li class='toc-level-1 '><a href="../../ember-inspector/">Introduction</a></li><li class='toc-level-1 '><a href="../../ember-inspector/installation/">Installing the Inspector</a></li><li class='toc-level-1 '><a href="../../ember-inspector/object-inspector/">Object Inspector</a></li><li class='toc-level-1 '><a href="../../ember-inspector/view-tree/">The View Tree</a></li><li class='toc-level-1 '><a href="../../ember-inspector/routes/">Inspecting Routes</a></li><li class='toc-level-1 '><a href="../../ember-inspector/data/">Data Tab</a></li><li class='toc-level-1 '><a href="../../ember-inspector/deprecations/">Tackling Deprecations</a></li><li class='toc-level-1 '><a href="../../ember-inspector/info/">Library Info</a></li><li class='toc-level-1 '><a href="../../ember-inspector/promises/">Debugging Promises</a></li><li class='toc-level-1 '><a href="../../ember-inspector/container/">Inspecting Objects via the Container</a></li><li class='toc-level-1 '><a href="../../ember-inspector/render-performance/">Rendering Performance</a></li><li class='toc-level-1 '><a href="../../ember-inspector/troubleshooting/">Troubleshooting</a></li></ol></li><li class='toc-level-0 '><a href="#">Addons and Dependencies</a><ol class='toc-level-1'><li class='toc-level-1 '><a href="../../addons-and-dependencies/managing-dependencies/">Managing Dependencies</a></li></ol></li><li class='toc-level-0 '><a href="#">Configuring Ember.js</a><ol class='toc-level-1'><li class='toc-level-1 '><a href="../../configuring-ember/configuring-your-app/">Configuring Your App</a></li><li class='toc-level-1 '><a href="../../configuring-ember/configuring-ember-cli/">Configuring Ember CLI</a></li><li class='toc-level-1 '><a href="../../configuring-ember/handling-deprecations/">Handling Deprecations</a></li><li class='toc-level-1 '><a href="../../configuring-ember/disabling-prototype-extensions/">Disabling Prototype Extensions</a></li><li class='toc-level-1 '><a href="../../configuring-ember/specifying-url-type/">Specifying the URL Type</a></li><li class='toc-level-1 '><a href="../../configuring-ember/embedding-applications/">Embedding Applications</a></li><li class='toc-level-1 '><a href="../../configuring-ember/feature-flags/">Feature Flags</a></li><li class='toc-level-1 '><a href="../../configuring-ember/build-targets/">Build targets</a></li><li class='toc-level-1 '><a href="../../configuring-ember/debugging/">Debugging</a></li></ol></li><li class='toc-level-0 '><a href="#">Contributing to Ember.js</a><ol class='toc-level-1'><li class='toc-level-1 '><a href="../../contributing/adding-new-features/">Adding New Features</a></li><li class='toc-level-1 '><a href="../../contributing/repositories/">Repositories</a></li></ol></li><li class='toc-level-0 '><a href="#">Glossário</a><ol class='toc-level-1'><li class='toc-level-1 '><a href="../../glossary/web-development/">Desenvolvimento WEB</a></li></ol></li></ol></nav>
+</aside>
+
+            <article>
+              <h1>
+                Query Parameters
+                <a href="https://github.com/ember-brasil/website/edit/master/source/guides/routing/query-params.md"
+                   target="_blank" class="edit-page icon-pencil">Melhorar esta página</a>
+              </h1>
+              <hr>
+
+              <p>Query parameters are optional key-value pairs that appear to the right of
+the <code>?</code> in a URL. For example, the following URL has two query params,
+<code>sort</code> and <code>page</code>, with respective values <code>ASC</code> and <code>2</code>:</p>
+<div class="highlight text "><div class="ribbon"></div><div class="scroller"><table class="CodeRay"><tr>
+  <td class="line-numbers"><pre>1
+</pre></td>
+  <td class="code"><pre>http://example.com/articles?sort=ASC&amp;page=2
+</pre></td>
+</tr></table>
+</div></div>
+<p>Query params allow for additional application state to be serialized
+into the URL that can&#39;t otherwise fit into the <em>path</em> of the URL (i.e.
+everything to the left of the <code>?</code>). Common use cases for query params include
+representing the current page number in a paginated collection, filter criteria, or sorting criteria.</p>
+<h3 class='anchorable-toc' id='toc_specifying-query-parameters'>Specifying Query Parameters</h3>
+<p>Query params are declared on route-driven controllers. For example, to
+configure query params that are active within the <code>articles</code> route,
+they must be declared on <code>controller:articles</code>.</p>
+
+<p>To add a <code>category</code>
+query parameter that will filter out all the articles that haven&#39;t
+been categorized as popular we&#39;d specify <code>&#39;category&#39;</code>
+as one of <code>controller:article</code>&#39;s <code>queryParams</code>:</p>
+<div class="highlight javascript "><div class="ribbon"></div><div class="scroller"><table class="CodeRay">
+  <thead>
+    <tr>
+      <td colspan="2">app/controllers/articles.js</td>
+    </tr>
+  </thead>
+<tr>
+  <td class="line-numbers"><pre>1
+2
+3
+4
+5
+6
+</pre></td>
+  <td class="code"><pre><span class="reserved">import</span> Ember from <span class="string"><span class="delimiter">'</span><span class="content">ember</span><span class="delimiter">'</span></span>;
+
+<span class="reserved">export</span> <span class="keyword">default</span> Ember.Controller.extend({
+  <span class="key">queryParams</span>: [<span class="string"><span class="delimiter">'</span><span class="content">category</span><span class="delimiter">'</span></span>],
+  <span class="key">category</span>: <span class="predefined-constant">null</span>
+});
+</pre></td>
+</tr></table>
+</div></div>
+<p>This sets up a binding between the <code>category</code> query param in the URL,
+and the <code>category</code> property on <code>controller:articles</code>. In other words,
+once the <code>articles</code> route has been entered, any changes to the
+<code>category</code> query param in the URL will update the <code>category</code> property
+on <code>controller:articles</code>, and vice versa.
+Note that you can&#39;t bind <code>queryParams</code> to computed properties, they
+have to be values.</p>
+
+<p>Now we need to define a computed property of our category-filtered
+array that the <code>articles</code> template will render:</p>
+<div class="highlight javascript "><div class="ribbon"></div><div class="scroller"><table class="CodeRay">
+  <thead>
+    <tr>
+      <td colspan="2">app/controllers/articles.js</td>
+    </tr>
+  </thead>
+<tr>
+  <td class="line-numbers"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+<strong>10</strong>
+11
+12
+13
+14
+15
+16
+17
+</pre></td>
+  <td class="code"><pre><span class="reserved">import</span> Ember from <span class="string"><span class="delimiter">'</span><span class="content">ember</span><span class="delimiter">'</span></span>;
+
+<span class="reserved">export</span> <span class="keyword">default</span> Ember.Controller.extend({
+  <span class="key">queryParams</span>: [<span class="string"><span class="delimiter">'</span><span class="content">category</span><span class="delimiter">'</span></span>],
+  <span class="key">category</span>: <span class="predefined-constant">null</span>,
+
+  <span class="key">filteredArticles</span>: Ember.computed(<span class="string"><span class="delimiter">'</span><span class="content">category</span><span class="delimiter">'</span></span>, <span class="string"><span class="delimiter">'</span><span class="content">model</span><span class="delimiter">'</span></span>, <span class="keyword">function</span>() {
+    let category = <span class="local-variable">this</span>.get(<span class="string"><span class="delimiter">'</span><span class="content">category</span><span class="delimiter">'</span></span>);
+    let articles = <span class="local-variable">this</span>.get(<span class="string"><span class="delimiter">'</span><span class="content">model</span><span class="delimiter">'</span></span>);
+
+    <span class="keyword">if</span> (category) {
+      <span class="keyword">return</span> articles.filterBy(<span class="string"><span class="delimiter">'</span><span class="content">category</span><span class="delimiter">'</span></span>, category);
+    } <span class="keyword">else</span> {
+      <span class="keyword">return</span> articles;
+    }
+  })
+});
+</pre></td>
+</tr></table>
+</div></div>
+<p>With this code, we have established the following behaviors:</p>
+
+<ol>
+<li>If the user navigates to <code>/articles</code>, <code>category</code> will be <code>null</code>, so
+the articles won&#39;t be filtered.</li>
+<li>If the user navigates to <code>/articles?category=recent</code>,
+<code>category</code> will be set to <code>&quot;recent&quot;</code>, so articles will be filtered.</li>
+<li>Once inside the <code>articles</code> route, any changes to the <code>category</code>
+property on <code>controller:articles</code> will cause the URL to update the
+query param. By default, a query param property change won&#39;t cause a
+full router transition (i.e. it won&#39;t call <code>model</code> hooks and
+<code>setupController</code>, etc.); it will only update the URL.</li>
+</ol>
+<h3 class='anchorable-toc' id='toc_link-to-helper'>link-to Helper</h3>
+<p>The <code>link-to</code> helper supports specifying query params using the
+<code>query-params</code> subexpression helper.</p>
+<div class="highlight handlebars "><div class="ribbon"></div><div class="scroller"><table class="CodeRay"><tr>
+  <td class="line-numbers"><pre>1
+2
+3
+4
+5
+</pre></td>
+  <td class="code"><pre>// Explicitly set target query params
+<span class="inline"><span class="inline-delimiter">{{#</span><span class="attribute-name">link-to</span> <span class="error">&quot;</span><span class="attribute-name">posts</span><span class="error">&quot;</span> <span class="error">(</span><span class="attribute-name">query-params</span> <span class="attribute-name">direction</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">asc</span><span class="delimiter">&quot;</span></span><span class="error">)</span><span class="inline-delimiter">}}</span></span>Sort<span class="inline"><span class="inline-delimiter">{{/</span><span class="attribute-name">link-to</span><span class="inline-delimiter">}}</span></span>
+
+// Binding is also supported
+<span class="inline"><span class="inline-delimiter">{{#</span><span class="attribute-name">link-to</span> <span class="error">&quot;</span><span class="attribute-name">posts</span><span class="error">&quot;</span> <span class="error">(</span><span class="attribute-name">query-params</span> <span class="attribute-name">direction</span>=<span class="attribute-value">otherDirection</span><span class="error">)</span><span class="inline-delimiter">}}</span></span>Sort<span class="inline"><span class="inline-delimiter">{{/</span><span class="attribute-name">link-to</span><span class="inline-delimiter">}}</span></span>
+</pre></td>
+</tr></table>
+</div></div>
+<p>In the above examples, <code>direction</code> is presumably a query param property
+on the <code>posts</code> controller, but it could also refer to a <code>direction</code> property
+on any of the controllers associated with the <code>posts</code> route hierarchy,
+matching the leaf-most controller with the supplied property name.</p>
+
+<p>The <code>link-to</code> helper takes into account query parameters when determining
+its &quot;active&quot; state, and will set the class appropriately. The active state
+is determined by calculating whether the query params end up the same after
+clicking a link. You don&#39;t have to supply all of the current,
+active query params for this to be true.</p>
+<h3 class='anchorable-toc' id='toc_transitionto'>transitionTo</h3>
+<p><code>Route#transitionTo</code> and <code>Controller#transitionToRoute</code>
+accept a final argument, which is an object with the key <code>queryParams</code>.</p>
+<div class="highlight javascript "><div class="ribbon"></div><div class="scroller"><table class="CodeRay">
+  <thead>
+    <tr>
+      <td colspan="2">app/routes/some-route.js</td>
+    </tr>
+  </thead>
+<tr>
+  <td class="line-numbers"><pre>1
+2
+3
+4
+5
+</pre></td>
+  <td class="code"><pre><span class="local-variable">this</span>.transitionTo(<span class="string"><span class="delimiter">'</span><span class="content">post</span><span class="delimiter">'</span></span>, object, { <span class="key">queryParams</span>: { <span class="key">showDetails</span>: <span class="predefined-constant">true</span> }});
+<span class="local-variable">this</span>.transitionTo(<span class="string"><span class="delimiter">'</span><span class="content">posts</span><span class="delimiter">'</span></span>, { <span class="key">queryParams</span>: { <span class="key">sort</span>: <span class="string"><span class="delimiter">'</span><span class="content">title</span><span class="delimiter">'</span></span> }});
+
+<span class="comment">// if you want to transition the query parameters without changing the route</span>
+<span class="local-variable">this</span>.transitionTo({ <span class="key">queryParams</span>: { <span class="key">direction</span>: <span class="string"><span class="delimiter">'</span><span class="content">asc</span><span class="delimiter">'</span></span> }});
+</pre></td>
+</tr></table>
+</div></div>
+<p>You can also add query params to URL transitions:</p>
+<div class="highlight javascript "><div class="ribbon"></div><div class="scroller"><table class="CodeRay">
+  <thead>
+    <tr>
+      <td colspan="2">app/routes/some-route.js</td>
+    </tr>
+  </thead>
+<tr>
+  <td class="line-numbers"><pre>1
+</pre></td>
+  <td class="code"><pre><span class="local-variable">this</span>.transitionTo(<span class="string"><span class="delimiter">'</span><span class="content">/posts/1?sort=date&amp;showDetails=true</span><span class="delimiter">'</span></span>);
+</pre></td>
+</tr></table>
+</div></div><h3 class='anchorable-toc' id='toc_opting-into-a-full-transition'>Opting into a full transition</h3>
+<p>When you change query params through a transition (<code>transitionTo</code> and <code>link-to</code>),
+it is not considered a full transition.
+This means that the controller properties associated with the query params will be updated,
+as will the URL, but no <code>Route</code> method hook like <code>model</code> or <code>setupController</code> will be called.</p>
+
+<p>If you need a query param change to trigger a full transition, and thus the method hooks,
+you can use the optional <code>queryParams</code> configuration hash on the <code>Route</code>.
+If you have a <code>category</code> query param and you want it to trigger a model refresh,
+you can set it as follows:</p>
+<div class="highlight javascript "><div class="ribbon"></div><div class="scroller"><table class="CodeRay">
+  <thead>
+    <tr>
+      <td colspan="2">app/routes/articles.js</td>
+    </tr>
+  </thead>
+<tr>
+  <td class="line-numbers"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+<strong>10</strong>
+11
+12
+13
+14
+15
+16
+17
+18
+19
+</pre></td>
+  <td class="code"><pre><span class="reserved">import</span> Ember from <span class="string"><span class="delimiter">'</span><span class="content">ember</span><span class="delimiter">'</span></span>;
+
+<span class="reserved">export</span> <span class="keyword">default</span> Ember.Route.extend({
+  <span class="key">queryParams</span>: {
+    <span class="key">category</span>: {
+      <span class="key">refreshModel</span>: <span class="predefined-constant">true</span>
+    }
+  },
+
+  model(params) {
+    <span class="comment">// This gets called upon entering 'articles' route</span>
+    <span class="comment">// for the first time, and we opt into refiring it upon</span>
+    <span class="comment">// query param changes by setting `refreshModel:true` above.</span>
+
+    <span class="comment">// params has format of { category: &quot;someValueOrJustNull&quot; },</span>
+    <span class="comment">// which we can forward to the server.</span>
+    <span class="keyword">return</span> <span class="local-variable">this</span>.get(<span class="string"><span class="delimiter">'</span><span class="content">store</span><span class="delimiter">'</span></span>).query(<span class="string"><span class="delimiter">'</span><span class="content">article</span><span class="delimiter">'</span></span>, params);
+  }
+});
+</pre></td>
+</tr></table>
+</div></div><div class="highlight javascript "><div class="ribbon"></div><div class="scroller"><table class="CodeRay">
+  <thead>
+    <tr>
+      <td colspan="2">app/controllers/articles.js</td>
+    </tr>
+  </thead>
+<tr>
+  <td class="line-numbers"><pre>1
+2
+3
+4
+5
+6
+</pre></td>
+  <td class="code"><pre><span class="reserved">import</span> Ember from <span class="string"><span class="delimiter">'</span><span class="content">ember</span><span class="delimiter">'</span></span>;
+
+<span class="reserved">export</span> <span class="keyword">default</span> Ember.Controller.extend({
+  <span class="key">queryParams</span>: [<span class="string"><span class="delimiter">'</span><span class="content">category</span><span class="delimiter">'</span></span>],
+  <span class="key">category</span>: <span class="predefined-constant">null</span>
+});
+</pre></td>
+</tr></table>
+</div></div><h3 class='anchorable-toc' id='toc_update-url-with-code-replacestate-code-instead'>Update URL with <code>replaceState</code> instead</h3>
+<p>By default, Ember will use <code>pushState</code> to update the URL in the
+address bar in response to a controller query param property change.
+If you would like to use <code>replaceState</code> instead, which prevents an
+additional item from being added to your browser&#39;s history,
+you can specify this as follows:</p>
+<div class="highlight javascript "><div class="ribbon"></div><div class="scroller"><table class="CodeRay">
+  <thead>
+    <tr>
+      <td colspan="2">app/routes/articles.js</td>
+    </tr>
+  </thead>
+<tr>
+  <td class="line-numbers"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+</pre></td>
+  <td class="code"><pre><span class="reserved">import</span> Ember from <span class="string"><span class="delimiter">'</span><span class="content">ember</span><span class="delimiter">'</span></span>;
+
+<span class="reserved">export</span> <span class="keyword">default</span> Ember.Route.extend({
+  <span class="key">queryParams</span>: {
+    <span class="key">category</span>: {
+      <span class="key">replace</span>: <span class="predefined-constant">true</span>
+    }
+  }
+});
+</pre></td>
+</tr></table>
+</div></div>
+<p>This behaviour is similar to <code>link-to</code>,
+which also lets you opt into a <code>replaceState</code> transition via <code>replace=true</code>.</p>
+<h3 class='anchorable-toc' id='toc_map-a-controller-s-property-to-a-different-query-param-key'>Map a controller&#39;s property to a different query param key</h3>
+<p>By default, specifying <code>foo</code> as a controller query param property will
+bind to a query param whose key is <code>foo</code>, e.g. <code>?foo=123</code>.
+You can also map a controller property to a different query param key using the following configuration syntax:</p>
+<div class="highlight javascript "><div class="ribbon"></div><div class="scroller"><table class="CodeRay">
+  <thead>
+    <tr>
+      <td colspan="2">app/controllers/articles.js</td>
+    </tr>
+  </thead>
+<tr>
+  <td class="line-numbers"><pre>1
+2
+3
+4
+5
+6
+7
+8
+</pre></td>
+  <td class="code"><pre><span class="reserved">import</span> Ember from <span class="string"><span class="delimiter">'</span><span class="content">ember</span><span class="delimiter">'</span></span>;
+
+<span class="reserved">export</span> <span class="keyword">default</span> Ember.Controller.extend({
+  <span class="key">queryParams</span>: {
+    <span class="key">category</span>: <span class="string"><span class="delimiter">'</span><span class="content">articles_category</span><span class="delimiter">'</span></span>
+  },
+  <span class="key">category</span>: <span class="predefined-constant">null</span>
+});
+</pre></td>
+</tr></table>
+</div></div>
+<p>This will cause changes to the <code>controller:articles</code>&#39;s <code>category</code>
+property to update the <code>articles_category</code> query param, and vice versa.</p>
+
+<p>Query params that require additional customization can
+be provided along with strings in the <code>queryParams</code> array.</p>
+<div class="highlight javascript "><div class="ribbon"></div><div class="scroller"><table class="CodeRay">
+  <thead>
+    <tr>
+      <td colspan="2">app/controllers/articles.js</td>
+    </tr>
+  </thead>
+<tr>
+  <td class="line-numbers"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+<strong>10</strong>
+</pre></td>
+  <td class="code"><pre><span class="reserved">import</span> Ember from <span class="string"><span class="delimiter">'</span><span class="content">ember</span><span class="delimiter">'</span></span>;
+
+<span class="reserved">export</span> <span class="keyword">default</span> Ember.Controller.extend({
+  <span class="key">queryParams</span>: [<span class="string"><span class="delimiter">'</span><span class="content">page</span><span class="delimiter">'</span></span>, <span class="string"><span class="delimiter">'</span><span class="content">filter</span><span class="delimiter">'</span></span>, {
+    <span class="key">category</span>: <span class="string"><span class="delimiter">'</span><span class="content">articles_category</span><span class="delimiter">'</span></span>
+  }],
+  <span class="key">category</span>: <span class="predefined-constant">null</span>,
+  <span class="key">page</span>: <span class="integer">1</span>,
+  <span class="key">filter</span>: <span class="string"><span class="delimiter">'</span><span class="content">recent</span><span class="delimiter">'</span></span>
+});
+</pre></td>
+</tr></table>
+</div></div><h3 class='anchorable-toc' id='toc_default-values-and-deserialization'>Default values and deserialization</h3>
+<p>In the following example,
+the controller query param property <code>page</code> is considered to have a default value of <code>1</code>.</p>
+<div class="highlight javascript "><div class="ribbon"></div><div class="scroller"><table class="CodeRay">
+  <thead>
+    <tr>
+      <td colspan="2">app/controllers/articles.js</td>
+    </tr>
+  </thead>
+<tr>
+  <td class="line-numbers"><pre>1
+2
+3
+4
+5
+6
+</pre></td>
+  <td class="code"><pre><span class="reserved">import</span> Ember from <span class="string"><span class="delimiter">'</span><span class="content">ember</span><span class="delimiter">'</span></span>;
+
+<span class="reserved">export</span> <span class="keyword">default</span> Ember.Controller.extend({
+  <span class="key">queryParams</span>: <span class="string"><span class="delimiter">'</span><span class="content">page</span><span class="delimiter">'</span></span>,
+  <span class="key">page</span>: <span class="integer">1</span>
+});
+</pre></td>
+</tr></table>
+</div></div>
+<p>This affects query param behavior in two ways:</p>
+
+<ol>
+<li>Query param values are cast to the same datatype as the default
+value, e.g. a URL change from <code>/?page=3</code> to <code>/?page=2</code> will set
+<code>controller:articles</code>&#39;s <code>page</code> property to the number <code>2</code>, rather than
+the string <code>&quot;2&quot;</code>. The same also applies to boolean default values. If the
+default value is an array, the string will be parsed using <code>JSON.parse</code>.</li>
+<li>When a controller&#39;s query param property is currently set to its
+default value, this value won&#39;t be serialized into the URL. So in the
+above example, if <code>page</code> is <code>1</code>, the URL might look like <code>/articles</code>,
+but once someone sets the controller&#39;s <code>page</code> value to <code>2</code>, the URL
+will become <code>/articles?page=2</code>.</li>
+</ol>
+<h3 class='anchorable-toc' id='toc_sticky-query-param-values'>Sticky Query Param Values</h3>
+<p>By default, query param values in Ember are &quot;sticky&quot;,
+in that if you make changes to a query param and then leave and re-enter the route,
+the new value of that query param will be preserved (rather than reset to its default).
+This is a particularly handy default for preserving sort/filter parameters as you navigate back and forth between routes.</p>
+
+<p>Furthermore, these sticky query param values are remembered/restored according to the model loaded into the route.
+So, given a <code>team</code> route with dynamic segment <code>/:team_name</code> and controller query param &quot;filter&quot;,
+if you navigate to <code>/badgers</code> and filter by <code>&quot;rookies&quot;</code>,
+then navigate to <code>/bears</code> and filter by <code>&quot;best&quot;</code>,
+and then navigate to <code>/potatoes</code> and filter by <code>&quot;worst&quot;</code>,
+then given the following nav bar links:</p>
+<div class="highlight handlebars "><div class="ribbon"></div><div class="scroller"><table class="CodeRay"><tr>
+  <td class="line-numbers"><pre>1
+2
+3
+</pre></td>
+  <td class="code"><pre><span class="inline"><span class="inline-delimiter">{{#</span><span class="attribute-name">link-to</span> <span class="error">&quot;</span><span class="attribute-name">team</span><span class="error">&quot;</span> <span class="error">&quot;</span><span class="attribute-name">badgers</span><span class="error">&quot;</span><span class="inline-delimiter">}}</span></span>Badgers<span class="inline"><span class="inline-delimiter">{{/</span><span class="attribute-name">link-to</span><span class="inline-delimiter">}}</span></span>
+<span class="inline"><span class="inline-delimiter">{{#</span><span class="attribute-name">link-to</span> <span class="error">&quot;</span><span class="attribute-name">team</span><span class="error">&quot;</span> <span class="error">&quot;</span><span class="attribute-name">bears</span><span class="error">&quot;</span><span class="inline-delimiter">}}</span></span>Bears<span class="inline"><span class="inline-delimiter">{{/</span><span class="attribute-name">link-to</span><span class="inline-delimiter">}}</span></span>
+<span class="inline"><span class="inline-delimiter">{{#</span><span class="attribute-name">link-to</span> <span class="error">&quot;</span><span class="attribute-name">team</span><span class="error">&quot;</span> <span class="error">&quot;</span><span class="attribute-name">potatoes</span><span class="error">&quot;</span><span class="inline-delimiter">}}</span></span>Potatoes<span class="inline"><span class="inline-delimiter">{{/</span><span class="attribute-name">link-to</span><span class="inline-delimiter">}}</span></span>
+</pre></td>
+</tr></table>
+</div></div>
+<p>the generated links would be:</p>
+<div class="highlight html "><div class="ribbon"></div><div class="scroller"><table class="CodeRay"><tr>
+  <td class="line-numbers"><pre>1
+2
+3
+</pre></td>
+  <td class="code"><pre><span class="tag">&lt;a</span> <span class="attribute-name">href</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">/badgers?filter=rookies</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>Badgers<span class="tag">&lt;/a&gt;</span>
+<span class="tag">&lt;a</span> <span class="attribute-name">href</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">/bears?filter=best</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>Bears<span class="tag">&lt;/a&gt;</span>
+<span class="tag">&lt;a</span> <span class="attribute-name">href</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">/potatoes?filter=worst</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>Potatoes<span class="tag">&lt;/a&gt;</span>
+</pre></td>
+</tr></table>
+</div></div>
+<p>This illustrates that once you change a query param,
+it is stored and tied to the model loaded into the route.</p>
+
+<p>If you wish to reset a query param, you have two options:</p>
+
+<ol>
+<li>explicitly pass in the default value for that query param into
+<code>link-to</code> or <code>transitionTo</code>.</li>
+<li>use the <code>Route.resetController</code> hook to set query param values back to
+their defaults before exiting the route or changing the route&#39;s model.</li>
+</ol>
+
+<p>In the following example, the controller&#39;s <code>page</code> query param is reset to 1,
+<em>while still scoped to the pre-transition <code>ArticlesRoute</code> model</em>.
+The result of this is that all links pointing back into the exited route will use the newly reset value <code>1</code> as the value for the <code>page</code> query param.</p>
+<div class="highlight javascript "><div class="ribbon"></div><div class="scroller"><table class="CodeRay">
+  <thead>
+    <tr>
+      <td colspan="2">app/routes/articles.js</td>
+    </tr>
+  </thead>
+<tr>
+  <td class="line-numbers"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+<strong>10</strong>
+</pre></td>
+  <td class="code"><pre><span class="reserved">import</span> Ember from <span class="string"><span class="delimiter">'</span><span class="content">ember</span><span class="delimiter">'</span></span>;
+
+<span class="reserved">export</span> <span class="keyword">default</span> Ember.Route.extend({
+  resetController(controller, isExiting, transition) {
+    <span class="keyword">if</span> (isExiting) {
+      <span class="comment">// isExiting would be false if only the route's model was changing</span>
+      controller.set(<span class="string"><span class="delimiter">'</span><span class="content">page</span><span class="delimiter">'</span></span>, <span class="integer">1</span>);
+    }
+  }
+});
+</pre></td>
+</tr></table>
+</div></div>
+<p>In some cases, you might not want the sticky query param value to be
+scoped to the route&#39;s model but would rather reuse a query param&#39;s value
+even as a route&#39;s model changes. This can be accomplished by setting the
+<code>scope</code> option to <code>&quot;controller&quot;</code> within the controller&#39;s <code>queryParams</code>
+config hash:</p>
+<div class="highlight javascript "><div class="ribbon"></div><div class="scroller"><table class="CodeRay">
+  <thead>
+    <tr>
+      <td colspan="2">app/controllers/articles.js</td>
+    </tr>
+  </thead>
+<tr>
+  <td class="line-numbers"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+</pre></td>
+  <td class="code"><pre><span class="reserved">import</span> Ember from <span class="string"><span class="delimiter">'</span><span class="content">ember</span><span class="delimiter">'</span></span>;
+
+<span class="reserved">export</span> <span class="keyword">default</span> Ember.Controller.extend({
+  <span class="key">queryParams</span>: [{
+    <span class="key">showMagnifyingGlass</span>: {
+      <span class="key">scope</span>: <span class="string"><span class="delimiter">'</span><span class="content">controller</span><span class="delimiter">'</span></span>
+    }
+  }]
+});
+</pre></td>
+</tr></table>
+</div></div>
+<p>The following demonstrates how you can override both the scope and the query param URL key of a single controller query param property:</p>
+<div class="highlight javascript "><div class="ribbon"></div><div class="scroller"><table class="CodeRay">
+  <thead>
+    <tr>
+      <td colspan="2">app/controllers/articles.js</td>
+    </tr>
+  </thead>
+<tr>
+  <td class="line-numbers"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+<strong>10</strong>
+11
+12
+</pre></td>
+  <td class="code"><pre><span class="reserved">import</span> Ember from <span class="string"><span class="delimiter">'</span><span class="content">ember</span><span class="delimiter">'</span></span>;
+
+<span class="reserved">export</span> <span class="keyword">default</span> Ember.Controller.extend({
+  <span class="key">queryParams</span>: [<span class="string"><span class="delimiter">'</span><span class="content">page</span><span class="delimiter">'</span></span>, <span class="string"><span class="delimiter">'</span><span class="content">filter</span><span class="delimiter">'</span></span>,
+    {
+      <span class="key">showMagnifyingGlass</span>: {
+        <span class="key">scope</span>: <span class="string"><span class="delimiter">'</span><span class="content">controller</span><span class="delimiter">'</span></span>,
+        <span class="key">as</span>: <span class="string"><span class="delimiter">'</span><span class="content">glass</span><span class="delimiter">'</span></span>
+      }
+    }
+  ]
+});
+</pre></td>
+</tr></table>
+</div></div>
+            </article>
+
+          </div>
+
+          <div class="footer">
+    <div class="container">
+
+      <div class="footer-statement">
+        <a href="https://ember-community-slackin.herokuapp.com/">Comunidade no Slack</a> &bull;
+        <a href="https://github.com/emberjs/ember.js">Github</a> &bull;
+        <a href="https://t.me/EmberBR">Telegram (Ember-BR)</a>
+      </div>
+
+      <div class="footer-statement footer-social">
+        <a href="http://twitter.com/emberjs"
+          title="Twitter">
+          <i class="icon-twitter"></i>
+        </a>
+        <a href="https://github.com/emberjs/ember.js"
+          title="GitHub">
+          <i class="icon-github"></i>
+        </a>
+        <a href="https://plus.google.com/communities/106387049790387471205"
+          title="Google+">
+          <i class="icon-gplus"></i>
+        </a>
+      </div>
+      <hr />
+      <div class="info">
+        <p>
+          Este site é parte de uma iniciativa da <b>Comunidade Brasileira Ember</b> e não tem nenhuma ligação direta com o projeto oficial. <br />
+          Ember é uma marca registrada da <a href="http://tilde.io">Tilde Inc.</a>.<br />
+          Para obter mais informações sobre licença de uso acesse <a href="http://emberjs.com/legal">Legal</a>.
+        </p>
+      </div>
+
+  </div>
+</div>
+
+
+          
+    </main>
+
+    <script type="text/javascript">
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-105665012-1', 'auto');
+    ga('send', 'pageview');
+</script>
+
+  </body>
+</html>

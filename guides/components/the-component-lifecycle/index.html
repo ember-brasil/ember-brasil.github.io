@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="theme-color" content="#e46652">
+
+    <title>Ember.js - Components: The Component Lifecycle</title>
+    <meta property="st:title" content="Components: The Component Lifecycle" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="../../../images/favicon.png" rel="icon" type="image/png" />
+    <!--[if lte IE 7 ]><link href="../../../stylesheets/fonts/fontello-ie7.css" rel="stylesheet" /><![endif]-->
+    <link href="../../../stylesheets/application.css" rel="stylesheet" />
+    <link href="//fonts.googleapis.com/css?family=Nunito:300,400,700" rel="stylesheet">
+    <!-- This TypeKit account is managed by @wifelette. Contact her with any issues. -->
+    <script src="https://use.typekit.net/stz3kpn.js"></script>
+    <script>try{Typekit.load({ async: true });}catch(e){}</script>
+
+    <link href="/blog/feed.xml" rel="alternate" type="application/atom+xml" title="Ember.js - Blog" />
+    
+  </head>
+
+  <body class="guides guides guides_components guides_components_the-component-lifecycle guides_components_the-component-lifecycle_index">
+
+    <!--[if lt IE 9]>
+      <script src="../../../javascripts/common-old-ie.js"></script>
+    <![endif]-->
+    <!--[if gte IE 9]><!-->
+      <script src="../../../javascripts/common-modern.js"></script>
+    <!--<![endif]-->
+
+    <main>
+      <header class="header">
+  <nav role="navigation" aria-label="main">
+    <ul class="header-nav">
+      <li class="header-logo">
+        <a href="/"><span class="visually-hidden">Ember homepage</span></a>
+      </li>
+      <li>
+        <a href="/">Home</a>
+      </li>
+      <li>
+        <a href="/guides/">Documentação</a>
+      </li>
+      <li>
+        <a href="/contribuidores/">Contribuidores</a>
+      </li>
+      <li>
+        <a href="/quem-usa-ember">Quem usa Ember?</a>
+      </li>
+      <li>
+        <a href="http://emberjs.com/api">Ember API</a>
+      </li>
+    </ul>
+  </nav>
+</header>
+
+
+      
+        <div class="content">
+            <aside class="sidebar">
+  <nav class='toc-container' aria-label='table of contents'><ol class='toc-level-0 selected'><li class='toc-level-0 '><a href="#">Começando</a><ol class='toc-level-1'><li class='toc-level-1 '><a href="../../getting-started/quick-start/">Começo rápido</a></li><li class='toc-level-1 '><a href="../../getting-started/">Instalando Ember</a></li><li class='toc-level-1 '><a href="../../getting-started/core-concepts/">Conceitos fundamentais</a></li></ol></li><li class='toc-level-0 '><a href="#">Tutorial</a><ol class='toc-level-1'><li class='toc-level-1 '><a href="../../tutorial/ember-cli/">Começando</a></li><li class='toc-level-1 '><a href="../../tutorial/acceptance-test/">Planejando seu aplicativo</a></li><li class='toc-level-1 '><a href="../../tutorial/routes-and-templates/">Routes e Templates</a></li><li class='toc-level-1 '><a href="../../tutorial/model-hook/">Model Hook</a></li><li class='toc-level-1 '><a href="../../tutorial/installing-addons/">Instalando Addons</a></li><li class='toc-level-1 '><a href="../../tutorial/simple-component/">Construindo um componente simples</a></li><li class='toc-level-1 '><a href="../../tutorial/hbs-helper/">Criando um Helper para Handlebars</a></li><li class='toc-level-1 '><a href="../../tutorial/ember-data/">Usando Ember Data</a></li><li class='toc-level-1 '><a href="../../tutorial/autocomplete-component/">Criando um componente complexo</a></li><li class='toc-level-1 '><a href="../../tutorial/service/">Services e Utils</a></li><li class='toc-level-1 '><a href="../../tutorial/subroutes/">Adicionando rotas aninhadas</a></li><li class='toc-level-1 '><a href="../../tutorial/deploying/">Publicando seu App</a></li></ol></li><li class='toc-level-0 '><a href="#">The Object Model</a><ol class='toc-level-1'><li class='toc-level-1 '><a href="../../object-model/">Objects in Ember</a></li><li class='toc-level-1 '><a href="../../object-model/classes-and-instances/">Classes and Instances</a></li><li class='toc-level-1 '><a href="../../object-model/reopening-classes-and-instances/">Reopening Classes and Instances</a></li><li class='toc-level-1 '><a href="../../object-model/computed-properties/">Computed Properties</a></li><li class='toc-level-1 '><a href="../../object-model/computed-properties-and-aggregate-data/">Computed Properties and Aggregate Data</a></li><li class='toc-level-1 '><a href="../../object-model/observers/">Observers</a></li><li class='toc-level-1 '><a href="../../object-model/bindings/">Bindings</a></li><li class='toc-level-1 '><a href="../../object-model/enumerables/">Enumerables</a></li></ol></li><li class='toc-level-0 '><a href="#">Routing</a><ol class='toc-level-1'><li class='toc-level-1 '><a href="../../routing/">Introduction</a></li><li class='toc-level-1 '><a href="../../routing/defining-your-routes/">Defining Your Routes</a></li><li class='toc-level-1 '><a href="../../routing/specifying-a-routes-model/">Specifying a Route's Model</a></li><li class='toc-level-1 '><a href="../../routing/rendering-a-template/">Rendering a Template</a></li><li class='toc-level-1 '><a href="../../routing/redirection/">Redirecting</a></li><li class='toc-level-1 '><a href="../../routing/preventing-and-retrying-transitions/">Preventing and Retrying Transitions</a></li><li class='toc-level-1 '><a href="../../routing/loading-and-error-substates/">Loading / Error Substates</a></li><li class='toc-level-1 '><a href="../../routing/query-params/">Query Parameters</a></li><li class='toc-level-1 '><a href="../../routing/asynchronous-routing/">Asynchronous Routing</a></li></ol></li><li class='toc-level-0 '><a href="#">Templates</a><ol class='toc-level-1'><li class='toc-level-1 '><a href="../../templates/handlebars-basics/">Handlebars Basics</a></li><li class='toc-level-1 '><a href="../../templates/built-in-helpers/">Built-in Helpers</a></li><li class='toc-level-1 '><a href="../../templates/conditionals/">Conditionals</a></li><li class='toc-level-1 '><a href="../../templates/displaying-a-list-of-items/">Displaying a List of Items</a></li><li class='toc-level-1 '><a href="../../templates/displaying-the-keys-in-an-object/">Displaying the Keys in an Object</a></li><li class='toc-level-1 '><a href="../../templates/binding-element-attributes/">Binding Element Attributes</a></li><li class='toc-level-1 '><a href="../../templates/links/">Links</a></li><li class='toc-level-1 '><a href="../../templates/actions/">Actions</a></li><li class='toc-level-1 '><a href="../../templates/input-helpers/">Input Helpers</a></li><li class='toc-level-1 '><a href="../../templates/development-helpers/">Development Helpers</a></li><li class='toc-level-1 '><a href="../../templates/writing-helpers/">Writing Helpers</a></li></ol></li><li class='toc-level-0 selected'><a href="#">Components</a><ol class='toc-level-1 selected'><li class='toc-level-1 '><a href="../defining-a-component/">Defining a Component</a></li><li class='toc-level-1 selected'><a href="./">The Component Lifecycle</a></li><li class='toc-level-1 '><a href="../passing-properties-to-a-component/">Passing Properties to a Component</a></li><li class='toc-level-1 '><a href="../wrapping-content-in-a-component/">Wrapping Content in a Component</a></li><li class='toc-level-1 '><a href="../customizing-a-components-element/">Customizing a Component's Element</a></li><li class='toc-level-1 '><a href="../block-params/">Using Block Params</a></li><li class='toc-level-1 '><a href="../handling-events/">Handling Events</a></li><li class='toc-level-1 '><a href="../triggering-changes-with-actions/">Triggering Changes with Actions</a></li></ol></li><li class='toc-level-0 '><a href="#">Controllers</a><ol class='toc-level-1'><li class='toc-level-1 '><a href="../../controllers/">Introdução</a></li></ol></li><li class='toc-level-0 '><a href="#">Models</a><ol class='toc-level-1'><li class='toc-level-1 '><a href="../../models/">Introduction</a></li><li class='toc-level-1 '><a href="../../models/defining-models/">Defining Models</a></li><li class='toc-level-1 '><a href="../../models/finding-records/">Finding Records</a></li><li class='toc-level-1 '><a href="../../models/creating-updating-and-deleting-records/">Creating, Updating and Deleting</a></li><li class='toc-level-1 '><a href="../../models/relationships/">Relationships</a></li><li class='toc-level-1 '><a href="../../models/pushing-records-into-the-store/">Pushing Records into the Store</a></li><li class='toc-level-1 '><a href="../../models/handling-metadata/">Handling Metadata</a></li><li class='toc-level-1 '><a href="../../models/customizing-adapters/">Customizing Adapters</a></li><li class='toc-level-1 '><a href="../../models/customizing-serializers/">Customizing Serializers</a></li></ol></li><li class='toc-level-0 '><a href="#">Application Concerns</a><ol class='toc-level-1'><li class='toc-level-1 '><a href="../../applications/applications-and-instances/">Applications and Instances</a></li><li class='toc-level-1 '><a href="../../applications/dependency-injection/">Dependency Injection</a></li><li class='toc-level-1 '><a href="../../applications/initializers/">Initializers</a></li><li class='toc-level-1 '><a href="../../applications/services/">Services</a></li><li class='toc-level-1 '><a href="../../applications/run-loop/">The Run Loop</a></li></ol></li><li class='toc-level-0 '><a href="#">Testing</a><ol class='toc-level-1'><li class='toc-level-1 '><a href="../../testing/">Introduction</a></li><li class='toc-level-1 '><a href="../../testing/acceptance/">Acceptance Tests</a></li><li class='toc-level-1 '><a href="../../testing/unit-testing-basics/">Unit Testing Basics</a></li><li class='toc-level-1 '><a href="../../testing/testing-components/">Testing Components</a></li><li class='toc-level-1 '><a href="../../testing/testing-helpers/">Testing Helpers</a></li><li class='toc-level-1 '><a href="../../testing/testing-controllers/">Testing Controllers</a></li><li class='toc-level-1 '><a href="../../testing/testing-routes/">Testing Routes</a></li><li class='toc-level-1 '><a href="../../testing/testing-models/">Testing Models</a></li></ol></li><li class='toc-level-0 '><a href="#">Ember Inspector</a><ol class='toc-level-1'><li class='toc-level-1 '><a href="../../ember-inspector/">Introduction</a></li><li class='toc-level-1 '><a href="../../ember-inspector/installation/">Installing the Inspector</a></li><li class='toc-level-1 '><a href="../../ember-inspector/object-inspector/">Object Inspector</a></li><li class='toc-level-1 '><a href="../../ember-inspector/view-tree/">The View Tree</a></li><li class='toc-level-1 '><a href="../../ember-inspector/routes/">Inspecting Routes</a></li><li class='toc-level-1 '><a href="../../ember-inspector/data/">Data Tab</a></li><li class='toc-level-1 '><a href="../../ember-inspector/deprecations/">Tackling Deprecations</a></li><li class='toc-level-1 '><a href="../../ember-inspector/info/">Library Info</a></li><li class='toc-level-1 '><a href="../../ember-inspector/promises/">Debugging Promises</a></li><li class='toc-level-1 '><a href="../../ember-inspector/container/">Inspecting Objects via the Container</a></li><li class='toc-level-1 '><a href="../../ember-inspector/render-performance/">Rendering Performance</a></li><li class='toc-level-1 '><a href="../../ember-inspector/troubleshooting/">Troubleshooting</a></li></ol></li><li class='toc-level-0 '><a href="#">Addons and Dependencies</a><ol class='toc-level-1'><li class='toc-level-1 '><a href="../../addons-and-dependencies/managing-dependencies/">Managing Dependencies</a></li></ol></li><li class='toc-level-0 '><a href="#">Configuring Ember.js</a><ol class='toc-level-1'><li class='toc-level-1 '><a href="../../configuring-ember/configuring-your-app/">Configuring Your App</a></li><li class='toc-level-1 '><a href="../../configuring-ember/configuring-ember-cli/">Configuring Ember CLI</a></li><li class='toc-level-1 '><a href="../../configuring-ember/handling-deprecations/">Handling Deprecations</a></li><li class='toc-level-1 '><a href="../../configuring-ember/disabling-prototype-extensions/">Disabling Prototype Extensions</a></li><li class='toc-level-1 '><a href="../../configuring-ember/specifying-url-type/">Specifying the URL Type</a></li><li class='toc-level-1 '><a href="../../configuring-ember/embedding-applications/">Embedding Applications</a></li><li class='toc-level-1 '><a href="../../configuring-ember/feature-flags/">Feature Flags</a></li><li class='toc-level-1 '><a href="../../configuring-ember/build-targets/">Build targets</a></li><li class='toc-level-1 '><a href="../../configuring-ember/debugging/">Debugging</a></li></ol></li><li class='toc-level-0 '><a href="#">Contributing to Ember.js</a><ol class='toc-level-1'><li class='toc-level-1 '><a href="../../contributing/adding-new-features/">Adding New Features</a></li><li class='toc-level-1 '><a href="../../contributing/repositories/">Repositories</a></li></ol></li><li class='toc-level-0 '><a href="#">Glossário</a><ol class='toc-level-1'><li class='toc-level-1 '><a href="../../glossary/web-development/">Desenvolvimento WEB</a></li></ol></li></ol></nav>
+</aside>
+
+            <article>
+              <h1>
+                The Component Lifecycle
+                <a href="https://github.com/ember-brasil/website/edit/master/source/guides/components/the-component-lifecycle.md"
+                   target="_blank" class="edit-page icon-pencil">Melhorar esta página</a>
+              </h1>
+              <hr>
+
+              <p>Part of what makes components so useful is that they let you take complete control of a section of the DOM.
+This allows for direct DOM manipulation, listening and responding to browser events, and using 3rd party JavaScript libraries in your Ember app.</p>
+
+<p>As components are rendered, re-rendered and finally removed, Ember provides <em>lifecycle hooks</em> that allow you to run code at specific times in a component&#39;s life.</p>
+
+<p>To get the most use out of a component, it is important to understand these lifecycle methods.</p>
+<h2 class='anchorable-toc' id='toc_order-of-lifecycle-hooks-called'>Order of Lifecycle Hooks Called</h2>
+<p>Listed below are the component lifecycle hooks in order of execution according to render scenario.</p>
+<h3 class='anchorable-toc' id='toc_on-initial-render'>On Initial Render</h3>
+<ol>
+<li><code>init</code></li>
+<li><a href="#toc_formatting-component-attributes-with-code-didreceiveattrs-code"><code>didReceiveAttrs</code></a></li>
+<li><code>willRender</code></li>
+<li><a href="#toc_integrating-with-third-party-libraries-with-code-didinsertelement-code"><code>didInsertElement</code></a></li>
+<li><a href="#toc_making-updates-to-the-rendered-dom-with-code-didrender-code"><code>didRender</code></a></li>
+</ol>
+<h3 class='anchorable-toc' id='toc_on-re-render'>On Re-Render</h3>
+<ol>
+<li><a href="#toc_resetting-presentation-state-on-attribute-change-with-code-didupdateattrs-code"><code>didUpdateAttrs</code></a></li>
+<li><a href="#toc_formatting-component-attributes-with-code-didreceiveattrs-code"><code>didReceiveAttrs</code></a></li>
+<li><code>willUpdate</code></li>
+<li><code>willRender</code></li>
+<li><code>didUpdate</code></li>
+<li><a href="#toc_making-updates-to-the-rendered-dom-with-code-didrender-code"><code>didRender</code></a></li>
+</ol>
+<h3 class='anchorable-toc' id='toc_on-component-destroy'>On Component Destroy</h3>
+<ol>
+<li><a href="#toc_detaching-and-tearing-down-component-elements-with-code-willdestroyelement-code"><code>willDestroyElement</code></a></li>
+<li><code>willClearRender</code></li>
+<li><code>didDestroyElement</code></li>
+</ol>
+<h2 class='anchorable-toc' id='toc_lifecycle-hook-examples'>Lifecycle Hook Examples</h2>
+<p>Below are some samples of ways to use lifecycle hooks within your components.</p>
+<h3 class='anchorable-toc' id='toc_resetting-presentation-state-on-attribute-change-with-code-didupdateattrs-code'>Resetting Presentation State on Attribute Change with <code>didUpdateAttrs</code></h3>
+<p><code>didUpdateAttrs</code> runs when the attributes of a component have changed, but not when the component is re-rendered, via <code>component.rerender</code>,
+<code>component.set</code>, or changes in models or services used by the template.</p>
+
+<p>Since <code>didUpdateAttrs</code> is called prior to rerender, you can use this hook to execute code when specific attributes are changed.
+This hook can be an effective alternative to an observer, as it will run prior to a re-render, but after an attribute has changed.</p>
+
+<p>An example of this scenario in action is a profile editor component.  As you are editing one user, and the user attribute is changed,
+you can use <code>didUpdateAttrs</code> to clear any error state that was built up from editing the previous user.</p>
+<div class="highlight handlebars "><div class="ribbon"></div><div class="scroller"><table class="CodeRay">
+  <thead>
+    <tr>
+      <td colspan="2">app/templates/components/profile-editor.hbs</td>
+    </tr>
+  </thead>
+<tr>
+  <td class="line-numbers"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+<strong>10</strong>
+</pre></td>
+  <td class="code"><pre><span class="tag">&lt;ul</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">errors</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+  <span class="inline"><span class="inline-delimiter">{{#</span><span class="attribute-name">each</span> <span class="attribute-name">errors</span> <span class="attribute-name">as</span> <span class="error">|</span><span class="attribute-name">error</span><span class="error">|</span><span class="inline-delimiter">}}</span></span>
+    <span class="tag">&lt;li&gt;</span><span class="inline"><span class="inline-delimiter">{{</span><span class="attribute-name">error.message</span><span class="inline-delimiter">}}</span></span><span class="tag">&lt;/li&gt;</span>
+  <span class="inline"><span class="inline-delimiter">{{/</span><span class="attribute-name">each</span><span class="inline-delimiter">}}</span></span>
+<span class="tag">&lt;/ul&gt;</span>
+<span class="tag">&lt;fieldset&gt;</span>
+  <span class="inline"><span class="inline-delimiter">{{</span><span class="attribute-name">input</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">user.name</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">value</span>=<span class="attribute-value">name</span> <span class="attribute-name">change</span>=<span class="error">(</span><span class="attribute-value">action</span> <span class="error">&quot;</span><span class="attribute-name">required</span><span class="error">&quot;</span><span class="error">)</span><span class="inline-delimiter">}}</span></span>
+  <span class="inline"><span class="inline-delimiter">{{</span><span class="attribute-name">input</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">user.department</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">value</span>=<span class="attribute-value">department</span> <span class="attribute-name">change</span>=<span class="error">(</span><span class="attribute-value">action</span> <span class="error">&quot;</span><span class="attribute-name">required</span><span class="error">&quot;</span><span class="error">)</span><span class="inline-delimiter">}}</span></span>
+  <span class="inline"><span class="inline-delimiter">{{</span><span class="attribute-name">input</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">user.email</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">value</span>=<span class="attribute-value">email</span> <span class="attribute-name">change</span>=<span class="error">(</span><span class="attribute-value">action</span> <span class="error">&quot;</span><span class="attribute-name">required</span><span class="error">&quot;</span><span class="error">)</span><span class="inline-delimiter">}}</span></span>
+<span class="tag">&lt;/fieldset&gt;</span>
+</pre></td>
+</tr></table>
+</div></div><div class="highlight javascript "><div class="ribbon"></div><div class="scroller"><table class="CodeRay">
+  <thead>
+    <tr>
+      <td colspan="2">/app/components/profile-editor.js</td>
+    </tr>
+  </thead>
+<tr>
+  <td class="line-numbers"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+<strong>10</strong>
+11
+12
+13
+14
+15
+16
+17
+18
+19
+<strong>20</strong>
+21
+</pre></td>
+  <td class="code"><pre><span class="reserved">import</span> Ember from <span class="string"><span class="delimiter">'</span><span class="content">ember</span><span class="delimiter">'</span></span>;
+
+<span class="reserved">export</span> <span class="keyword">default</span> Ember.Component.extend({
+  init() {
+    <span class="local-variable">this</span>._super(...<span class="local-variable">arguments</span>);
+    <span class="local-variable">this</span>.errors = [];
+  },
+
+  didUpdateAttrs() {
+    <span class="local-variable">this</span>._super(...<span class="local-variable">arguments</span>);
+    <span class="local-variable">this</span>.set(<span class="string"><span class="delimiter">'</span><span class="content">errors</span><span class="delimiter">'</span></span>, []);
+  },
+
+  <span class="key">actions</span>: {
+    required(event) {
+      <span class="keyword">if</span> (!event.target.value) {
+        <span class="local-variable">this</span>.get(<span class="string"><span class="delimiter">'</span><span class="content">errors</span><span class="delimiter">'</span></span>).pushObject({ <span class="key">message</span>: <span class="error">`</span><span class="predefined">$</span>{event.target.name} is required<span class="error">`</span>});
+      }
+    }
+  }
+});
+</pre></td>
+</tr></table>
+</div></div><h3 class='anchorable-toc' id='toc_formatting-component-attributes-with-code-didreceiveattrs-code'>Formatting Component Attributes with <code>didReceiveAttrs</code></h3>
+<p><code>didReceiveAttrs</code> runs after <code>init</code>, and it also runs on subsequent re-renders, which is useful for logic that is the same on all renders.
+It does not run when the re-render has been initiated internally.</p>
+
+<p>Since the <code>didReceiveAttrs</code> hook is called every time a component&#39;s attributes are updated whether on render or re-render,
+you can use the hook to effectively act as an observer, ensuring code is executed every time an attribute changes.</p>
+
+<p>For example, if you have a component that renders based on a json configuration, but you want to provide your component with the option of taking the config as a string,
+you can leverage <code>didReceiveAttrs</code> to ensure the incoming config is always parsed.</p>
+<div class="highlight javascript "><div class="ribbon"></div><div class="scroller"><table class="CodeRay">
+  <thead>
+    <tr>
+      <td colspan="2">app/components/profile-editor.js</td>
+    </tr>
+  </thead>
+<tr>
+  <td class="line-numbers"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+<strong>10</strong>
+11
+12
+13
+</pre></td>
+  <td class="code"><pre><span class="reserved">import</span> Ember from <span class="string"><span class="delimiter">'</span><span class="content">ember</span><span class="delimiter">'</span></span>;
+
+<span class="reserved">export</span> <span class="keyword">default</span> Ember.Component.extend({
+  didReceiveAttrs() {
+    <span class="local-variable">this</span>._super(...<span class="local-variable">arguments</span>);
+    const profile = <span class="local-variable">this</span>.get(<span class="string"><span class="delimiter">'</span><span class="content">data</span><span class="delimiter">'</span></span>);
+    <span class="keyword">if</span> (<span class="keyword">typeof</span> profile === <span class="string"><span class="delimiter">'</span><span class="content">string</span><span class="delimiter">'</span></span>) {
+      <span class="local-variable">this</span>.set(<span class="string"><span class="delimiter">'</span><span class="content">profile</span><span class="delimiter">'</span></span>, JSON.parse(profile));
+    } <span class="keyword">else</span> {
+      <span class="local-variable">this</span>.set(<span class="string"><span class="delimiter">'</span><span class="content">profile</span><span class="delimiter">'</span></span>, profile);
+    }
+  }
+});
+</pre></td>
+</tr></table>
+</div></div><h3 class='anchorable-toc' id='toc_integrating-with-third-party-libraries-with-code-didinsertelement-code'>Integrating with Third-Party Libraries with <code>didInsertElement</code></h3>
+<p>Suppose you want to integrate your favorite date picker library into an Ember project.
+Typically, 3rd party JS/jQuery libraries require a DOM element to bind to.
+So, where is the best place to initialize and attach the library?</p>
+
+<p>After a component successfully renders its backing HTML element into the DOM, it will trigger its <a href="http://emberjs.com/api/classes/Ember.Component.html#event_didInsertElement"><code>didInsertElement()</code></a> hook.</p>
+
+<p>Ember guarantees that, by the time <code>didInsertElement()</code> is called:</p>
+
+<ol>
+<li>The component&#39;s element has been both created and inserted into the
+DOM.</li>
+<li>The component&#39;s element is accessible via the component&#39;s
+<a href="http://emberjs.com/api/classes/Ember.Component.html#method__"><code>$()</code></a>
+method.</li>
+</ol>
+
+<p>A component&#39;s <a href="http://emberjs.com/api/classes/Ember.Component.html#method__"><code>$()</code></a> method allows you to access the component&#39;s DOM element by returning a JQuery element.
+For example, you can set an attribute using jQuery&#39;s <code>attr()</code> method:</p>
+<div class="highlight javascript "><div class="ribbon"></div><div class="scroller"><table class="CodeRay">
+  <thead>
+    <tr>
+      <td colspan="2">app/components/profile-editor.js</td>
+    </tr>
+  </thead>
+<tr>
+  <td class="line-numbers"><pre>1
+2
+3
+4
+5
+6
+7
+8
+</pre></td>
+  <td class="code"><pre><span class="reserved">import</span> Ember from <span class="string"><span class="delimiter">'</span><span class="content">ember</span><span class="delimiter">'</span></span>;
+
+<span class="reserved">export</span> <span class="keyword">default</span> Ember.Component.extend({
+  didInsertElement() {
+    <span class="local-variable">this</span>._super(...<span class="local-variable">arguments</span>);
+    <span class="local-variable">this</span>.<span class="predefined">$</span>().attr(<span class="string"><span class="delimiter">'</span><span class="content">contenteditable</span><span class="delimiter">'</span></span>, <span class="predefined-constant">true</span>);
+  }
+});
+</pre></td>
+</tr></table>
+</div></div>
+<p><a href="http://emberjs.com/api/classes/Ember.Component.html#method__"><code>$()</code></a> will, by default, return a jQuery object for the component&#39;s root element, but you can also target child elements within the component&#39;s template by passing a selector:</p>
+<div class="highlight javascript "><div class="ribbon"></div><div class="scroller"><table class="CodeRay">
+  <thead>
+    <tr>
+      <td colspan="2">app/components/profile-editor.js</td>
+    </tr>
+  </thead>
+<tr>
+  <td class="line-numbers"><pre>1
+2
+3
+4
+5
+6
+7
+8
+</pre></td>
+  <td class="code"><pre><span class="reserved">import</span> Ember from <span class="string"><span class="delimiter">'</span><span class="content">ember</span><span class="delimiter">'</span></span>;
+
+<span class="reserved">export</span> <span class="keyword">default</span> Ember.Component.extend({
+  didInsertElement() {
+    <span class="local-variable">this</span>._super(...<span class="local-variable">arguments</span>);
+    <span class="local-variable">this</span>.<span class="predefined">$</span>(<span class="string"><span class="delimiter">'</span><span class="content">div p button</span><span class="delimiter">'</span></span>).addClass(<span class="string"><span class="delimiter">'</span><span class="content">enabled</span><span class="delimiter">'</span></span>);
+  }
+});
+</pre></td>
+</tr></table>
+</div></div>
+<p>Let&#39;s initialize our date picker by overriding the <a href="http://emberjs.com/api/classes/Ember.Component.html#event_didInsertElement"><code>didInsertElement()</code></a> method.</p>
+
+<p>Date picker libraries usually attach to an <code>&lt;input&gt;</code> element, so we will use jQuery to find an appropriate input within our component&#39;s template.</p>
+<div class="highlight javascript "><div class="ribbon"></div><div class="scroller"><table class="CodeRay">
+  <thead>
+    <tr>
+      <td colspan="2">app/components/profile-editor.js</td>
+    </tr>
+  </thead>
+<tr>
+  <td class="line-numbers"><pre>1
+2
+3
+4
+5
+6
+7
+8
+</pre></td>
+  <td class="code"><pre><span class="reserved">import</span> Ember from <span class="string"><span class="delimiter">'</span><span class="content">ember</span><span class="delimiter">'</span></span>;
+
+<span class="reserved">export</span> <span class="keyword">default</span> Ember.Component.extend({
+  didInsertElement() {
+    <span class="local-variable">this</span>._super(...<span class="local-variable">arguments</span>);
+    <span class="local-variable">this</span>.<span class="predefined">$</span>(<span class="string"><span class="delimiter">'</span><span class="content">input.date</span><span class="delimiter">'</span></span>).myDatePickerLib();
+  }
+});
+</pre></td>
+</tr></table>
+</div></div>
+<p><a href="http://emberjs.com/api/classes/Ember.Component.html#event_didInsertElement"><code>didInsertElement()</code></a> is also a good place to
+attach event listeners. This is particularly useful for custom events or
+other browser events which do not have a <a href="http://guides.emberjs.com/v2.1.0/components/handling-events/#toc_event-names">built-in event
+handler</a>.</p>
+
+<p>For example, perhaps you have some custom CSS animations trigger when the component
+is rendered and you want to handle some cleanup when it ends:</p>
+<div class="highlight javascript "><div class="ribbon"></div><div class="scroller"><table class="CodeRay">
+  <thead>
+    <tr>
+      <td colspan="2">app/components/profile-editor.js</td>
+    </tr>
+  </thead>
+<tr>
+  <td class="line-numbers"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+<strong>10</strong>
+</pre></td>
+  <td class="code"><pre><span class="reserved">import</span> Ember from <span class="string"><span class="delimiter">'</span><span class="content">ember</span><span class="delimiter">'</span></span>;
+
+<span class="reserved">export</span> <span class="keyword">default</span> Ember.Component.extend({
+  didInsertElement() {
+    <span class="local-variable">this</span>._super(...<span class="local-variable">arguments</span>);
+    <span class="local-variable">this</span>.<span class="predefined">$</span>().on(<span class="string"><span class="delimiter">'</span><span class="content">animationend</span><span class="delimiter">'</span></span>, () =&gt; {
+      <span class="predefined">$</span>(<span class="local-variable">this</span>).removeClass(<span class="string"><span class="delimiter">'</span><span class="content">sliding-anim</span><span class="delimiter">'</span></span>);
+    });
+  }
+});
+</pre></td>
+</tr></table>
+</div></div>
+<p>There are a few things to note about the <code>didInsertElement()</code> hook:</p>
+
+<ul>
+<li>It is only triggered once when the component element is first rendered.</li>
+<li>In cases where you have components nested inside other components, the child component will always receive the <code>didInsertElement()</code> call before its parent does.</li>
+<li>Setting properties on the component in <a href="http://emberjs.com/api/classes/Ember.Component.html#event_didInsertElement"><code>didInsertElement()</code></a> triggers a re-render, and  for performance reasons,
+is not allowed.</li>
+<li>While <a href="http://emberjs.com/api/classes/Ember.Component.html#event_didInsertElement"><code>didInsertElement()</code></a> is technically an event that can be listened for using <a href="http://emberjs.com/api/classes/Ember.Component.html#method_on"><code>on()</code></a>, it is encouraged to override the default method itself,
+particularly when order of execution is important.</li>
+</ul>
+<h3 class='anchorable-toc' id='toc_making-updates-to-the-rendered-dom-with-code-didrender-code'>Making Updates to the Rendered DOM with <code>didRender</code></h3>
+<p>The <code>didRender</code> hook is called during both render and re-render after the template has rendered and the DOM updated.
+You can leverage this hook to perform post-processing on the DOM of a component after it&#39;s been updated.</p>
+
+<p>In this example, there is a list component that needs to scroll to a selected item when rendered.
+Since scrolling to a specific spot is based on positions within the DOM, we need to ensure that the list has been rendered before scrolling.
+We can first render this list, and then set the scroll.</p>
+
+<p>The component below takes a list of items and displays them on the screen.
+Additionally, it takes an object representing which item is selected and will select and set the scroll top to that item.</p>
+<div class="highlight handlebars "><div class="ribbon"></div><div class="scroller"><table class="CodeRay">
+  <thead>
+    <tr>
+      <td colspan="2">app/templates/application.hbs</td>
+    </tr>
+  </thead>
+<tr>
+  <td class="line-numbers"><pre>1
+</pre></td>
+  <td class="code"><pre><span class="inline"><span class="inline-delimiter">{{</span><span class="attribute-name">selected-item-list</span> <span class="attribute-name">items</span>=<span class="attribute-value">items</span> <span class="attribute-name">selectedItem</span>=<span class="attribute-value">selection</span><span class="inline-delimiter">}}</span></span>
+</pre></td>
+</tr></table>
+</div></div>
+<p>When rendered the component will iterate through the given list and apply a class to the one that is selected.</p>
+<div class="highlight handlebars "><div class="ribbon"></div><div class="scroller"><table class="CodeRay">
+  <thead>
+    <tr>
+      <td colspan="2">app/templates/components/selected-item-list.hbs</td>
+    </tr>
+  </thead>
+<tr>
+  <td class="line-numbers"><pre>1
+2
+3
+</pre></td>
+  <td class="code"><pre><span class="inline"><span class="inline-delimiter">{{#</span><span class="attribute-name">each</span> <span class="attribute-name">items</span> <span class="attribute-name">as</span> <span class="error">|</span><span class="attribute-name">item</span><span class="error">|</span><span class="inline-delimiter">}}</span></span>
+  <span class="tag">&lt;div</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">list-item </span></span><span class="inline"><span class="inline-delimiter">{{</span><span class="attribute-name">if</span> <span class="attribute-name">item.isSelected</span> <span class="error">'</span><span class="attribute-name">selected-item</span><span class="error">'</span><span class="inline-delimiter">}}</span></span><span class="string"><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span><span class="inline"><span class="inline-delimiter">{{</span><span class="attribute-name">item.label</span><span class="inline-delimiter">}}</span></span><span class="tag">&lt;/div&gt;</span>
+<span class="inline"><span class="inline-delimiter">{{/</span><span class="attribute-name">each</span><span class="inline-delimiter">}}</span></span>
+</pre></td>
+</tr></table>
+</div></div>
+<p>The scroll happens on <code>didRender</code>, where it will scroll the component&#39;s container to the element with the selected class name.</p>
+<div class="highlight javascript "><div class="ribbon"></div><div class="scroller"><table class="CodeRay">
+  <thead>
+    <tr>
+      <td colspan="2">app/components/selected-item-list.js</td>
+    </tr>
+  </thead>
+<tr>
+  <td class="line-numbers"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+<strong>10</strong>
+11
+12
+13
+14
+15
+16
+17
+18
+19
+<strong>20</strong>
+</pre></td>
+  <td class="code"><pre><span class="reserved">import</span> Ember from <span class="string"><span class="delimiter">'</span><span class="content">ember</span><span class="delimiter">'</span></span>;
+
+<span class="reserved">export</span> <span class="keyword">default</span> Ember.Component.extend({
+  <span class="key">classNames</span>: [<span class="string"><span class="delimiter">'</span><span class="content">item-list</span><span class="delimiter">'</span></span>],
+
+  didReceiveAttrs() {
+    <span class="local-variable">this</span>._super(...<span class="local-variable">arguments</span>);
+    <span class="local-variable">this</span>.set(<span class="string"><span class="delimiter">'</span><span class="content">items</span><span class="delimiter">'</span></span>, <span class="local-variable">this</span>.get(<span class="string"><span class="delimiter">'</span><span class="content">items</span><span class="delimiter">'</span></span>).map((item) =&gt; {
+      <span class="keyword">if</span> (item.id === <span class="local-variable">this</span>.get(<span class="string"><span class="delimiter">'</span><span class="content">selectedItem.id</span><span class="delimiter">'</span></span>)) {
+        item.isSelected = <span class="predefined-constant">true</span>;
+      }
+      <span class="keyword">return</span> item;
+    }));
+  },
+
+  didRender() {
+    <span class="local-variable">this</span>._super(...<span class="local-variable">arguments</span>);
+    <span class="local-variable">this</span>.<span class="predefined">$</span>(<span class="string"><span class="delimiter">'</span><span class="content">.item-list</span><span class="delimiter">'</span></span>).scrollTop(<span class="local-variable">this</span>.<span class="predefined">$</span>(<span class="string"><span class="delimiter">'</span><span class="content">.selected-item</span><span class="delimiter">'</span></span>).position.top);
+  }
+});
+</pre></td>
+</tr></table>
+</div></div><h3 class='anchorable-toc' id='toc_detaching-and-tearing-down-component-elements-with-code-willdestroyelement-code'>Detaching and Tearing Down Component Elements with <code>willDestroyElement</code></h3>
+<p>When a component detects that it is time to remove itself from the DOM, Ember will trigger the <a href="http://emberjs.com/api/classes/Ember.Component.html#event_willDestroyElement"><code>willDestroyElement()</code></a> method,
+allowing for any teardown logic to be performed.</p>
+
+<p>Component teardown can be triggered by a number of different conditions.
+For instance, the user may navigate to a different route, or a conditional Handlebars block surrounding your component may change:</p>
+<div class="highlight handlebars "><div class="ribbon"></div><div class="scroller"><table class="CodeRay">
+  <thead>
+    <tr>
+      <td colspan="2">app/templates/application.hbs</td>
+    </tr>
+  </thead>
+<tr>
+  <td class="line-numbers"><pre>1
+2
+3
+</pre></td>
+  <td class="code"><pre><span class="inline"><span class="inline-delimiter">{{#</span><span class="attribute-name">if</span> <span class="attribute-name">falseBool</span><span class="inline-delimiter">}}</span></span>
+  <span class="inline"><span class="inline-delimiter">{{</span><span class="attribute-name">my-component</span><span class="inline-delimiter">}}</span></span>
+<span class="inline"><span class="inline-delimiter">{{/</span><span class="attribute-name">if</span><span class="inline-delimiter">}}</span></span>
+</pre></td>
+</tr></table>
+</div></div>
+<p>Let&#39;s use this hook to cleanup our date picker and event listener from above:</p>
+<div class="highlight javascript "><div class="ribbon"></div><div class="scroller"><table class="CodeRay">
+  <thead>
+    <tr>
+      <td colspan="2">app/components/profile-editor.js</td>
+    </tr>
+  </thead>
+<tr>
+  <td class="line-numbers"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+</pre></td>
+  <td class="code"><pre><span class="reserved">import</span> Ember from <span class="string"><span class="delimiter">'</span><span class="content">ember</span><span class="delimiter">'</span></span>;
+
+<span class="reserved">export</span> <span class="keyword">default</span> Ember.Component.extend({
+  willDestroyElement() {
+    <span class="local-variable">this</span>.<span class="predefined">$</span>().off(<span class="string"><span class="delimiter">'</span><span class="content">animationend</span><span class="delimiter">'</span></span>);
+    <span class="local-variable">this</span>.<span class="predefined">$</span>(<span class="string"><span class="delimiter">'</span><span class="content">input.date</span><span class="delimiter">'</span></span>).myDatepickerLib().destroy();
+    <span class="local-variable">this</span>._super(...<span class="local-variable">arguments</span>);
+  }
+});
+</pre></td>
+</tr></table>
+</div></div>
+            </article>
+
+          </div>
+
+          <div class="footer">
+    <div class="container">
+
+      <div class="footer-statement">
+        <a href="https://ember-community-slackin.herokuapp.com/">Comunidade no Slack</a> &bull;
+        <a href="https://github.com/emberjs/ember.js">Github</a> &bull;
+        <a href="https://t.me/EmberBR">Telegram (Ember-BR)</a>
+      </div>
+
+      <div class="footer-statement footer-social">
+        <a href="http://twitter.com/emberjs"
+          title="Twitter">
+          <i class="icon-twitter"></i>
+        </a>
+        <a href="https://github.com/emberjs/ember.js"
+          title="GitHub">
+          <i class="icon-github"></i>
+        </a>
+        <a href="https://plus.google.com/communities/106387049790387471205"
+          title="Google+">
+          <i class="icon-gplus"></i>
+        </a>
+      </div>
+      <hr />
+      <div class="info">
+        <p>
+          Este site é parte de uma iniciativa da <b>Comunidade Brasileira Ember</b> e não tem nenhuma ligação direta com o projeto oficial. <br />
+          Ember é uma marca registrada da <a href="http://tilde.io">Tilde Inc.</a>.<br />
+          Para obter mais informações sobre licença de uso acesse <a href="http://emberjs.com/legal">Legal</a>.
+        </p>
+      </div>
+
+  </div>
+</div>
+
+
+          
+    </main>
+
+    <script type="text/javascript">
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-105665012-1', 'auto');
+    ga('send', 'pageview');
+</script>
+
+  </body>
+</html>

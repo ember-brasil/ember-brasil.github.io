@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="theme-color" content="#e46652">
+
+    <title>Ember.js - Tutorial: Services e Utils</title>
+    <meta property="st:title" content="Tutorial: Services e Utils" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="../../../images/favicon.png" rel="icon" type="image/png" />
+    <!--[if lte IE 7 ]><link href="../../../stylesheets/fonts/fontello-ie7.css" rel="stylesheet" /><![endif]-->
+    <link href="../../../stylesheets/application.css" rel="stylesheet" />
+    <link href="//fonts.googleapis.com/css?family=Nunito:300,400,700" rel="stylesheet">
+    <!-- This TypeKit account is managed by @wifelette. Contact her with any issues. -->
+    <script src="https://use.typekit.net/stz3kpn.js"></script>
+    <script>try{Typekit.load({ async: true });}catch(e){}</script>
+
+    <link href="/blog/feed.xml" rel="alternate" type="application/atom+xml" title="Ember.js - Blog" />
+    
+  </head>
+
+  <body class="guides guides guides_tutorial guides_tutorial_service guides_tutorial_service_index">
+
+    <!--[if lt IE 9]>
+      <script src="../../../javascripts/common-old-ie.js"></script>
+    <![endif]-->
+    <!--[if gte IE 9]><!-->
+      <script src="../../../javascripts/common-modern.js"></script>
+    <!--<![endif]-->
+
+    <main>
+      <header class="header">
+  <nav role="navigation" aria-label="main">
+    <ul class="header-nav">
+      <li class="header-logo">
+        <a href="/"><span class="visually-hidden">Ember homepage</span></a>
+      </li>
+      <li>
+        <a href="/">Home</a>
+      </li>
+      <li>
+        <a href="/guides/">Documentação</a>
+      </li>
+      <li>
+        <a href="/contribuidores/">Contribuidores</a>
+      </li>
+      <li>
+        <a href="/quem-usa-ember">Quem usa Ember?</a>
+      </li>
+      <li>
+        <a href="http://emberjs.com/api">Ember API</a>
+      </li>
+    </ul>
+  </nav>
+</header>
+
+
+      
+        <div class="content">
+            <aside class="sidebar">
+  <nav class='toc-container' aria-label='table of contents'><ol class='toc-level-0 selected'><li class='toc-level-0 '><a href="#">Começando</a><ol class='toc-level-1'><li class='toc-level-1 '><a href="../../getting-started/quick-start/">Começo rápido</a></li><li class='toc-level-1 '><a href="../../getting-started/">Instalando Ember</a></li><li class='toc-level-1 '><a href="../../getting-started/core-concepts/">Conceitos fundamentais</a></li></ol></li><li class='toc-level-0 selected'><a href="#">Tutorial</a><ol class='toc-level-1 selected'><li class='toc-level-1 '><a href="../ember-cli/">Começando</a></li><li class='toc-level-1 '><a href="../acceptance-test/">Planejando seu aplicativo</a></li><li class='toc-level-1 '><a href="../routes-and-templates/">Routes e Templates</a></li><li class='toc-level-1 '><a href="../model-hook/">Model Hook</a></li><li class='toc-level-1 '><a href="../installing-addons/">Instalando Addons</a></li><li class='toc-level-1 '><a href="../simple-component/">Construindo um componente simples</a></li><li class='toc-level-1 '><a href="../hbs-helper/">Criando um Helper para Handlebars</a></li><li class='toc-level-1 '><a href="../ember-data/">Usando Ember Data</a></li><li class='toc-level-1 '><a href="../autocomplete-component/">Criando um componente complexo</a></li><li class='toc-level-1 selected'><a href="./">Services e Utils</a></li><li class='toc-level-1 '><a href="../subroutes/">Adicionando rotas aninhadas</a></li><li class='toc-level-1 '><a href="../deploying/">Publicando seu App</a></li></ol></li><li class='toc-level-0 '><a href="#">The Object Model</a><ol class='toc-level-1'><li class='toc-level-1 '><a href="../../object-model/">Objects in Ember</a></li><li class='toc-level-1 '><a href="../../object-model/classes-and-instances/">Classes and Instances</a></li><li class='toc-level-1 '><a href="../../object-model/reopening-classes-and-instances/">Reopening Classes and Instances</a></li><li class='toc-level-1 '><a href="../../object-model/computed-properties/">Computed Properties</a></li><li class='toc-level-1 '><a href="../../object-model/computed-properties-and-aggregate-data/">Computed Properties and Aggregate Data</a></li><li class='toc-level-1 '><a href="../../object-model/observers/">Observers</a></li><li class='toc-level-1 '><a href="../../object-model/bindings/">Bindings</a></li><li class='toc-level-1 '><a href="../../object-model/enumerables/">Enumerables</a></li></ol></li><li class='toc-level-0 '><a href="#">Routing</a><ol class='toc-level-1'><li class='toc-level-1 '><a href="../../routing/">Introduction</a></li><li class='toc-level-1 '><a href="../../routing/defining-your-routes/">Defining Your Routes</a></li><li class='toc-level-1 '><a href="../../routing/specifying-a-routes-model/">Specifying a Route's Model</a></li><li class='toc-level-1 '><a href="../../routing/rendering-a-template/">Rendering a Template</a></li><li class='toc-level-1 '><a href="../../routing/redirection/">Redirecting</a></li><li class='toc-level-1 '><a href="../../routing/preventing-and-retrying-transitions/">Preventing and Retrying Transitions</a></li><li class='toc-level-1 '><a href="../../routing/loading-and-error-substates/">Loading / Error Substates</a></li><li class='toc-level-1 '><a href="../../routing/query-params/">Query Parameters</a></li><li class='toc-level-1 '><a href="../../routing/asynchronous-routing/">Asynchronous Routing</a></li></ol></li><li class='toc-level-0 '><a href="#">Templates</a><ol class='toc-level-1'><li class='toc-level-1 '><a href="../../templates/handlebars-basics/">Handlebars Basics</a></li><li class='toc-level-1 '><a href="../../templates/built-in-helpers/">Built-in Helpers</a></li><li class='toc-level-1 '><a href="../../templates/conditionals/">Conditionals</a></li><li class='toc-level-1 '><a href="../../templates/displaying-a-list-of-items/">Displaying a List of Items</a></li><li class='toc-level-1 '><a href="../../templates/displaying-the-keys-in-an-object/">Displaying the Keys in an Object</a></li><li class='toc-level-1 '><a href="../../templates/binding-element-attributes/">Binding Element Attributes</a></li><li class='toc-level-1 '><a href="../../templates/links/">Links</a></li><li class='toc-level-1 '><a href="../../templates/actions/">Actions</a></li><li class='toc-level-1 '><a href="../../templates/input-helpers/">Input Helpers</a></li><li class='toc-level-1 '><a href="../../templates/development-helpers/">Development Helpers</a></li><li class='toc-level-1 '><a href="../../templates/writing-helpers/">Writing Helpers</a></li></ol></li><li class='toc-level-0 '><a href="#">Components</a><ol class='toc-level-1'><li class='toc-level-1 '><a href="../../components/defining-a-component/">Defining a Component</a></li><li class='toc-level-1 '><a href="../../components/the-component-lifecycle/">The Component Lifecycle</a></li><li class='toc-level-1 '><a href="../../components/passing-properties-to-a-component/">Passing Properties to a Component</a></li><li class='toc-level-1 '><a href="../../components/wrapping-content-in-a-component/">Wrapping Content in a Component</a></li><li class='toc-level-1 '><a href="../../components/customizing-a-components-element/">Customizing a Component's Element</a></li><li class='toc-level-1 '><a href="../../components/block-params/">Using Block Params</a></li><li class='toc-level-1 '><a href="../../components/handling-events/">Handling Events</a></li><li class='toc-level-1 '><a href="../../components/triggering-changes-with-actions/">Triggering Changes with Actions</a></li></ol></li><li class='toc-level-0 '><a href="#">Controllers</a><ol class='toc-level-1'><li class='toc-level-1 '><a href="../../controllers/">Introdução</a></li></ol></li><li class='toc-level-0 '><a href="#">Models</a><ol class='toc-level-1'><li class='toc-level-1 '><a href="../../models/">Introduction</a></li><li class='toc-level-1 '><a href="../../models/defining-models/">Defining Models</a></li><li class='toc-level-1 '><a href="../../models/finding-records/">Finding Records</a></li><li class='toc-level-1 '><a href="../../models/creating-updating-and-deleting-records/">Creating, Updating and Deleting</a></li><li class='toc-level-1 '><a href="../../models/relationships/">Relationships</a></li><li class='toc-level-1 '><a href="../../models/pushing-records-into-the-store/">Pushing Records into the Store</a></li><li class='toc-level-1 '><a href="../../models/handling-metadata/">Handling Metadata</a></li><li class='toc-level-1 '><a href="../../models/customizing-adapters/">Customizing Adapters</a></li><li class='toc-level-1 '><a href="../../models/customizing-serializers/">Customizing Serializers</a></li></ol></li><li class='toc-level-0 '><a href="#">Application Concerns</a><ol class='toc-level-1'><li class='toc-level-1 '><a href="../../applications/applications-and-instances/">Applications and Instances</a></li><li class='toc-level-1 '><a href="../../applications/dependency-injection/">Dependency Injection</a></li><li class='toc-level-1 '><a href="../../applications/initializers/">Initializers</a></li><li class='toc-level-1 '><a href="../../applications/services/">Services</a></li><li class='toc-level-1 '><a href="../../applications/run-loop/">The Run Loop</a></li></ol></li><li class='toc-level-0 '><a href="#">Testing</a><ol class='toc-level-1'><li class='toc-level-1 '><a href="../../testing/">Introduction</a></li><li class='toc-level-1 '><a href="../../testing/acceptance/">Acceptance Tests</a></li><li class='toc-level-1 '><a href="../../testing/unit-testing-basics/">Unit Testing Basics</a></li><li class='toc-level-1 '><a href="../../testing/testing-components/">Testing Components</a></li><li class='toc-level-1 '><a href="../../testing/testing-helpers/">Testing Helpers</a></li><li class='toc-level-1 '><a href="../../testing/testing-controllers/">Testing Controllers</a></li><li class='toc-level-1 '><a href="../../testing/testing-routes/">Testing Routes</a></li><li class='toc-level-1 '><a href="../../testing/testing-models/">Testing Models</a></li></ol></li><li class='toc-level-0 '><a href="#">Ember Inspector</a><ol class='toc-level-1'><li class='toc-level-1 '><a href="../../ember-inspector/">Introduction</a></li><li class='toc-level-1 '><a href="../../ember-inspector/installation/">Installing the Inspector</a></li><li class='toc-level-1 '><a href="../../ember-inspector/object-inspector/">Object Inspector</a></li><li class='toc-level-1 '><a href="../../ember-inspector/view-tree/">The View Tree</a></li><li class='toc-level-1 '><a href="../../ember-inspector/routes/">Inspecting Routes</a></li><li class='toc-level-1 '><a href="../../ember-inspector/data/">Data Tab</a></li><li class='toc-level-1 '><a href="../../ember-inspector/deprecations/">Tackling Deprecations</a></li><li class='toc-level-1 '><a href="../../ember-inspector/info/">Library Info</a></li><li class='toc-level-1 '><a href="../../ember-inspector/promises/">Debugging Promises</a></li><li class='toc-level-1 '><a href="../../ember-inspector/container/">Inspecting Objects via the Container</a></li><li class='toc-level-1 '><a href="../../ember-inspector/render-performance/">Rendering Performance</a></li><li class='toc-level-1 '><a href="../../ember-inspector/troubleshooting/">Troubleshooting</a></li></ol></li><li class='toc-level-0 '><a href="#">Addons and Dependencies</a><ol class='toc-level-1'><li class='toc-level-1 '><a href="../../addons-and-dependencies/managing-dependencies/">Managing Dependencies</a></li></ol></li><li class='toc-level-0 '><a href="#">Configuring Ember.js</a><ol class='toc-level-1'><li class='toc-level-1 '><a href="../../configuring-ember/configuring-your-app/">Configuring Your App</a></li><li class='toc-level-1 '><a href="../../configuring-ember/configuring-ember-cli/">Configuring Ember CLI</a></li><li class='toc-level-1 '><a href="../../configuring-ember/handling-deprecations/">Handling Deprecations</a></li><li class='toc-level-1 '><a href="../../configuring-ember/disabling-prototype-extensions/">Disabling Prototype Extensions</a></li><li class='toc-level-1 '><a href="../../configuring-ember/specifying-url-type/">Specifying the URL Type</a></li><li class='toc-level-1 '><a href="../../configuring-ember/embedding-applications/">Embedding Applications</a></li><li class='toc-level-1 '><a href="../../configuring-ember/feature-flags/">Feature Flags</a></li><li class='toc-level-1 '><a href="../../configuring-ember/build-targets/">Build targets</a></li><li class='toc-level-1 '><a href="../../configuring-ember/debugging/">Debugging</a></li></ol></li><li class='toc-level-0 '><a href="#">Contributing to Ember.js</a><ol class='toc-level-1'><li class='toc-level-1 '><a href="../../contributing/adding-new-features/">Adding New Features</a></li><li class='toc-level-1 '><a href="../../contributing/repositories/">Repositories</a></li></ol></li><li class='toc-level-0 '><a href="#">Glossário</a><ol class='toc-level-1'><li class='toc-level-1 '><a href="../../glossary/web-development/">Desenvolvimento WEB</a></li></ol></li></ol></nav>
+</aside>
+
+            <article>
+              <h1>
+                Services e Utils
+                <a href="https://github.com/ember-brasil/website/edit/master/source/guides/tutorial/service.md"
+                   target="_blank" class="edit-page icon-pencil">Melhorar esta página</a>
+              </h1>
+              <hr>
+
+              <p>For Super Rentals, we want to be able to display a map showing where each rental is.
+To implement this feature, we will take advantage of several Ember concepts:</p>
+
+<ol>
+<li>A utility function to create a map from the Google Maps API.</li>
+<li>A service to keep a cache of rendered maps to use in different places in the application.</li>
+<li>A component to display a map on each rental listing.</li>
+</ol>
+<h3 class='anchorable-toc' id='toc_making-google-maps-available'>Making Google Maps Available</h3>
+<p>Before implementing a map, we need to make a 3rd party map API available to our Ember app.
+There are several ways to include 3rd party libraries in Ember.
+See the guides section on <a href="../../addons-and-dependencies/managing-dependencies/">managing dependencies</a>
+as a starting point when you need to add one.</p>
+
+<p>The <a href="https://developers.google.com/maps/documentation/javascript/tutorial">Google Maps API</a> requires us to reference its library from a remote script.
+In this case we&#39;ll provide this script to our Ember app via an Addon called <code>ember-simple-google-maps</code>.</p>
+<div class="highlight shell "><div class="ribbon"></div><div class="scroller"><table class="CodeRay"><tr>
+  <td class="line-numbers"><pre>1
+</pre></td>
+  <td class="code"><pre>ember install ember-simple-google-maps
+</pre></td>
+</tr></table>
+</div></div>
+<p>Google Maps requires an API key for deployment.
+You can <a href="https://developers.google.com/maps/documentation/javascript/get-api-key">Generate an API key</a>
+from Google.
+Add your new API key to the application by stopping the server and restarting it with the environment variable, <code>GOOGLE_MAPS_API_KEY</code>.</p>
+<div class="highlight shell "><div class="ribbon"></div><div class="scroller"><table class="CodeRay"><tr>
+  <td class="line-numbers"><pre>1
+</pre></td>
+  <td class="code"><pre>GOOGLE_MAPS_API_KEY=&lt;your key here&gt; ember s
+</pre></td>
+</tr></table>
+</div></div><h3 class='anchorable-toc' id='toc_accessing-the-google-maps-api-with-a-utility'>Accessing the Google Maps API with a Utility</h3>
+<p>Ember utilities are reusable code that can be accessed from various parts of the application.
+For Super Rentals, we&#39;ll use a utility to access the Google Maps API.
+The utility will abstract the Google API away from our Maps service,
+which will allow for future reuse of the maps API within the application,
+easier refactoring to alternate maps implementations,
+and easier testing of code that depends on it.</p>
+
+<p>Now that we have the maps API available to the application, we can create our map utility.
+Utility files can be generated using Ember CLI.</p>
+<div class="highlight shell "><div class="ribbon"></div><div class="scroller"><table class="CodeRay"><tr>
+  <td class="line-numbers"><pre>1
+</pre></td>
+  <td class="code"><pre>ember g util google-maps
+</pre></td>
+</tr></table>
+</div></div>
+<p>The CLI <code>generate util</code> command will create a utility file and a unit test.
+We&#39;ll delete the unit test since we don&#39;t want to test Google code.</p>
+
+<p>Our app needs a single function, <code>createMap</code>,
+which makes use of <code>google.maps.Map</code> to create our map element,
+<code>google.maps.Geocoder</code> to lookup the coordinates of our location,
+and <code>google.maps.Marker</code> to pin our map based on the resolved location.</p>
+<div class="highlight javascript "><div class="ribbon"></div><div class="scroller"><table class="CodeRay">
+  <thead>
+    <tr>
+      <td colspan="2">app/utils/google-maps.js</td>
+    </tr>
+  </thead>
+<tr>
+  <td class="line-numbers"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+<strong>10</strong>
+11
+12
+13
+14
+15
+16
+17
+18
+19
+<strong>20</strong>
+21
+22
+23
+24
+25
+26
+27
+28
+</pre></td>
+  <td class="code"><pre><span class="reserved">import</span> Ember from <span class="string"><span class="delimiter">'</span><span class="content">ember</span><span class="delimiter">'</span></span>;
+
+const google = window.google;
+
+<span class="reserved">export</span> <span class="keyword">default</span> Ember.Object.extend({
+
+  init() {
+    <span class="local-variable">this</span>.set(<span class="string"><span class="delimiter">'</span><span class="content">geocoder</span><span class="delimiter">'</span></span>, <span class="keyword">new</span> google.maps.Geocoder());
+  },
+
+  createMap(element, location) {
+    let map = <span class="keyword">new</span> google.maps.Map(element, { <span class="key">scrollwheel</span>: <span class="predefined-constant">false</span>, <span class="key">zoom</span>: <span class="integer">10</span> });
+    <span class="local-variable">this</span>.pinLocation(location, map);
+    <span class="keyword">return</span> map;
+  },
+
+  pinLocation(location, map) {
+    <span class="local-variable">this</span>.get(<span class="string"><span class="delimiter">'</span><span class="content">geocoder</span><span class="delimiter">'</span></span>).geocode({<span class="key">address</span>: location}, (result, status) =&gt; {
+      <span class="keyword">if</span> (status === google.maps.GeocoderStatus.OK) {
+        let geometry = result[<span class="integer">0</span>].geometry.location;
+        let position = { <span class="key">lat</span>: geometry.lat(), <span class="key">lng</span>: geometry.lng() };
+        map.setCenter(position);
+        <span class="keyword">new</span> google.maps.Marker({ position, map, <span class="key">title</span>: location });
+      }
+    });
+  }
+
+});
+</pre></td>
+</tr></table>
+</div></div><h3 class='anchorable-toc' id='toc_fetching-maps-with-a-service'>Fetching Maps With a Service</h3>
+<p>Now that we are able to generate a map element,
+we will implement a maps service that will keep a reference to the Map object we create,
+and attach the map to an element in our application</p>
+
+<p>Accessing our maps API through a <a href="../../applications/services">service</a> will give us several benefits</p>
+
+<ul>
+<li>It is injected with a <a href="https://en.wikipedia.org/wiki/Service_locator_pattern">service locator</a>,
+meaning it will abstract the maps API from the code that uses it,
+allowing for easier refactoring and maintenance.</li>
+<li>It is lazy-loaded, meaning it won&#39;t be initialized until it is called the first time.
+In some cases this can reduce your app&#39;s processor load and memory consumption.</li>
+<li>It is a singleton, which means there is only one instance of the service object in browser.
+This will allow us to keep map data while the user navigates around the app,
+so that returning to a page doesn&#39;t require it to reload its maps.</li>
+</ul>
+
+<p>Let&#39;s get started creating our service by generating it through Ember CLI,
+which will create the service file, as well as a unit test for it.</p>
+<div class="highlight shell "><div class="ribbon"></div><div class="scroller"><table class="CodeRay"><tr>
+  <td class="line-numbers"><pre>1
+</pre></td>
+  <td class="code"><pre>ember g service maps
+</pre></td>
+</tr></table>
+</div></div>
+<p>Now implement the service as follows.
+Note that we check if a map already exists for the given location and use that one,
+otherwise we call a Google Maps utility to create one.</p>
+<div class="highlight javascript "><div class="ribbon"></div><div class="scroller"><table class="CodeRay">
+  <thead>
+    <tr>
+      <td colspan="2">app/services/maps.js</td>
+    </tr>
+  </thead>
+<tr>
+  <td class="line-numbers"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+<strong>10</strong>
+11
+12
+13
+14
+15
+16
+17
+18
+19
+<strong>20</strong>
+21
+22
+23
+24
+25
+26
+27
+28
+29
+<strong>30</strong>
+31
+32
+</pre></td>
+  <td class="code"><pre><span class="reserved">import</span> Ember from <span class="string"><span class="delimiter">'</span><span class="content">ember</span><span class="delimiter">'</span></span>;
+<span class="reserved">import</span> MapUtil from <span class="string"><span class="delimiter">'</span><span class="content">../utils/google-maps</span><span class="delimiter">'</span></span>;
+
+<span class="reserved">export</span> <span class="keyword">default</span> Ember.Service.extend({
+
+  init() {
+    <span class="keyword">if</span> (!<span class="local-variable">this</span>.get(<span class="string"><span class="delimiter">'</span><span class="content">cachedMaps</span><span class="delimiter">'</span></span>)) {
+      <span class="local-variable">this</span>.set(<span class="string"><span class="delimiter">'</span><span class="content">cachedMaps</span><span class="delimiter">'</span></span>, Ember.Object.create());
+    }
+    <span class="keyword">if</span> (!<span class="local-variable">this</span>.get(<span class="string"><span class="delimiter">'</span><span class="content">mapUtil</span><span class="delimiter">'</span></span>)) {
+      <span class="local-variable">this</span>.set(<span class="string"><span class="delimiter">'</span><span class="content">mapUtil</span><span class="delimiter">'</span></span>, MapUtil.create());
+    }
+  },
+
+  getMapElement(location) {
+    let camelizedLocation = location.camelize();
+    let element = <span class="local-variable">this</span>.get(<span class="error">`</span>cachedMaps.<span class="predefined">$</span>{camelizedLocation}<span class="error">`</span>);
+    <span class="keyword">if</span> (!element) {
+      element = <span class="local-variable">this</span>.createMapElement();
+      <span class="local-variable">this</span>.get(<span class="string"><span class="delimiter">'</span><span class="content">mapUtil</span><span class="delimiter">'</span></span>).createMap(element, location);
+      <span class="local-variable">this</span>.set(<span class="error">`</span>cachedMaps.<span class="predefined">$</span>{camelizedLocation}<span class="error">`</span>, element);
+    }
+    <span class="keyword">return</span> element;
+  },
+
+  createMapElement() {
+    let element = document.createElement(<span class="string"><span class="delimiter">'</span><span class="content">div</span><span class="delimiter">'</span></span>);
+    element.className = <span class="string"><span class="delimiter">'</span><span class="content">map</span><span class="delimiter">'</span></span>;
+    <span class="keyword">return</span> element;
+  }
+
+});
+</pre></td>
+</tr></table>
+</div></div><h3 class='anchorable-toc' id='toc_display-maps-with-a-component'>Display Maps With a Component</h3>
+<p>With a service and utility that render a map to a web page element,
+we&#39;ll connect it to our application using a component.</p>
+
+<p>Generate the map component using Ember CLI.</p>
+<div class="highlight shell "><div class="ribbon"></div><div class="scroller"><table class="CodeRay"><tr>
+  <td class="line-numbers"><pre>1
+</pre></td>
+  <td class="code"><pre>ember g component location-map
+</pre></td>
+</tr></table>
+</div></div>
+<p>Running this command generates three files: a component JavaScript file, a template, and a test file.</p>
+
+<p>Let&#39;s start by adding a <code>div</code> element to the component template.
+This <code>div</code> will act as a place for the 3rd party map API to render the map to.</p>
+<div class="highlight handlebars "><div class="ribbon"></div><div class="scroller"><table class="CodeRay">
+  <thead>
+    <tr>
+      <td colspan="2">app/templates/components/location-map.hbs</td>
+    </tr>
+  </thead>
+<tr>
+  <td class="line-numbers"><pre>1
+</pre></td>
+  <td class="code"><pre><span class="tag">&lt;div</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">map-container</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span><span class="tag">&lt;/div&gt;</span>
+</pre></td>
+</tr></table>
+</div></div>
+<p>Next, update the component to append the map output to the <code>div</code> element we created.</p>
+
+<p>We provide the maps service into our component by initializing a property of our component, called <code>maps</code>.
+Services are commonly made available in components and other Ember objects by <a href="../../applications/services/#toc_accessing-services">&quot;service injection&quot;</a>.
+When you initialize a property with <code>Ember.inject.service()</code>,
+Ember tries to set that property with a service matching its name.</p>
+
+<p>With our <code>maps</code> service, our component will call the <code>getMapElement</code> function with the provided location.
+We append the map element we get back from the service by implementing <code>didInsertElement</code>,
+which is a <a href="../../components/the-component-lifecycle/#toc_integrating-with-third-party-libraries-with-code-didinsertelement-code">component lifecycle hook</a>.
+This function runs during the component render, after the component&#39;s markup gets inserted into the page.</p>
+<div class="highlight javascript "><div class="ribbon"></div><div class="scroller"><table class="CodeRay">
+  <thead>
+    <tr>
+      <td colspan="2">app/components/location-map.js</td>
+    </tr>
+  </thead>
+<tr>
+  <td class="line-numbers"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+<strong>10</strong>
+11
+12
+</pre></td>
+  <td class="code"><pre><span class="reserved">import</span> Ember from <span class="string"><span class="delimiter">'</span><span class="content">ember</span><span class="delimiter">'</span></span>;
+
+<span class="reserved">export</span> <span class="keyword">default</span> Ember.Component.extend({
+  <span class="key">maps</span>: Ember.inject.service(),
+
+  didInsertElement() {
+    <span class="local-variable">this</span>._super(...<span class="local-variable">arguments</span>);
+    let location = <span class="local-variable">this</span>.get(<span class="string"><span class="delimiter">'</span><span class="content">location</span><span class="delimiter">'</span></span>);
+    let mapElement = <span class="local-variable">this</span>.get(<span class="string"><span class="delimiter">'</span><span class="content">maps</span><span class="delimiter">'</span></span>).getMapElement(location);
+    <span class="local-variable">this</span>.<span class="predefined">$</span>(<span class="string"><span class="delimiter">'</span><span class="content">.map-container</span><span class="delimiter">'</span></span>).append(mapElement);
+  }
+});
+</pre></td>
+</tr></table>
+</div></div>
+<p>You may have noticed that <code>this.get(&#39;location&#39;)</code> refers to a property location we haven&#39;t defined.
+This property will be passed in to the component by its parent template below.</p>
+
+<p>Finally open the template file for our <code>rental-listing</code> component and add the new <code>location-map</code> component.</p>
+<div class="highlight handlebars "><div class="ribbon"></div><div class="scroller"><?xml version="1.0"?>
+<table class="CodeRay">
+  <thead>
+    <tr>
+      <td colspan="2">app/templates/components/rental-listing.hbs</td>
+    </tr>
+  </thead>
+<tr>
+  <td class="line-numbers"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+<strong>10</strong>
+11
+12
+13
+14
+15
+16
+17
+18
+19
+<span class="highlight-line added"><strong>20</strong></span>
+21</pre></td>
+  <td class="code"><pre><span class="tag">&lt;article</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">"</span><span class="content">listing</span><span class="delimiter">"</span></span><span class="tag">&gt;</span>
+  <span class="tag">&lt;a</span> <span class="inline"><span class="inline-delimiter">{{</span><span class="attribute-name">action</span> <span class="error">'</span><span class="attribute-name">toggleImageSize</span><span class="error">'</span><span class="inline-delimiter">}}</span></span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">"</span><span class="content">image </span></span><span class="inline"><span class="inline-delimiter">{{</span><span class="attribute-name">if</span> <span class="attribute-name">isWide</span> <span class="error">"</span><span class="attribute-name">wide</span><span class="error">"</span><span class="inline-delimiter">}}</span></span><span class="string"><span class="delimiter">"</span></span><span class="tag">&gt;</span>
+    <span class="tag">&lt;img</span> <span class="attribute-name">src</span>=<span class="string"><span class="delimiter">"</span></span><span class="inline"><span class="inline-delimiter">{{</span><span class="attribute-name">rental.image</span><span class="inline-delimiter">}}</span></span><span class="string"><span class="delimiter">"</span></span> <span class="attribute-name">alt</span>=<span class="string"><span class="delimiter">"</span><span class="delimiter">"</span></span><span class="tag">&gt;</span>
+    <span class="tag">&lt;small&gt;</span>View Larger<span class="tag">&lt;/small&gt;</span>
+  <span class="tag">&lt;/a&gt;</span>
+  <span class="tag">&lt;h3&gt;</span><span class="inline"><span class="inline-delimiter">{{</span><span class="attribute-name">rental.title</span><span class="inline-delimiter">}}</span></span><span class="tag">&lt;/h3&gt;</span>
+  <span class="tag">&lt;div</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">"</span><span class="content">detail owner</span><span class="delimiter">"</span></span><span class="tag">&gt;</span>
+    <span class="tag">&lt;span&gt;</span>Owner:<span class="tag">&lt;/span&gt;</span> <span class="inline"><span class="inline-delimiter">{{</span><span class="attribute-name">rental.owner</span><span class="inline-delimiter">}}</span></span>
+  <span class="tag">&lt;/div&gt;</span>
+  <span class="tag">&lt;div</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">"</span><span class="content">detail type</span><span class="delimiter">"</span></span><span class="tag">&gt;</span>
+    <span class="tag">&lt;span&gt;</span>Type:<span class="tag">&lt;/span&gt;</span> <span class="inline"><span class="inline-delimiter">{{</span><span class="attribute-name">rental-property-type</span> <span class="attribute-name">rental.propertyType</span><span class="inline-delimiter">}}</span></span>
+      - <span class="inline"><span class="inline-delimiter">{{</span><span class="attribute-name">rental.propertyType</span><span class="inline-delimiter">}}</span></span>
+  <span class="tag">&lt;/div&gt;</span>
+  <span class="tag">&lt;div</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">"</span><span class="content">detail location</span><span class="delimiter">"</span></span><span class="tag">&gt;</span>
+    <span class="tag">&lt;span&gt;</span>Location:<span class="tag">&lt;/span&gt;</span> <span class="inline"><span class="inline-delimiter">{{</span><span class="attribute-name">rental.city</span><span class="inline-delimiter">}}</span></span>
+  <span class="tag">&lt;/div&gt;</span>
+  <span class="tag">&lt;div</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">"</span><span class="content">detail bedrooms</span><span class="delimiter">"</span></span><span class="tag">&gt;</span>
+    <span class="tag">&lt;span&gt;</span>Number of bedrooms:<span class="tag">&lt;/span&gt;</span> <span class="inline"><span class="inline-delimiter">{{</span><span class="attribute-name">rental.bedrooms</span><span class="inline-delimiter">}}</span></span>
+  <span class="tag">&lt;/div&gt;</span>
+<span class="highlight-line added">  <span class="inline"><span class="inline-delimiter">{{</span><span class="attribute-name">location-map</span> <span class="attribute-name">location</span>=<span class="attribute-value">rental.city</span><span class="inline-delimiter">}}</span></span></span>
+<span class="tag">&lt;/article&gt;</span></pre></td>
+</tr></table>
+</div></div>
+<p>After starting the server we should now see some end to end maps functionality show up on our front page!</p>
+
+<p><img src="../../images/service/style-super-rentals-maps.png" alt="super rentals homepage with maps"></p>
+
+<p>You may now either move onto the <a href="../subroutes/">next feature</a>, or continue here to test the maps feature we just added.</p>
+<h3 class='anchorable-toc' id='toc_unit-testing-a-service'>Unit testing a Service</h3>
+<p>We&#39;ll use a unit test to validate the service.
+Unit tests are more isolated than integration tests and acceptance tests,
+and are intended for testing specific logic within a class.</p>
+
+<p>For our service unit test, we&#39;ll want to verify that locations that have been previously loaded are fetched from cache, while new locations are created using the utility.
+We will isolate our tests from actually calling Google Maps by stubbing our map utility.
+On line 6 of <code>maps-test.js</code> below we create an Ember object to simulate the behavior of the utility, but instead of creating a google map, we return an empty JavaScript object.</p>
+
+<p>Unit tests use the function called <code>this.subject</code> to instantiate the object to test, and lets the test pass in initial values as arguments.
+In our case we are passing in our fake map utility object in the first test, and passing a cache object for the second test.</p>
+<div class="highlight javascript "><div class="ribbon"></div><div class="scroller"><table class="CodeRay">
+  <thead>
+    <tr>
+      <td colspan="2">tests/unit/services/maps-test.js</td>
+    </tr>
+  </thead>
+<tr>
+  <td class="line-numbers"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+<strong>10</strong>
+11
+12
+13
+14
+15
+16
+17
+18
+19
+<strong>20</strong>
+21
+22
+23
+24
+25
+26
+27
+28
+29
+<strong>30</strong>
+31
+32
+33
+</pre></td>
+  <td class="code"><pre><span class="reserved">import</span> { moduleFor, test } from <span class="string"><span class="delimiter">'</span><span class="content">ember-qunit</span><span class="delimiter">'</span></span>;
+<span class="reserved">import</span> Ember from <span class="string"><span class="delimiter">'</span><span class="content">ember</span><span class="delimiter">'</span></span>;
+
+const DUMMY_ELEMENT = {};
+
+let MapUtilStub = Ember.Object.extend({
+  createMap(element, location) {
+    <span class="local-variable">this</span>.assert.ok(element, <span class="string"><span class="delimiter">'</span><span class="content">createMap called with element</span><span class="delimiter">'</span></span>);
+    <span class="local-variable">this</span>.assert.ok(location, <span class="string"><span class="delimiter">'</span><span class="content">createMap called with location</span><span class="delimiter">'</span></span>);
+    <span class="keyword">return</span> DUMMY_ELEMENT;
+  }
+});
+
+moduleFor(<span class="string"><span class="delimiter">'</span><span class="content">service:maps</span><span class="delimiter">'</span></span>, <span class="string"><span class="delimiter">'</span><span class="content">Unit | Service | maps</span><span class="delimiter">'</span></span>);
+
+test(<span class="string"><span class="delimiter">'</span><span class="content">should create a new map if one isnt cached for location</span><span class="delimiter">'</span></span>, <span class="keyword">function</span> (assert) {
+  assert.expect(<span class="integer">4</span>);
+  let stubMapUtil = MapUtilStub.create({ assert });
+  let mapService = <span class="local-variable">this</span>.subject({ <span class="key">mapUtil</span>: stubMapUtil });
+  let element = mapService.getMapElement(<span class="string"><span class="delimiter">'</span><span class="content">San Francisco</span><span class="delimiter">'</span></span>);
+  assert.ok(element, <span class="string"><span class="delimiter">'</span><span class="content">element exists</span><span class="delimiter">'</span></span>);
+  assert.equal(element.className, <span class="string"><span class="delimiter">'</span><span class="content">map</span><span class="delimiter">'</span></span>, <span class="string"><span class="delimiter">'</span><span class="content">element has class name of map</span><span class="delimiter">'</span></span>);
+});
+
+test(<span class="string"><span class="delimiter">'</span><span class="content">should use existing map if one is cached for location</span><span class="delimiter">'</span></span>, <span class="keyword">function</span> (assert) {
+  assert.expect(<span class="integer">1</span>);
+  let stubCachedMaps = Ember.Object.create({
+    <span class="key">sanFrancisco</span>: DUMMY_ELEMENT
+  });
+  let mapService = <span class="local-variable">this</span>.subject({ <span class="key">cachedMaps</span>: stubCachedMaps });
+  let element = mapService.getMapElement(<span class="string"><span class="delimiter">'</span><span class="content">San Francisco</span><span class="delimiter">'</span></span>);
+  assert.equal(element, DUMMY_ELEMENT, <span class="string"><span class="delimiter">'</span><span class="content">element fetched from cache</span><span class="delimiter">'</span></span>);
+});
+</pre></td>
+</tr></table>
+</div></div>
+<p>When the service calls <code>createMap</code> on our fake utility, we will run asserts to validate that it is called.
+In our first test notice that we expect four asserts to be run in line 17. Two of the asserts run in the test function, while the other two are run when <code>createMap</code> is called.</p>
+
+<p>In the second test, only one assert is expected (line 26), since the map element is fetched from cache and does not use the utility.</p>
+
+<p>Also, note that the second test uses a dummy object as the returned map element (defined on line 4).
+Our map element can be substituted with any object because we are only asserting that the cache has been accessed (see line 32).</p>
+
+<p>The location in the cache has been <a href="http://emberjs.com/api/classes/Ember.String.html#method_camelize"><code>camelized</code></a> (line 30),
+so that it may be used as a key to look up our element.
+This matches the behavior in <code>getMapElement</code> when city has not yet been cached.</p>
+<h3 class='anchorable-toc' id='toc_integration-testing-the-map-component'>Integration Testing the Map Component</h3>
+<p>Now let&#39;s test that the map component is relying on our service to provide map elements.</p>
+
+<p>To limit the test to validating only its own behavior and not the service, we&#39;ll take advantage of the registration API to register a stub maps service.
+That way when Ember injects the map service into the component, it uses our fake service instead of the real one.</p>
+
+<p>A stub stands in place of the real object in your application and simulates its behavior.
+In the stub service, define a method that will fetch the map based on location, called <code>getMapElement</code>.</p>
+<div class="highlight javascript "><div class="ribbon"></div><div class="scroller"><table class="CodeRay">
+  <thead>
+    <tr>
+      <td colspan="2">tests/integration/components/location-map-test.js</td>
+    </tr>
+  </thead>
+<tr>
+  <td class="line-numbers"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+<strong>10</strong>
+11
+12
+13
+14
+15
+16
+17
+18
+19
+<strong>20</strong>
+21
+22
+23
+24
+25
+26
+27
+</pre></td>
+  <td class="code"><pre><span class="reserved">import</span> { moduleForComponent, test } from <span class="string"><span class="delimiter">'</span><span class="content">ember-qunit</span><span class="delimiter">'</span></span>;
+<span class="reserved">import</span> hbs from <span class="string"><span class="delimiter">'</span><span class="content">htmlbars-inline-precompile</span><span class="delimiter">'</span></span>;
+<span class="reserved">import</span> Ember from <span class="string"><span class="delimiter">'</span><span class="content">ember</span><span class="delimiter">'</span></span>;
+
+let StubMapsService = Ember.Service.extend({
+  getMapElement(location) {
+    <span class="local-variable">this</span>.set(<span class="string"><span class="delimiter">'</span><span class="content">calledWithLocation</span><span class="delimiter">'</span></span>, location);
+    <span class="comment">// We create a div here to simulate our maps service,</span>
+    <span class="comment">// which will create and then cache the map element</span>
+    <span class="keyword">return</span> document.createElement(<span class="string"><span class="delimiter">'</span><span class="content">div</span><span class="delimiter">'</span></span>);
+  }
+});
+
+moduleForComponent(<span class="string"><span class="delimiter">'</span><span class="content">location-map</span><span class="delimiter">'</span></span>, <span class="string"><span class="delimiter">'</span><span class="content">Integration | Component | location map</span><span class="delimiter">'</span></span>, {
+  <span class="key">integration</span>: <span class="predefined-constant">true</span>,
+  beforeEach() {
+    <span class="local-variable">this</span>.register(<span class="string"><span class="delimiter">'</span><span class="content">service:maps</span><span class="delimiter">'</span></span>, StubMapsService);
+    <span class="local-variable">this</span>.inject.service(<span class="string"><span class="delimiter">'</span><span class="content">maps</span><span class="delimiter">'</span></span>, { <span class="key">as</span>: <span class="string"><span class="delimiter">'</span><span class="content">mapsService</span><span class="delimiter">'</span></span> });
+  }
+});
+
+test(<span class="string"><span class="delimiter">'</span><span class="content">should append map element to container element</span><span class="delimiter">'</span></span>, <span class="keyword">function</span>(assert) {
+  <span class="local-variable">this</span>.set(<span class="string"><span class="delimiter">'</span><span class="content">myLocation</span><span class="delimiter">'</span></span>, <span class="string"><span class="delimiter">'</span><span class="content">New York</span><span class="delimiter">'</span></span>);
+  <span class="local-variable">this</span>.render(hbs<span class="error">`</span>{{location-map location=myLocation}}<span class="error">`</span>);
+  assert.equal(<span class="local-variable">this</span>.<span class="predefined">$</span>(<span class="string"><span class="delimiter">'</span><span class="content">.map-container</span><span class="delimiter">'</span></span>).children().length, <span class="integer">1</span>, <span class="string"><span class="delimiter">'</span><span class="content">the map element should be put onscreen</span><span class="delimiter">'</span></span>);
+  assert.equal(<span class="local-variable">this</span>.get(<span class="string"><span class="delimiter">'</span><span class="content">mapsService.calledWithLocation</span><span class="delimiter">'</span></span>), <span class="string"><span class="delimiter">'</span><span class="content">New York</span><span class="delimiter">'</span></span>, <span class="string"><span class="delimiter">'</span><span class="content">a map of New York should be requested</span><span class="delimiter">'</span></span>);
+});
+</pre></td>
+</tr></table>
+</div></div>
+<p>In the <code>beforeEach</code> function that runs before each test, we use the built-in function <code>this.register</code> to <a href="../../applications/dependency-injection/#toc_factory-registrations">register</a> our stub service in place of the maps service.
+Registration makes an object available to your Ember application for things like loading components from templates and injecting services in this case.</p>
+
+<p>The call to the function <code>this.inject.service</code> <a href="../../applications/dependency-injection/#toc_ad-hoc-injections">injects</a> the service we just registered into the context of the tests, so each test may access it through <code>this.get(&#39;mapsService&#39;)</code>.
+In the example we assert that <code>calledWithLocation</code> in our stub is set to the location we passed to the component.</p>
+<h3 class='anchorable-toc' id='toc_stubbing-services-in-acceptance-tests'>Stubbing Services in Acceptance Tests</h3>
+<p>Finally, we want to update our acceptance tests to account for our new service.
+While it would be great to verify that a map is displaying, we don&#39;t want to hammer the Google Maps API every time we run our acceptance test.
+For this tutorial we&#39;ll rely on our component integration tests to ensure that the map DOM is being attached to our screen.
+To avoid hitting our Maps request limit, we&#39;ll stub out our Maps service in our acceptance tests.</p>
+
+<p>Often, services connect to third party APIs that are not desirable to include in automated tests.
+To stub these services we simply have to register a stub service that implements the same API, but does not have the dependencies that are problematic for the test suite.</p>
+
+<p>Add the following code after the imports to our acceptance test:</p>
+<div class="highlight javascript "><div class="ribbon"></div><div class="scroller"><?xml version="1.0"?>
+<table class="CodeRay">
+  <thead>
+    <tr>
+      <td colspan="2">/tests/acceptance/list-rentals-test.js</td>
+    </tr>
+  </thead>
+<tr>
+  <td class="line-numbers"><pre>1
+2
+<span class="highlight-line added">3</span>
+4
+<span class="highlight-line added">5</span>
+<span class="highlight-line added">6</span>
+<span class="highlight-line added">7</span>
+<span class="highlight-line added">8</span>
+<span class="highlight-line added">9</span>
+<span class="highlight-line added"><strong>10</strong></span>
+<span class="highlight-line removed">11</span>
+<span class="highlight-line added">12</span>
+<span class="highlight-line added">13</span>
+<span class="highlight-line added">14</span>
+<span class="highlight-line added">15</span>
+<span class="highlight-line added">16</span>
+<span class="highlight-line added">17</span></pre></td>
+  <td class="code"><pre><span class="reserved">import</span> { test } from <span class="string"><span class="delimiter">'</span><span class="content">qunit</span><span class="delimiter">'</span></span>;
+<span class="reserved">import</span> moduleForAcceptance from <span class="string"><span class="delimiter">'</span><span class="content">super-rentals/tests/helpers/module-for-acceptance</span><span class="delimiter">'</span></span>;
+<span class="highlight-line added"><span class="reserved">import</span> Ember from <span class="string"><span class="delimiter">'</span><span class="content">ember</span><span class="delimiter">'</span></span>;</span>
+
+<span class="highlight-line added">let StubMapsService = Ember.Service.extend({</span>
+<span class="highlight-line added">  getMapElement() {</span>
+<span class="highlight-line added">    <span class="keyword">return</span> document.createElement(<span class="string"><span class="delimiter">'</span><span class="content">div</span><span class="delimiter">'</span></span>);</span>
+<span class="highlight-line added">  }</span>
+<span class="highlight-line added">});</span>
+<span class="highlight-line added"/>
+<span class="highlight-line removed">moduleForAcceptance(<span class="string"><span class="delimiter">'</span><span class="content">Acceptance | list-rentals</span><span class="delimiter">'</span></span>);</span>
+<span class="highlight-line added">moduleForAcceptance(<span class="string"><span class="delimiter">'</span><span class="content">Acceptance | list rentals</span><span class="delimiter">'</span></span>, {</span>
+<span class="highlight-line added">  beforeEach() {</span>
+<span class="highlight-line added">    <span class="local-variable">this</span>.application.register(<span class="string"><span class="delimiter">'</span><span class="content">service:stubMaps</span><span class="delimiter">'</span></span>, StubMapsService);</span>
+<span class="highlight-line added">    <span class="local-variable">this</span>.application.inject(<span class="string"><span class="delimiter">'</span><span class="content">component:location-map</span><span class="delimiter">'</span></span>, <span class="string"><span class="delimiter">'</span><span class="content">maps</span><span class="delimiter">'</span></span>, <span class="string"><span class="delimiter">'</span><span class="content">service:stubMaps</span><span class="delimiter">'</span></span>);</span>
+<span class="highlight-line added">  }</span>
+<span class="highlight-line added">});</span></pre></td>
+</tr></table>
+</div></div>
+<p>What&#39;s happening here is we are adding our own stub maps service that simply creates an empty div.
+Then we are putting it in Ember&#39;s <a href="../../applications/dependency-injection#toc_factory-registrations">registry</a>, and injecting it into the <code>location-map</code> component that uses it.
+That way every time that component is created, our stub map service gets injected over the Google maps service.
+Now when we run our acceptance tests, you&#39;ll notice that maps do not get rendered as the test runs.</p>
+
+<p><img src="../../images/service/acceptance-without-maps.png" alt="acceptance tests without maps"></p>
+
+            </article>
+
+          </div>
+
+          <div class="footer">
+    <div class="container">
+
+      <div class="footer-statement">
+        <a href="https://ember-community-slackin.herokuapp.com/">Comunidade no Slack</a> &bull;
+        <a href="https://github.com/emberjs/ember.js">Github</a> &bull;
+        <a href="https://t.me/EmberBR">Telegram (Ember-BR)</a>
+      </div>
+
+      <div class="footer-statement footer-social">
+        <a href="http://twitter.com/emberjs"
+          title="Twitter">
+          <i class="icon-twitter"></i>
+        </a>
+        <a href="https://github.com/emberjs/ember.js"
+          title="GitHub">
+          <i class="icon-github"></i>
+        </a>
+        <a href="https://plus.google.com/communities/106387049790387471205"
+          title="Google+">
+          <i class="icon-gplus"></i>
+        </a>
+      </div>
+      <hr />
+      <div class="info">
+        <p>
+          Este site é parte de uma iniciativa da <b>Comunidade Brasileira Ember</b> e não tem nenhuma ligação direta com o projeto oficial. <br />
+          Ember é uma marca registrada da <a href="http://tilde.io">Tilde Inc.</a>.<br />
+          Para obter mais informações sobre licença de uso acesse <a href="http://emberjs.com/legal">Legal</a>.
+        </p>
+      </div>
+
+  </div>
+</div>
+
+
+          
+    </main>
+
+    <script type="text/javascript">
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-105665012-1', 'auto');
+    ga('send', 'pageview');
+</script>
+
+  </body>
+</html>

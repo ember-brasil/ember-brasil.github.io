@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="theme-color" content="#e46652">
+
+    <title>Ember.js - Models: Introduction</title>
+    <meta property="st:title" content="Models: Introduction" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="../../images/favicon.png" rel="icon" type="image/png" />
+    <!--[if lte IE 7 ]><link href="../../stylesheets/fonts/fontello-ie7.css" rel="stylesheet" /><![endif]-->
+    <link href="../../stylesheets/application.css" rel="stylesheet" />
+    <link href="//fonts.googleapis.com/css?family=Nunito:300,400,700" rel="stylesheet">
+    <!-- This TypeKit account is managed by @wifelette. Contact her with any issues. -->
+    <script src="https://use.typekit.net/stz3kpn.js"></script>
+    <script>try{Typekit.load({ async: true });}catch(e){}</script>
+
+    <link href="/blog/feed.xml" rel="alternate" type="application/atom+xml" title="Ember.js - Blog" />
+    
+  </head>
+
+  <body class="guides guides guides_models guides_models_index">
+
+    <!--[if lt IE 9]>
+      <script src="../../javascripts/common-old-ie.js"></script>
+    <![endif]-->
+    <!--[if gte IE 9]><!-->
+      <script src="../../javascripts/common-modern.js"></script>
+    <!--<![endif]-->
+
+    <main>
+      <header class="header">
+  <nav role="navigation" aria-label="main">
+    <ul class="header-nav">
+      <li class="header-logo">
+        <a href="/"><span class="visually-hidden">Ember homepage</span></a>
+      </li>
+      <li>
+        <a href="/">Home</a>
+      </li>
+      <li>
+        <a href="/guides/">Documentação</a>
+      </li>
+      <li>
+        <a href="/contribuidores/">Contribuidores</a>
+      </li>
+      <li>
+        <a href="/quem-usa-ember">Quem usa Ember?</a>
+      </li>
+      <li>
+        <a href="http://emberjs.com/api">Ember API</a>
+      </li>
+    </ul>
+  </nav>
+</header>
+
+
+      
+        <div class="content">
+            <aside class="sidebar">
+  <nav class='toc-container' aria-label='table of contents'><ol class='toc-level-0 selected'><li class='toc-level-0 '><a href="#">Começando</a><ol class='toc-level-1'><li class='toc-level-1 '><a href="../getting-started/quick-start/">Começo rápido</a></li><li class='toc-level-1 '><a href="../getting-started/">Instalando Ember</a></li><li class='toc-level-1 '><a href="../getting-started/core-concepts/">Conceitos fundamentais</a></li></ol></li><li class='toc-level-0 '><a href="#">Tutorial</a><ol class='toc-level-1'><li class='toc-level-1 '><a href="../tutorial/ember-cli/">Começando</a></li><li class='toc-level-1 '><a href="../tutorial/acceptance-test/">Planejando seu aplicativo</a></li><li class='toc-level-1 '><a href="../tutorial/routes-and-templates/">Routes e Templates</a></li><li class='toc-level-1 '><a href="../tutorial/model-hook/">Model Hook</a></li><li class='toc-level-1 '><a href="../tutorial/installing-addons/">Instalando Addons</a></li><li class='toc-level-1 '><a href="../tutorial/simple-component/">Construindo um componente simples</a></li><li class='toc-level-1 '><a href="../tutorial/hbs-helper/">Criando um Helper para Handlebars</a></li><li class='toc-level-1 '><a href="../tutorial/ember-data/">Usando Ember Data</a></li><li class='toc-level-1 '><a href="../tutorial/autocomplete-component/">Criando um componente complexo</a></li><li class='toc-level-1 '><a href="../tutorial/service/">Services e Utils</a></li><li class='toc-level-1 '><a href="../tutorial/subroutes/">Adicionando rotas aninhadas</a></li><li class='toc-level-1 '><a href="../tutorial/deploying/">Publicando seu App</a></li></ol></li><li class='toc-level-0 '><a href="#">The Object Model</a><ol class='toc-level-1'><li class='toc-level-1 '><a href="../object-model/">Objects in Ember</a></li><li class='toc-level-1 '><a href="../object-model/classes-and-instances/">Classes and Instances</a></li><li class='toc-level-1 '><a href="../object-model/reopening-classes-and-instances/">Reopening Classes and Instances</a></li><li class='toc-level-1 '><a href="../object-model/computed-properties/">Computed Properties</a></li><li class='toc-level-1 '><a href="../object-model/computed-properties-and-aggregate-data/">Computed Properties and Aggregate Data</a></li><li class='toc-level-1 '><a href="../object-model/observers/">Observers</a></li><li class='toc-level-1 '><a href="../object-model/bindings/">Bindings</a></li><li class='toc-level-1 '><a href="../object-model/enumerables/">Enumerables</a></li></ol></li><li class='toc-level-0 '><a href="#">Routing</a><ol class='toc-level-1'><li class='toc-level-1 '><a href="../routing/">Introduction</a></li><li class='toc-level-1 '><a href="../routing/defining-your-routes/">Defining Your Routes</a></li><li class='toc-level-1 '><a href="../routing/specifying-a-routes-model/">Specifying a Route's Model</a></li><li class='toc-level-1 '><a href="../routing/rendering-a-template/">Rendering a Template</a></li><li class='toc-level-1 '><a href="../routing/redirection/">Redirecting</a></li><li class='toc-level-1 '><a href="../routing/preventing-and-retrying-transitions/">Preventing and Retrying Transitions</a></li><li class='toc-level-1 '><a href="../routing/loading-and-error-substates/">Loading / Error Substates</a></li><li class='toc-level-1 '><a href="../routing/query-params/">Query Parameters</a></li><li class='toc-level-1 '><a href="../routing/asynchronous-routing/">Asynchronous Routing</a></li></ol></li><li class='toc-level-0 '><a href="#">Templates</a><ol class='toc-level-1'><li class='toc-level-1 '><a href="../templates/handlebars-basics/">Handlebars Basics</a></li><li class='toc-level-1 '><a href="../templates/built-in-helpers/">Built-in Helpers</a></li><li class='toc-level-1 '><a href="../templates/conditionals/">Conditionals</a></li><li class='toc-level-1 '><a href="../templates/displaying-a-list-of-items/">Displaying a List of Items</a></li><li class='toc-level-1 '><a href="../templates/displaying-the-keys-in-an-object/">Displaying the Keys in an Object</a></li><li class='toc-level-1 '><a href="../templates/binding-element-attributes/">Binding Element Attributes</a></li><li class='toc-level-1 '><a href="../templates/links/">Links</a></li><li class='toc-level-1 '><a href="../templates/actions/">Actions</a></li><li class='toc-level-1 '><a href="../templates/input-helpers/">Input Helpers</a></li><li class='toc-level-1 '><a href="../templates/development-helpers/">Development Helpers</a></li><li class='toc-level-1 '><a href="../templates/writing-helpers/">Writing Helpers</a></li></ol></li><li class='toc-level-0 '><a href="#">Components</a><ol class='toc-level-1'><li class='toc-level-1 '><a href="../components/defining-a-component/">Defining a Component</a></li><li class='toc-level-1 '><a href="../components/the-component-lifecycle/">The Component Lifecycle</a></li><li class='toc-level-1 '><a href="../components/passing-properties-to-a-component/">Passing Properties to a Component</a></li><li class='toc-level-1 '><a href="../components/wrapping-content-in-a-component/">Wrapping Content in a Component</a></li><li class='toc-level-1 '><a href="../components/customizing-a-components-element/">Customizing a Component's Element</a></li><li class='toc-level-1 '><a href="../components/block-params/">Using Block Params</a></li><li class='toc-level-1 '><a href="../components/handling-events/">Handling Events</a></li><li class='toc-level-1 '><a href="../components/triggering-changes-with-actions/">Triggering Changes with Actions</a></li></ol></li><li class='toc-level-0 '><a href="#">Controllers</a><ol class='toc-level-1'><li class='toc-level-1 '><a href="../controllers/">Introdução</a></li></ol></li><li class='toc-level-0 selected'><a href="#">Models</a><ol class='toc-level-1 selected'><li class='toc-level-1 selected'><a href="./">Introduction</a></li><li class='toc-level-1 '><a href="defining-models/">Defining Models</a></li><li class='toc-level-1 '><a href="finding-records/">Finding Records</a></li><li class='toc-level-1 '><a href="creating-updating-and-deleting-records/">Creating, Updating and Deleting</a></li><li class='toc-level-1 '><a href="relationships/">Relationships</a></li><li class='toc-level-1 '><a href="pushing-records-into-the-store/">Pushing Records into the Store</a></li><li class='toc-level-1 '><a href="handling-metadata/">Handling Metadata</a></li><li class='toc-level-1 '><a href="customizing-adapters/">Customizing Adapters</a></li><li class='toc-level-1 '><a href="customizing-serializers/">Customizing Serializers</a></li></ol></li><li class='toc-level-0 '><a href="#">Application Concerns</a><ol class='toc-level-1'><li class='toc-level-1 '><a href="../applications/applications-and-instances/">Applications and Instances</a></li><li class='toc-level-1 '><a href="../applications/dependency-injection/">Dependency Injection</a></li><li class='toc-level-1 '><a href="../applications/initializers/">Initializers</a></li><li class='toc-level-1 '><a href="../applications/services/">Services</a></li><li class='toc-level-1 '><a href="../applications/run-loop/">The Run Loop</a></li></ol></li><li class='toc-level-0 '><a href="#">Testing</a><ol class='toc-level-1'><li class='toc-level-1 '><a href="../testing/">Introduction</a></li><li class='toc-level-1 '><a href="../testing/acceptance/">Acceptance Tests</a></li><li class='toc-level-1 '><a href="../testing/unit-testing-basics/">Unit Testing Basics</a></li><li class='toc-level-1 '><a href="../testing/testing-components/">Testing Components</a></li><li class='toc-level-1 '><a href="../testing/testing-helpers/">Testing Helpers</a></li><li class='toc-level-1 '><a href="../testing/testing-controllers/">Testing Controllers</a></li><li class='toc-level-1 '><a href="../testing/testing-routes/">Testing Routes</a></li><li class='toc-level-1 '><a href="../testing/testing-models/">Testing Models</a></li></ol></li><li class='toc-level-0 '><a href="#">Ember Inspector</a><ol class='toc-level-1'><li class='toc-level-1 '><a href="../ember-inspector/">Introduction</a></li><li class='toc-level-1 '><a href="../ember-inspector/installation/">Installing the Inspector</a></li><li class='toc-level-1 '><a href="../ember-inspector/object-inspector/">Object Inspector</a></li><li class='toc-level-1 '><a href="../ember-inspector/view-tree/">The View Tree</a></li><li class='toc-level-1 '><a href="../ember-inspector/routes/">Inspecting Routes</a></li><li class='toc-level-1 '><a href="../ember-inspector/data/">Data Tab</a></li><li class='toc-level-1 '><a href="../ember-inspector/deprecations/">Tackling Deprecations</a></li><li class='toc-level-1 '><a href="../ember-inspector/info/">Library Info</a></li><li class='toc-level-1 '><a href="../ember-inspector/promises/">Debugging Promises</a></li><li class='toc-level-1 '><a href="../ember-inspector/container/">Inspecting Objects via the Container</a></li><li class='toc-level-1 '><a href="../ember-inspector/render-performance/">Rendering Performance</a></li><li class='toc-level-1 '><a href="../ember-inspector/troubleshooting/">Troubleshooting</a></li></ol></li><li class='toc-level-0 '><a href="#">Addons and Dependencies</a><ol class='toc-level-1'><li class='toc-level-1 '><a href="../addons-and-dependencies/managing-dependencies/">Managing Dependencies</a></li></ol></li><li class='toc-level-0 '><a href="#">Configuring Ember.js</a><ol class='toc-level-1'><li class='toc-level-1 '><a href="../configuring-ember/configuring-your-app/">Configuring Your App</a></li><li class='toc-level-1 '><a href="../configuring-ember/configuring-ember-cli/">Configuring Ember CLI</a></li><li class='toc-level-1 '><a href="../configuring-ember/handling-deprecations/">Handling Deprecations</a></li><li class='toc-level-1 '><a href="../configuring-ember/disabling-prototype-extensions/">Disabling Prototype Extensions</a></li><li class='toc-level-1 '><a href="../configuring-ember/specifying-url-type/">Specifying the URL Type</a></li><li class='toc-level-1 '><a href="../configuring-ember/embedding-applications/">Embedding Applications</a></li><li class='toc-level-1 '><a href="../configuring-ember/feature-flags/">Feature Flags</a></li><li class='toc-level-1 '><a href="../configuring-ember/build-targets/">Build targets</a></li><li class='toc-level-1 '><a href="../configuring-ember/debugging/">Debugging</a></li></ol></li><li class='toc-level-0 '><a href="#">Contributing to Ember.js</a><ol class='toc-level-1'><li class='toc-level-1 '><a href="../contributing/adding-new-features/">Adding New Features</a></li><li class='toc-level-1 '><a href="../contributing/repositories/">Repositories</a></li></ol></li><li class='toc-level-0 '><a href="#">Glossário</a><ol class='toc-level-1'><li class='toc-level-1 '><a href="../glossary/web-development/">Desenvolvimento WEB</a></li></ol></li></ol></nav>
+</aside>
+
+            <article>
+              <h1>
+                Introduction
+                <a href="https://github.com/ember-brasil/website/edit/master/source/guides/models/index.md"
+                   target="_blank" class="edit-page icon-pencil">Melhorar esta página</a>
+              </h1>
+              <hr>
+
+              <p>Models are objects that represent the underlying data that your
+application presents to the user. Different apps will have very
+different models, depending on what problems they&#39;re trying to solve.</p>
+
+<p>For example, a photo sharing application might have a <code>Photo</code>
+model to represent a particular photo, and a <code>PhotoAlbum</code> that
+represents a group of photos. In contrast, an online shopping app would
+probably have different models, like <code>ShoppingCart</code>, <code>Invoice</code>, or
+<code>LineItem</code>.</p>
+
+<p>Models tend to be <em>persistent</em>. That means the user does not expect
+model data to be lost when they close their browser window. To make sure
+no data is lost, if the user makes changes to a model, you need to store
+the model data somewhere that it will not be lost.</p>
+
+<p>Typically, most models are loaded from and saved to a server that uses a
+database to store data. Usually you will send JSON representations of
+models back and forth to an HTTP server that you have written. However,
+Ember makes it easy to use other durable storage, such as saving to the
+user&#39;s hard disk with <a href="https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API">IndexedDB</a>, or hosted storage solutions that let you
+avoid writing and hosting your own servers.</p>
+
+<p>Once you&#39;ve loaded your models from storage, components know how to
+translate model data into a UI that your user can interact with.  For
+more information about how components get model data, see the
+<a href="../routing/specifying-a-routes-model">Specifying a Route&#39;s Model</a>
+guide.</p>
+
+<p>Ember Data, included by default when you create a new application, is a
+library that integrates tightly with Ember to make it easy to retrieve
+models from your server as JSON, save updates back to the server, and
+create new models in the browser.</p>
+
+<p>Thanks to its use of the <em>adapter pattern</em>, Ember Data can be configured
+to work with many different kinds of backends. There is <a href="http://emberobserver.com/categories/ember-data-adapters">an entire
+ecosystem of adapters</a> that allow your Ember app to talk to different
+types of servers without you writing any networking code.</p>
+
+<p>If you need to integrate your Ember.js app with a server that does not
+have an adapter available (for example, you hand-rolled an API server
+that does not adhere to any JSON specification), Ember Data is designed
+to be configurable to work with whatever data your server returns.</p>
+
+<p>Ember Data is also designed to work with streaming servers, like those
+powered by WebSockets. You can open a socket to your server and push
+changes into Ember Data whenever they occur, giving your app a real-time
+user interface that is always up-to-date.</p>
+
+<p>At first, using Ember Data may feel different than the way you&#39;re used
+to writing JavaScript applications. Many developers are familiar with
+using AJAX to fetch raw JSON data from an endpoint, which may appear
+easy at first. Over time, however, complexity leaks out into your
+application code, making it hard to maintain.</p>
+
+<p>With Ember Data, managing models as your application grows becomes both
+simple <em>and</em> easy.</p>
+
+<p>Once you have an understanding of Ember Data, you will have a much
+better way to manage the complexity of data loading in your application.
+This will allow your code to evolve without becoming a mess.</p>
+<h2 class='anchorable-toc' id='toc_the-store-and-a-single-source-of-truth'>The Store and a Single Source of Truth</h2>
+<p>One common way of building web applications is to tightly couple user
+interface elements to data fetching. For example, imagine you are
+writing the admin section of a blogging app, which has a feature that
+lists the drafts for the currently logged in user.</p>
+
+<p>You might be tempted to make the component responsible for fetching that
+data and storing it:</p>
+<div class="highlight javascript "><div class="ribbon"></div><div class="scroller"><table class="CodeRay">
+  <thead>
+    <tr>
+      <td colspan="2">app/components/list-of-drafts.js</td>
+    </tr>
+  </thead>
+<tr>
+  <td class="line-numbers"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+</pre></td>
+  <td class="code"><pre><span class="reserved">import</span> Ember from <span class="string"><span class="delimiter">'</span><span class="content">ember</span><span class="delimiter">'</span></span>;
+
+<span class="reserved">export</span> <span class="keyword">default</span> Ember.Component.extend({
+  willRender() {
+    <span class="predefined">$</span>.getJSON(<span class="string"><span class="delimiter">'</span><span class="content">/drafts</span><span class="delimiter">'</span></span>).then(data =&gt; {
+      <span class="local-variable">this</span>.set(<span class="string"><span class="delimiter">'</span><span class="content">drafts</span><span class="delimiter">'</span></span>, data);
+    });
+  }
+});
+</pre></td>
+</tr></table>
+</div></div>
+<p>You could then show the list of drafts in your component&#39;s template like
+this:</p>
+<div class="highlight handlebars "><div class="ribbon"></div><div class="scroller"><table class="CodeRay">
+  <thead>
+    <tr>
+      <td colspan="2">app/templates/components/list-of-drafts.hbs</td>
+    </tr>
+  </thead>
+<tr>
+  <td class="line-numbers"><pre>1
+2
+3
+4
+5
+</pre></td>
+  <td class="code"><pre><span class="tag">&lt;ul&gt;</span>
+  <span class="inline"><span class="inline-delimiter">{{#</span><span class="attribute-name">each</span> <span class="attribute-name">drafts</span> <span class="attribute-name">key</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">id</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">as</span> <span class="error">|</span><span class="attribute-name">draft</span><span class="error">|</span><span class="inline-delimiter">}}</span></span>
+    <span class="tag">&lt;li&gt;</span><span class="inline"><span class="inline-delimiter">{{</span><span class="attribute-name">draft.title</span><span class="inline-delimiter">}}</span></span><span class="tag">&lt;/li&gt;</span>
+  <span class="inline"><span class="inline-delimiter">{{/</span><span class="attribute-name">each</span><span class="inline-delimiter">}}</span></span>
+<span class="tag">&lt;/ul&gt;</span>
+</pre></td>
+</tr></table>
+</div></div>
+<p>This works great for the <code>list-of-drafts</code> component. However, your app
+is likely made up of many different components. On another page you
+may want a component to display the number of drafts. You may be
+tempted to copy and paste your existing <code>willRender</code> code into the new
+component.</p>
+<div class="highlight javascript "><div class="ribbon"></div><div class="scroller"><table class="CodeRay">
+  <thead>
+    <tr>
+      <td colspan="2">app/components/drafts-button.js</td>
+    </tr>
+  </thead>
+<tr>
+  <td class="line-numbers"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+</pre></td>
+  <td class="code"><pre><span class="reserved">import</span> Ember from <span class="string"><span class="delimiter">'</span><span class="content">ember</span><span class="delimiter">'</span></span>;
+
+<span class="reserved">export</span> <span class="keyword">default</span> Ember.Component.extend({
+  willRender() {
+    <span class="predefined">$</span>.getJSON(<span class="string"><span class="delimiter">'</span><span class="content">/drafts</span><span class="delimiter">'</span></span>).then(data =&gt; {
+      <span class="local-variable">this</span>.set(<span class="string"><span class="delimiter">'</span><span class="content">drafts</span><span class="delimiter">'</span></span>, data);
+    });
+  }
+});
+</pre></td>
+</tr></table>
+</div></div><div class="highlight handlebars "><div class="ribbon"></div><div class="scroller"><table class="CodeRay">
+  <thead>
+    <tr>
+      <td colspan="2">app/templates/components/drafts-button.hbs</td>
+    </tr>
+  </thead>
+<tr>
+  <td class="line-numbers"><pre>1
+2
+3
+</pre></td>
+  <td class="code"><pre><span class="inline"><span class="inline-delimiter">{{#</span><span class="attribute-name">link-to</span> <span class="error">'</span><span class="attribute-name">drafts</span><span class="error">'</span> <span class="attribute-name">tagName</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">button</span><span class="delimiter">&quot;</span></span><span class="inline-delimiter">}}</span></span>
+Drafts (<span class="inline"><span class="inline-delimiter">{{</span><span class="attribute-name">drafts.length</span><span class="inline-delimiter">}}</span></span>)
+<span class="inline"><span class="inline-delimiter">{{/</span><span class="attribute-name">link-to</span><span class="inline-delimiter">}}</span></span>
+</pre></td>
+</tr></table>
+</div></div>
+<p>Unfortunately, the app will now make two separate requests for the
+same information. Not only is the redundant data fetching costly in
+terms of wasted bandwidth and affecting the perceived speed of your
+app, it&#39;s easy for the two values to get out-of-sync. You yourself
+have probably used a web application where the list of items gets out
+of sync with the counter in a toolbar, leading to a frustrating and
+inconsistent experience.</p>
+
+<p>There is also a <em>tight coupling</em> between your application&#39;s UI and the
+network code. If the url or the format of the JSON payload changes, it
+is likely to break all of your UI components in ways that are hard to
+track down.</p>
+
+<p>The SOLID principles of good design tell us that objects should have a
+single responsibility. The responsibility of a component should be
+presenting model data to the user, not fetching the model.</p>
+
+<p>Good Ember apps take a different approach. Ember Data gives you a single
+<strong>store</strong> that is the central repository of models in your application.
+Components and routes can ask the store for models, and the store is
+responsible for knowing how to fetch them.</p>
+
+<p>It also means that the store can detect that two different components
+are asking for the same model, allowing your app to only fetch the data
+from the server once. You can think of the store as a read-through cache
+for your app&#39;s models. Both your components and routes have access to
+this shared store; when they need to display or modify a model, they
+first ask the store for it.</p>
+<h2 class='anchorable-toc' id='toc_convention-over-configuration-with-json-api'>Convention Over Configuration with JSON API</h2>
+<p>You can significantly reduce the amount of code you need to write and
+maintain by relying on Ember&#39;s conventions. Since these conventions
+will be shared among developers on your team, following them leads
+to code that is easier to maintain and understand.</p>
+
+<p>Rather than create an arbitrary set of conventions, Ember Data is
+designed to work out of the box with <a href="http://jsonapi.org">JSON API</a>. JSON API is a
+formal specification for building conventional, robust, and performant
+APIs that allow clients and servers to communicate model data.</p>
+
+<p>JSON API standardizes how JavaScript applications talk to servers, so
+you decrease the coupling between your frontend and backend, and have
+more freedom to change pieces of your stack.</p>
+
+<p>As an analogy, JSON API is to JavaScript apps and API servers what SQL is
+to server-side frameworks and databases. Popular frameworks like Ruby on
+Rails, Laravel, Django, Spring and more work out of the box with many
+different databases, like MySQL, PostgreSQL, SQL Server, and more.</p>
+
+<p>Frameworks (or apps built on those frameworks) don&#39;t need to write
+lots of custom code to add support for a new database; as long as that
+database supports SQL, adding support for it is relatively easy.</p>
+
+<p>So too with JSON API. By using JSON API to interop between your Ember
+app and your server, you can entirely change your backend stack without
+breaking your frontend. And as you add apps for other platforms, such as
+iOS and Android, you will be able to leverage JSON API libraries for
+those platforms to easily consume the same API your Ember app uses.</p>
+<h2 class='anchorable-toc' id='toc_models'>Models</h2>
+<p>In Ember Data, each model is represented by a subclass of <code>Model</code> that
+defines the attributes, relationships, and behavior of the data that you
+present to the user.</p>
+
+<p>Models define the type of data that will be provided by your server. For
+example, a <code>Person</code> model might have a <code>firstName</code> attribute that is a
+string, and a <code>birthday</code> attribute that is a date:</p>
+<div class="highlight javascript "><div class="ribbon"></div><div class="scroller"><table class="CodeRay">
+  <thead>
+    <tr>
+      <td colspan="2">app/models/person.js</td>
+    </tr>
+  </thead>
+<tr>
+  <td class="line-numbers"><pre>1
+2
+3
+4
+5
+6
+</pre></td>
+  <td class="code"><pre><span class="reserved">import</span> DS from <span class="string"><span class="delimiter">'</span><span class="content">ember-data</span><span class="delimiter">'</span></span>;
+
+<span class="reserved">export</span> <span class="keyword">default</span> DS.Model.extend({
+  <span class="key">firstName</span>: DS.attr(<span class="string"><span class="delimiter">'</span><span class="content">string</span><span class="delimiter">'</span></span>),
+  <span class="key">birthday</span>:  DS.attr(<span class="string"><span class="delimiter">'</span><span class="content">date</span><span class="delimiter">'</span></span>)
+});
+</pre></td>
+</tr></table>
+</div></div>
+<p>A model also describes its relationships with other objects. For
+example, an <code>order</code> may have many <code>line-items</code>, and a
+<code>line-item</code> may belong to a particular <code>order</code>.</p>
+<div class="highlight javascript "><div class="ribbon"></div><div class="scroller"><table class="CodeRay">
+  <thead>
+    <tr>
+      <td colspan="2">app/models/order.js</td>
+    </tr>
+  </thead>
+<tr>
+  <td class="line-numbers"><pre>1
+2
+3
+4
+5
+</pre></td>
+  <td class="code"><pre><span class="reserved">import</span> DS from <span class="string"><span class="delimiter">'</span><span class="content">ember-data</span><span class="delimiter">'</span></span>;
+
+<span class="reserved">export</span> <span class="keyword">default</span> DS.Model.extend({
+  <span class="key">lineItems</span>: DS.hasMany(<span class="string"><span class="delimiter">'</span><span class="content">line-item</span><span class="delimiter">'</span></span>)
+});
+</pre></td>
+</tr></table>
+</div></div><div class="highlight javascript "><div class="ribbon"></div><div class="scroller"><table class="CodeRay">
+  <thead>
+    <tr>
+      <td colspan="2">app/models/line-item.js</td>
+    </tr>
+  </thead>
+<tr>
+  <td class="line-numbers"><pre>1
+2
+3
+4
+5
+</pre></td>
+  <td class="code"><pre><span class="reserved">import</span> DS from <span class="string"><span class="delimiter">'</span><span class="content">ember-data</span><span class="delimiter">'</span></span>;
+
+<span class="reserved">export</span> <span class="keyword">default</span> DS.Model.extend({
+  <span class="key">order</span>: DS.belongsTo(<span class="string"><span class="delimiter">'</span><span class="content">order</span><span class="delimiter">'</span></span>)
+});
+</pre></td>
+</tr></table>
+</div></div>
+<p>Models don&#39;t have any data themselves, they define the attributes,
+relationships and behavior of specific instances, which are called
+<strong>records</strong>.</p>
+<h2 class='anchorable-toc' id='toc_records'>Records</h2>
+<p>A <strong>record</strong> is an instance of a model that contains data loaded from a
+server. Your application can also create new records and save them back
+to the server.</p>
+
+<p>A record is uniquely identified by its model <strong>type</strong> and <strong>ID</strong>.</p>
+
+<p>For example, if you were writing a contact management app, you might
+have a <code>Person</code> model. An individual record in your app might
+have a type of <code>person</code> and an ID of <code>1</code> or <code>steve-buscemi</code>.</p>
+<div class="highlight js "><div class="ribbon"></div><div class="scroller"><table class="CodeRay"><tr>
+  <td class="line-numbers"><pre>1
+</pre></td>
+  <td class="code"><pre><span class="local-variable">this</span>.get(<span class="string"><span class="delimiter">'</span><span class="content">store</span><span class="delimiter">'</span></span>).findRecord(<span class="string"><span class="delimiter">'</span><span class="content">person</span><span class="delimiter">'</span></span>, <span class="integer">1</span>); <span class="comment">// =&gt; { id: 1, name: 'steve-buscemi' }</span>
+</pre></td>
+</tr></table>
+</div></div>
+<p>An ID is usually assigned to a record by the server when you save it for
+the first time, but you can also generate IDs client-side.</p>
+<h2 class='anchorable-toc' id='toc_adapter'>Adapter</h2>
+<p>An <strong>adapter</strong> is an object that translates requests from Ember (such as
+&quot;find the user with an ID of 1&quot;) into requests to a server.</p>
+
+<p>For example, if your application asks for a <code>Person</code> with an ID of
+<code>1</code>, how should Ember load it? Over HTTP or a WebSocket?  If
+it&#39;s HTTP, is the URL <code>/person/1</code> or <code>/resources/people/1</code>?</p>
+
+<p>The adapter is responsible for answering all of these questions.
+Whenever your app asks the store for a record that it doesn&#39;t have
+cached, it will ask the adapter for it. If you change a record and save
+it, the store will hand the record to the adapter to send the
+appropriate data to your server and confirm that the save was
+successful.</p>
+
+<p>Adapters let you completely change how your API is implemented without
+impacting your Ember application code.</p>
+<h2 class='anchorable-toc' id='toc_caching'>Caching</h2>
+<p>The store will automatically cache records for you. If a record had already
+been loaded, asking for it a second time will always return the same
+object instance. This minimizes the number of round-trips to the
+server, and allows your application to render its UI to the user as fast as
+possible.</p>
+
+<p>For example, the first time your application asks the store for a
+<code>person</code> record with an ID of <code>1</code>, it will fetch that information from
+your server.</p>
+
+<p>However, the next time your app asks for a <code>person</code> with ID <code>1</code>, the
+store will notice that it had already retrieved and cached that
+information from the server. Instead of sending another request for the
+same information, it will give your application the same record it had
+provided it the first time.  This feature—always returning the same
+record object, no matter how many times you look it up—is sometimes
+called an <em>identity map</em>.</p>
+
+<p>Using an identity map is important because it ensures that changes you
+make in one part of your UI are propagated to other parts of the UI. It
+also means that you don&#39;t have to manually keep records in sync—you can
+ask for a record by ID and not have to worry about whether other parts
+of your application have already asked for and loaded it.</p>
+
+<p>One downside to returning a cached record is you may find the state of
+the data has changed since it was first loaded into the store&#39;s
+identity map. In order to prevent this stale data from being a problem
+for long, Ember Data will automatically make a request in the
+background each time a cached record is returned from the store. When
+the new data comes in, the record is updated, and if there have been
+changes to the record since the initial render, the template is
+re-rendered with the new information.</p>
+<h2 class='anchorable-toc' id='toc_architecture-overview'>Architecture Overview</h2>
+<p>The first time your application asks the store for a record, the store
+sees that it doesn&#39;t have a local copy and requests it from your
+adapter. Your adapter will go and retrieve the record from your
+persistence layer; typically, this will be a JSON representation of the
+record served from an HTTP server.</p>
+
+<p><img src="../images/guides/models/finding-unloaded-record-step1-diagram.png" alt="Diagram showing process for finding an unloaded record"></p>
+
+<p>As illustrated in the diagram above, the adapter cannot always return the
+requested record immediately. In this case, the adapter must make an
+<em>asynchronous</em> request to the server, and only when that request finishes
+loading can the record be created with its backing data.</p>
+
+<p>Because of this asynchronicity, the store immediately returns a
+<em>promise</em> from the <code>find()</code> method. Similarly, any requests that the
+store makes to the adapter also return promises.</p>
+
+<p>Once the request to the server returns with a JSON payload for the
+requested record, the adapter resolves the promise it returned to the
+store with the JSON.</p>
+
+<p>The store then takes that JSON, initializes the record with the
+JSON data, and resolves the promise returned to your application
+with the newly-loaded record.</p>
+
+<p><img src="../images/guides/models/finding-unloaded-record-step2-diagram.png" alt="Diagram showing process for finding an unloaded record after the payload has returned from the server"></p>
+
+<p>Let&#39;s look at what happens if you request a record that the store
+already has in its cache.</p>
+
+<p><img src="../images/guides/models/finding-loaded-record-diagram.png" alt="Diagram showing process for finding an unloaded record after the payload has returned from the server"></p>
+
+<p>In this case, because the store already knew about the record, it
+returns a promise that it resolves with the record immediately. It does
+not need to ask the adapter (and, therefore, the server) for a copy
+since it already has it saved locally.</p>
+
+<hr>
+
+<p>Models, records, adapters and the store are the core concepts you
+should understand to get the most out of Ember Data. The following
+sections go into more depth about each of these concepts, and how to
+use them together.</p>
+
+            </article>
+
+          </div>
+
+          <div class="footer">
+    <div class="container">
+
+      <div class="footer-statement">
+        <a href="https://ember-community-slackin.herokuapp.com/">Comunidade no Slack</a> &bull;
+        <a href="https://github.com/emberjs/ember.js">Github</a> &bull;
+        <a href="https://t.me/EmberBR">Telegram (Ember-BR)</a>
+      </div>
+
+      <div class="footer-statement footer-social">
+        <a href="http://twitter.com/emberjs"
+          title="Twitter">
+          <i class="icon-twitter"></i>
+        </a>
+        <a href="https://github.com/emberjs/ember.js"
+          title="GitHub">
+          <i class="icon-github"></i>
+        </a>
+        <a href="https://plus.google.com/communities/106387049790387471205"
+          title="Google+">
+          <i class="icon-gplus"></i>
+        </a>
+      </div>
+      <hr />
+      <div class="info">
+        <p>
+          Este site é parte de uma iniciativa da <b>Comunidade Brasileira Ember</b> e não tem nenhuma ligação direta com o projeto oficial. <br />
+          Ember é uma marca registrada da <a href="http://tilde.io">Tilde Inc.</a>.<br />
+          Para obter mais informações sobre licença de uso acesse <a href="http://emberjs.com/legal">Legal</a>.
+        </p>
+      </div>
+
+  </div>
+</div>
+
+
+          
+    </main>
+
+    <script type="text/javascript">
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-105665012-1', 'auto');
+    ga('send', 'pageview');
+</script>
+
+  </body>
+</html>

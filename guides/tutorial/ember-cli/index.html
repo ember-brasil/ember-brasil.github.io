@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="theme-color" content="#e46652">
+
+    <title>Ember.js - Tutorial: Começando</title>
+    <meta property="st:title" content="Tutorial: Começando" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="../../../images/favicon.png" rel="icon" type="image/png" />
+    <!--[if lte IE 7 ]><link href="../../../stylesheets/fonts/fontello-ie7.css" rel="stylesheet" /><![endif]-->
+    <link href="../../../stylesheets/application.css" rel="stylesheet" />
+    <link href="//fonts.googleapis.com/css?family=Nunito:300,400,700" rel="stylesheet">
+    <!-- This TypeKit account is managed by @wifelette. Contact her with any issues. -->
+    <script src="https://use.typekit.net/stz3kpn.js"></script>
+    <script>try{Typekit.load({ async: true });}catch(e){}</script>
+
+    <link href="/blog/feed.xml" rel="alternate" type="application/atom+xml" title="Ember.js - Blog" />
+    
+  </head>
+
+  <body class="guides guides guides_tutorial guides_tutorial_ember-cli guides_tutorial_ember-cli_index">
+
+    <!--[if lt IE 9]>
+      <script src="../../../javascripts/common-old-ie.js"></script>
+    <![endif]-->
+    <!--[if gte IE 9]><!-->
+      <script src="../../../javascripts/common-modern.js"></script>
+    <!--<![endif]-->
+
+    <main>
+      <header class="header">
+  <nav role="navigation" aria-label="main">
+    <ul class="header-nav">
+      <li class="header-logo">
+        <a href="/"><span class="visually-hidden">Ember homepage</span></a>
+      </li>
+      <li>
+        <a href="/">Home</a>
+      </li>
+      <li>
+        <a href="/guides/">Documentação</a>
+      </li>
+      <li>
+        <a href="/contribuidores/">Contribuidores</a>
+      </li>
+      <li>
+        <a href="/quem-usa-ember">Quem usa Ember?</a>
+      </li>
+      <li>
+        <a href="http://emberjs.com/api">Ember API</a>
+      </li>
+    </ul>
+  </nav>
+</header>
+
+
+      
+        <div class="content">
+            <aside class="sidebar">
+  <nav class='toc-container' aria-label='table of contents'><ol class='toc-level-0 selected'><li class='toc-level-0 '><a href="#">Começando</a><ol class='toc-level-1'><li class='toc-level-1 '><a href="../../getting-started/quick-start/">Começo rápido</a></li><li class='toc-level-1 '><a href="../../getting-started/">Instalando Ember</a></li><li class='toc-level-1 '><a href="../../getting-started/core-concepts/">Conceitos fundamentais</a></li></ol></li><li class='toc-level-0 selected'><a href="#">Tutorial</a><ol class='toc-level-1 selected'><li class='toc-level-1 selected'><a href="./">Começando</a></li><li class='toc-level-1 '><a href="../acceptance-test/">Planejando seu aplicativo</a></li><li class='toc-level-1 '><a href="../routes-and-templates/">Routes e Templates</a></li><li class='toc-level-1 '><a href="../model-hook/">Model Hook</a></li><li class='toc-level-1 '><a href="../installing-addons/">Instalando Addons</a></li><li class='toc-level-1 '><a href="../simple-component/">Construindo um componente simples</a></li><li class='toc-level-1 '><a href="../hbs-helper/">Criando um Helper para Handlebars</a></li><li class='toc-level-1 '><a href="../ember-data/">Usando Ember Data</a></li><li class='toc-level-1 '><a href="../autocomplete-component/">Criando um componente complexo</a></li><li class='toc-level-1 '><a href="../service/">Services e Utils</a></li><li class='toc-level-1 '><a href="../subroutes/">Adicionando rotas aninhadas</a></li><li class='toc-level-1 '><a href="../deploying/">Publicando seu App</a></li></ol></li><li class='toc-level-0 '><a href="#">The Object Model</a><ol class='toc-level-1'><li class='toc-level-1 '><a href="../../object-model/">Objects in Ember</a></li><li class='toc-level-1 '><a href="../../object-model/classes-and-instances/">Classes and Instances</a></li><li class='toc-level-1 '><a href="../../object-model/reopening-classes-and-instances/">Reopening Classes and Instances</a></li><li class='toc-level-1 '><a href="../../object-model/computed-properties/">Computed Properties</a></li><li class='toc-level-1 '><a href="../../object-model/computed-properties-and-aggregate-data/">Computed Properties and Aggregate Data</a></li><li class='toc-level-1 '><a href="../../object-model/observers/">Observers</a></li><li class='toc-level-1 '><a href="../../object-model/bindings/">Bindings</a></li><li class='toc-level-1 '><a href="../../object-model/enumerables/">Enumerables</a></li></ol></li><li class='toc-level-0 '><a href="#">Routing</a><ol class='toc-level-1'><li class='toc-level-1 '><a href="../../routing/">Introduction</a></li><li class='toc-level-1 '><a href="../../routing/defining-your-routes/">Defining Your Routes</a></li><li class='toc-level-1 '><a href="../../routing/specifying-a-routes-model/">Specifying a Route's Model</a></li><li class='toc-level-1 '><a href="../../routing/rendering-a-template/">Rendering a Template</a></li><li class='toc-level-1 '><a href="../../routing/redirection/">Redirecting</a></li><li class='toc-level-1 '><a href="../../routing/preventing-and-retrying-transitions/">Preventing and Retrying Transitions</a></li><li class='toc-level-1 '><a href="../../routing/loading-and-error-substates/">Loading / Error Substates</a></li><li class='toc-level-1 '><a href="../../routing/query-params/">Query Parameters</a></li><li class='toc-level-1 '><a href="../../routing/asynchronous-routing/">Asynchronous Routing</a></li></ol></li><li class='toc-level-0 '><a href="#">Templates</a><ol class='toc-level-1'><li class='toc-level-1 '><a href="../../templates/handlebars-basics/">Handlebars Basics</a></li><li class='toc-level-1 '><a href="../../templates/built-in-helpers/">Built-in Helpers</a></li><li class='toc-level-1 '><a href="../../templates/conditionals/">Conditionals</a></li><li class='toc-level-1 '><a href="../../templates/displaying-a-list-of-items/">Displaying a List of Items</a></li><li class='toc-level-1 '><a href="../../templates/displaying-the-keys-in-an-object/">Displaying the Keys in an Object</a></li><li class='toc-level-1 '><a href="../../templates/binding-element-attributes/">Binding Element Attributes</a></li><li class='toc-level-1 '><a href="../../templates/links/">Links</a></li><li class='toc-level-1 '><a href="../../templates/actions/">Actions</a></li><li class='toc-level-1 '><a href="../../templates/input-helpers/">Input Helpers</a></li><li class='toc-level-1 '><a href="../../templates/development-helpers/">Development Helpers</a></li><li class='toc-level-1 '><a href="../../templates/writing-helpers/">Writing Helpers</a></li></ol></li><li class='toc-level-0 '><a href="#">Components</a><ol class='toc-level-1'><li class='toc-level-1 '><a href="../../components/defining-a-component/">Defining a Component</a></li><li class='toc-level-1 '><a href="../../components/the-component-lifecycle/">The Component Lifecycle</a></li><li class='toc-level-1 '><a href="../../components/passing-properties-to-a-component/">Passing Properties to a Component</a></li><li class='toc-level-1 '><a href="../../components/wrapping-content-in-a-component/">Wrapping Content in a Component</a></li><li class='toc-level-1 '><a href="../../components/customizing-a-components-element/">Customizing a Component's Element</a></li><li class='toc-level-1 '><a href="../../components/block-params/">Using Block Params</a></li><li class='toc-level-1 '><a href="../../components/handling-events/">Handling Events</a></li><li class='toc-level-1 '><a href="../../components/triggering-changes-with-actions/">Triggering Changes with Actions</a></li></ol></li><li class='toc-level-0 '><a href="#">Controllers</a><ol class='toc-level-1'><li class='toc-level-1 '><a href="../../controllers/">Introdução</a></li></ol></li><li class='toc-level-0 '><a href="#">Models</a><ol class='toc-level-1'><li class='toc-level-1 '><a href="../../models/">Introduction</a></li><li class='toc-level-1 '><a href="../../models/defining-models/">Defining Models</a></li><li class='toc-level-1 '><a href="../../models/finding-records/">Finding Records</a></li><li class='toc-level-1 '><a href="../../models/creating-updating-and-deleting-records/">Creating, Updating and Deleting</a></li><li class='toc-level-1 '><a href="../../models/relationships/">Relationships</a></li><li class='toc-level-1 '><a href="../../models/pushing-records-into-the-store/">Pushing Records into the Store</a></li><li class='toc-level-1 '><a href="../../models/handling-metadata/">Handling Metadata</a></li><li class='toc-level-1 '><a href="../../models/customizing-adapters/">Customizing Adapters</a></li><li class='toc-level-1 '><a href="../../models/customizing-serializers/">Customizing Serializers</a></li></ol></li><li class='toc-level-0 '><a href="#">Application Concerns</a><ol class='toc-level-1'><li class='toc-level-1 '><a href="../../applications/applications-and-instances/">Applications and Instances</a></li><li class='toc-level-1 '><a href="../../applications/dependency-injection/">Dependency Injection</a></li><li class='toc-level-1 '><a href="../../applications/initializers/">Initializers</a></li><li class='toc-level-1 '><a href="../../applications/services/">Services</a></li><li class='toc-level-1 '><a href="../../applications/run-loop/">The Run Loop</a></li></ol></li><li class='toc-level-0 '><a href="#">Testing</a><ol class='toc-level-1'><li class='toc-level-1 '><a href="../../testing/">Introduction</a></li><li class='toc-level-1 '><a href="../../testing/acceptance/">Acceptance Tests</a></li><li class='toc-level-1 '><a href="../../testing/unit-testing-basics/">Unit Testing Basics</a></li><li class='toc-level-1 '><a href="../../testing/testing-components/">Testing Components</a></li><li class='toc-level-1 '><a href="../../testing/testing-helpers/">Testing Helpers</a></li><li class='toc-level-1 '><a href="../../testing/testing-controllers/">Testing Controllers</a></li><li class='toc-level-1 '><a href="../../testing/testing-routes/">Testing Routes</a></li><li class='toc-level-1 '><a href="../../testing/testing-models/">Testing Models</a></li></ol></li><li class='toc-level-0 '><a href="#">Ember Inspector</a><ol class='toc-level-1'><li class='toc-level-1 '><a href="../../ember-inspector/">Introduction</a></li><li class='toc-level-1 '><a href="../../ember-inspector/installation/">Installing the Inspector</a></li><li class='toc-level-1 '><a href="../../ember-inspector/object-inspector/">Object Inspector</a></li><li class='toc-level-1 '><a href="../../ember-inspector/view-tree/">The View Tree</a></li><li class='toc-level-1 '><a href="../../ember-inspector/routes/">Inspecting Routes</a></li><li class='toc-level-1 '><a href="../../ember-inspector/data/">Data Tab</a></li><li class='toc-level-1 '><a href="../../ember-inspector/deprecations/">Tackling Deprecations</a></li><li class='toc-level-1 '><a href="../../ember-inspector/info/">Library Info</a></li><li class='toc-level-1 '><a href="../../ember-inspector/promises/">Debugging Promises</a></li><li class='toc-level-1 '><a href="../../ember-inspector/container/">Inspecting Objects via the Container</a></li><li class='toc-level-1 '><a href="../../ember-inspector/render-performance/">Rendering Performance</a></li><li class='toc-level-1 '><a href="../../ember-inspector/troubleshooting/">Troubleshooting</a></li></ol></li><li class='toc-level-0 '><a href="#">Addons and Dependencies</a><ol class='toc-level-1'><li class='toc-level-1 '><a href="../../addons-and-dependencies/managing-dependencies/">Managing Dependencies</a></li></ol></li><li class='toc-level-0 '><a href="#">Configuring Ember.js</a><ol class='toc-level-1'><li class='toc-level-1 '><a href="../../configuring-ember/configuring-your-app/">Configuring Your App</a></li><li class='toc-level-1 '><a href="../../configuring-ember/configuring-ember-cli/">Configuring Ember CLI</a></li><li class='toc-level-1 '><a href="../../configuring-ember/handling-deprecations/">Handling Deprecations</a></li><li class='toc-level-1 '><a href="../../configuring-ember/disabling-prototype-extensions/">Disabling Prototype Extensions</a></li><li class='toc-level-1 '><a href="../../configuring-ember/specifying-url-type/">Specifying the URL Type</a></li><li class='toc-level-1 '><a href="../../configuring-ember/embedding-applications/">Embedding Applications</a></li><li class='toc-level-1 '><a href="../../configuring-ember/feature-flags/">Feature Flags</a></li><li class='toc-level-1 '><a href="../../configuring-ember/build-targets/">Build targets</a></li><li class='toc-level-1 '><a href="../../configuring-ember/debugging/">Debugging</a></li></ol></li><li class='toc-level-0 '><a href="#">Contributing to Ember.js</a><ol class='toc-level-1'><li class='toc-level-1 '><a href="../../contributing/adding-new-features/">Adding New Features</a></li><li class='toc-level-1 '><a href="../../contributing/repositories/">Repositories</a></li></ol></li><li class='toc-level-0 '><a href="#">Glossário</a><ol class='toc-level-1'><li class='toc-level-1 '><a href="../../glossary/web-development/">Desenvolvimento WEB</a></li></ol></li></ol></nav>
+</aside>
+
+            <article>
+              <h1>
+                Começando
+                <a href="https://github.com/ember-brasil/website/edit/master/source/guides/tutorial/ember-cli.md"
+                   target="_blank" class="edit-page icon-pencil">Melhorar esta página</a>
+              </h1>
+              <hr>
+
+              <p>Bem-vindo ao Tutorial do Ember!
+Este tutorial destina-se a apresentar conceitos básicos para criar um aplicativo profissional com Ember.
+Se você ficar com dúvida em qualquer ponto durante o tutorial, sinta-se à vontade para baixar <a href="https://github.com/ember-learn/superrentals">https://github.com/ember-learn/super-rentals</a>, esse é o aplicativo completo construído neste tutorial.</p>
+
+<p>Você vai precisar instalar a última versão do <code>ember-cli</code> seguindo o <a href="../../getting-started/quick-start/#toc_instalando-o-ember">Guia Inicial</a> na seção &quot;Instalando Ember&quot;.</p>
+
+<p>A ferramenta de linha de comando do Ember CLI possui inúmeras opções úteis para criar novos projetos, executar testes e diversos conjuntos ferramentas de desenvolvimento.
+Isso permite que os desenvolvedores Ember se concentrem na construção do aplicativo, em vez de criar estruturas para executa-lo.</p>
+
+<p>No terminal, digite <code>ember -help</code> isso mostra todos os comandos disponíveis no Ember CLI. Para obter mais informações sobre um comando específico, digite <code>ember help &lt;command-name&gt;</code>.</p>
+<h2 class='anchorable-toc' id='toc_criando-um-novo-aplicativo'>Criando um novo aplicativo</h2>
+<p>Para criar um novo projeto usando o Ember CLI, use o comando <code>new</code>. Já pensando na próxima seção, você pode criar um aplicativo chamado <code>super-rentals</code>.</p>
+<div class="highlight shell "><div class="ribbon"></div><div class="scroller"><table class="CodeRay"><tr>
+  <td class="line-numbers"><pre>1
+</pre></td>
+  <td class="code"><pre>ember new super-rentals
+</pre></td>
+</tr></table>
+</div></div>
+<p>Um novo projeto será criado dentro do seu diretório atual. Agora você pode ir ao seu diretório do projeto <code>super-rentals</code> e começar a trabalhar nele.</p>
+<div class="highlight shell "><div class="ribbon"></div><div class="scroller"><table class="CodeRay"><tr>
+  <td class="line-numbers"><pre>1
+</pre></td>
+  <td class="code"><pre>cd super-rentals
+</pre></td>
+</tr></table>
+</div></div><h2 class='anchorable-toc' id='toc_estrutura-de-pastas-e-arquivos'>Estrutura de pastas e arquivos</h2>
+<p>O comando <code>new</code> cria um projeto padrão com essa estrutura de pastas e arquivos:</p>
+<div class="highlight text "><div class="ribbon"></div><div class="scroller"><table class="CodeRay"><tr>
+  <td class="line-numbers"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+<strong>10</strong>
+11
+12
+13
+</pre></td>
+  <td class="code"><pre>|--app
+|--config
+|--node_modules
+|--public
+|--tests
+|--vendor
+
+&lt;other files&gt;
+
+ember-cli-build.js
+package.json
+README.md
+testem.js
+</pre></td>
+</tr></table>
+</div></div>
+<p>Vamos dar uma olhada nas pastas e arquivos que o Ember CLI gerou.</p>
+
+<p><strong>app</strong>: É a principal pasta do projeto, é onde fica os <code>models</code>, <code>components</code>, <code>routes</code>, <code>templates</code> e <code>styles</code>. Basicamente é nesta pasta que todo o código do seu aplicativo vai ficar.</p>
+
+<p><strong>config</strong>: Essa pasta contém os arquivos de configurações para nosso aplicativo, como <code>environment.js</code>.</p>
+
+<p><strong>node_modules / package.json</strong>: Essa pasta e arquivo são do npm. Npm é um gerenciador de pacotes para Node.js.
+Ember é construído com Node e usa diversos pacotes <strong>Node.js</strong> para executar. O arquivo <code>package.json</code> contém a lista de dependências de pacotes necessários para seu aplicativo. Qualquer <strong>Ember CLI Addons</strong> que você instale também aparecerá neste arquivo. Os pacotes listados no <code>package.json</code> estão instalados na pasta <code>node_modules</code>.</p>
+
+<p><strong>public</strong>: Essa pasta é onde você vai salvar imagens, svg, css ou outro recurso estático do seu aplicativo.</p>
+
+<p><strong>vendor</strong>: Você pode salvar nesta pasta dependências não gerenciadas pelo <strong>Bower</strong> como JavaScript e CSS de terceiros.</p>
+
+<p><strong>tests</strong>: Todos os testes automatizados como <code>units</code>, <code>integrations</code> e <code>acceptances</code> são salvos nesta pasta.</p>
+
+<p><strong>testem.js</strong>: Ember CLI executa os testes com <strong>testem</strong>, as configurações são salva em <code>testem.js</code>. Testem funciona integrado com <strong>QUnit</strong> e <strong>Mocha</strong>.</p>
+
+<p><strong>ember-cli-build.js</strong>: Contém todas as configurações necessárias de como Ember CLI deve construir seu aplicativo.</p>
+<h2 class='anchorable-toc' id='toc_es6-modules'>ES6 Modules</h2>
+<p>Se você olhar <code>app/router.js</code>, pode se que você não esteja familiarizado com algumas sintaxes.</p>
+<div class="highlight javascript "><div class="ribbon"></div><div class="scroller"><table class="CodeRay">
+  <thead>
+    <tr>
+      <td colspan="2">app/router.js</td>
+    </tr>
+  </thead>
+<tr>
+  <td class="line-numbers"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+<strong>10</strong>
+11
+12
+</pre></td>
+  <td class="code"><pre><span class="reserved">import</span> Ember from <span class="string"><span class="delimiter">'</span><span class="content">ember</span><span class="delimiter">'</span></span>;
+<span class="reserved">import</span> config from <span class="string"><span class="delimiter">'</span><span class="content">./config/environment</span><span class="delimiter">'</span></span>;
+
+const Router = Ember.Router.extend({
+  <span class="key">location</span>: config.locationType,
+  <span class="key">rootURL</span>: config.rootURL
+});
+
+Router.map(<span class="keyword">function</span>() {
+});
+
+<span class="reserved">export</span> <span class="keyword">default</span> Router;
+</pre></td>
+</tr></table>
+</div></div>
+<p>Ember CLI usa módulos ECMAScript 2015 (ES2015 conhecido como ES6) para organizar o código do aplicativo.
+Por exemplo, a linha <code>import Ember from &#39;ember&#39;;</code> da a você acesso completo a biblioteca do Ember.js. A linha <code>import config from &#39;./config/environment&#39;;</code> da a você acesso as configuração do seu aplicativo. <code>const</code> é uma maneira de declarar uma variável de somente leitura para garantir que ela não será acidentalmente reatribuída em outro local. No final do arquivo, <code>export default Router;</code> torna a variável <code>Router</code> definida neste arquivo disponível para outros arquivos.</p>
+<h2 class='anchorable-toc' id='toc_servidor-de-desenvolvimento'>Servidor de desenvolvimento</h2>
+<p>Uma vez que temos um novo projeto, podemos verificar se tudo está funcionando iniciando o servidor de desenvolvimento do Ember:</p>
+<div class="highlight shell "><div class="ribbon"></div><div class="scroller"><table class="CodeRay"><tr>
+  <td class="line-numbers"><pre>1
+</pre></td>
+  <td class="code"><pre>ember server
+</pre></td>
+</tr></table>
+</div></div>
+<p>Se você acessar <a href="http://localhost:4200"><code>http://localhost:4200</code></a>, você verá a tela de boas-vindas padrão.
+Quando você editar o arquivo <code>app/templates/application.hbs</code>, esse conteúdo será substituído.</p>
+
+<p><img src="../../images/ember-cli/default-welcome-page.png" alt="default welcome screen"></p>
+
+<p>A primeira coisa que queremos fazer em nosso novo projeto é remover a tela de boas-vindas.
+Você pode fazer isso abrindo o arquivo de template localizado em <code>app/templates/application.hbs</code>.</p>
+
+<p>Uma vez aberto, remova o componente chamado <code>{{welcome-page}}</code>.
+O aplicativo agora deve ter uma tela completamente em branco, pronto para iniciarmos nosso aplicativo.</p>
+<div class="highlight handlebars "><div class="ribbon"></div><div class="scroller"><?xml version="1.0"?>
+<table class="CodeRay">
+  <thead>
+    <tr>
+      <td colspan="2">app/templates/application.hbs</td>
+    </tr>
+  </thead>
+<tr>
+  <td class="line-numbers"><pre><span class="highlight-line removed">1</span>
+<span class="highlight-line removed">2</span>
+<span class="highlight-line removed">3</span>
+4
+5</pre></td>
+  <td class="code"><pre><span class="highlight-line removed"><span class="comment">{{!-- The following component displays Ember's default welcome message. --}}</span></span>
+<span class="highlight-line removed"><span class="inline"><span class="inline-delimiter">{{</span><span class="attribute-name">welcome-page</span><span class="inline-delimiter">}}</span></span></span>
+<span class="highlight-line removed"><span class="comment">{{!-- Feel free to remove this! --}}</span></span>
+
+<span class="inline"><span class="inline-delimiter">{{</span><span class="attribute-name">outlet</span><span class="inline-delimiter">}}</span></span></pre></td>
+</tr></table>
+</div></div>
+            </article>
+
+          </div>
+
+          <div class="footer">
+    <div class="container">
+
+      <div class="footer-statement">
+        <a href="https://ember-community-slackin.herokuapp.com/">Comunidade no Slack</a> &bull;
+        <a href="https://github.com/emberjs/ember.js">Github</a> &bull;
+        <a href="https://t.me/EmberBR">Telegram (Ember-BR)</a>
+      </div>
+
+      <div class="footer-statement footer-social">
+        <a href="http://twitter.com/emberjs"
+          title="Twitter">
+          <i class="icon-twitter"></i>
+        </a>
+        <a href="https://github.com/emberjs/ember.js"
+          title="GitHub">
+          <i class="icon-github"></i>
+        </a>
+        <a href="https://plus.google.com/communities/106387049790387471205"
+          title="Google+">
+          <i class="icon-gplus"></i>
+        </a>
+      </div>
+      <hr />
+      <div class="info">
+        <p>
+          Este site é parte de uma iniciativa da <b>Comunidade Brasileira Ember</b> e não tem nenhuma ligação direta com o projeto oficial. <br />
+          Ember é uma marca registrada da <a href="http://tilde.io">Tilde Inc.</a>.<br />
+          Para obter mais informações sobre licença de uso acesse <a href="http://emberjs.com/legal">Legal</a>.
+        </p>
+      </div>
+
+  </div>
+</div>
+
+
+          
+    </main>
+
+    <script type="text/javascript">
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-105665012-1', 'auto');
+    ga('send', 'pageview');
+</script>
+
+  </body>
+</html>

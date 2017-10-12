@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="theme-color" content="#e46652">
+
+    <title>Ember.js - Tutorial: Routes e Templates</title>
+    <meta property="st:title" content="Tutorial: Routes e Templates" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="../../../images/favicon.png" rel="icon" type="image/png" />
+    <!--[if lte IE 7 ]><link href="../../../stylesheets/fonts/fontello-ie7.css" rel="stylesheet" /><![endif]-->
+    <link href="../../../stylesheets/application.css" rel="stylesheet" />
+    <link href="//fonts.googleapis.com/css?family=Nunito:300,400,700" rel="stylesheet">
+    <!-- This TypeKit account is managed by @wifelette. Contact her with any issues. -->
+    <script src="https://use.typekit.net/stz3kpn.js"></script>
+    <script>try{Typekit.load({ async: true });}catch(e){}</script>
+
+    <link href="/blog/feed.xml" rel="alternate" type="application/atom+xml" title="Ember.js - Blog" />
+    
+  </head>
+
+  <body class="guides guides guides_tutorial guides_tutorial_routes-and-templates guides_tutorial_routes-and-templates_index">
+
+    <!--[if lt IE 9]>
+      <script src="../../../javascripts/common-old-ie.js"></script>
+    <![endif]-->
+    <!--[if gte IE 9]><!-->
+      <script src="../../../javascripts/common-modern.js"></script>
+    <!--<![endif]-->
+
+    <main>
+      <header class="header">
+  <nav role="navigation" aria-label="main">
+    <ul class="header-nav">
+      <li class="header-logo">
+        <a href="/"><span class="visually-hidden">Ember homepage</span></a>
+      </li>
+      <li>
+        <a href="/">Home</a>
+      </li>
+      <li>
+        <a href="/guides/">Documentação</a>
+      </li>
+      <li>
+        <a href="/contribuidores/">Contribuidores</a>
+      </li>
+      <li>
+        <a href="/quem-usa-ember">Quem usa Ember?</a>
+      </li>
+      <li>
+        <a href="http://emberjs.com/api">Ember API</a>
+      </li>
+    </ul>
+  </nav>
+</header>
+
+
+      
+        <div class="content">
+            <aside class="sidebar">
+  <nav class='toc-container' aria-label='table of contents'><ol class='toc-level-0 selected'><li class='toc-level-0 '><a href="#">Começando</a><ol class='toc-level-1'><li class='toc-level-1 '><a href="../../getting-started/quick-start/">Começo rápido</a></li><li class='toc-level-1 '><a href="../../getting-started/">Instalando Ember</a></li><li class='toc-level-1 '><a href="../../getting-started/core-concepts/">Conceitos fundamentais</a></li></ol></li><li class='toc-level-0 selected'><a href="#">Tutorial</a><ol class='toc-level-1 selected'><li class='toc-level-1 '><a href="../ember-cli/">Começando</a></li><li class='toc-level-1 '><a href="../acceptance-test/">Planejando seu aplicativo</a></li><li class='toc-level-1 selected'><a href="./">Routes e Templates</a></li><li class='toc-level-1 '><a href="../model-hook/">Model Hook</a></li><li class='toc-level-1 '><a href="../installing-addons/">Instalando Addons</a></li><li class='toc-level-1 '><a href="../simple-component/">Construindo um componente simples</a></li><li class='toc-level-1 '><a href="../hbs-helper/">Criando um Helper para Handlebars</a></li><li class='toc-level-1 '><a href="../ember-data/">Usando Ember Data</a></li><li class='toc-level-1 '><a href="../autocomplete-component/">Criando um componente complexo</a></li><li class='toc-level-1 '><a href="../service/">Services e Utils</a></li><li class='toc-level-1 '><a href="../subroutes/">Adicionando rotas aninhadas</a></li><li class='toc-level-1 '><a href="../deploying/">Publicando seu App</a></li></ol></li><li class='toc-level-0 '><a href="#">The Object Model</a><ol class='toc-level-1'><li class='toc-level-1 '><a href="../../object-model/">Objects in Ember</a></li><li class='toc-level-1 '><a href="../../object-model/classes-and-instances/">Classes and Instances</a></li><li class='toc-level-1 '><a href="../../object-model/reopening-classes-and-instances/">Reopening Classes and Instances</a></li><li class='toc-level-1 '><a href="../../object-model/computed-properties/">Computed Properties</a></li><li class='toc-level-1 '><a href="../../object-model/computed-properties-and-aggregate-data/">Computed Properties and Aggregate Data</a></li><li class='toc-level-1 '><a href="../../object-model/observers/">Observers</a></li><li class='toc-level-1 '><a href="../../object-model/bindings/">Bindings</a></li><li class='toc-level-1 '><a href="../../object-model/enumerables/">Enumerables</a></li></ol></li><li class='toc-level-0 '><a href="#">Routing</a><ol class='toc-level-1'><li class='toc-level-1 '><a href="../../routing/">Introduction</a></li><li class='toc-level-1 '><a href="../../routing/defining-your-routes/">Defining Your Routes</a></li><li class='toc-level-1 '><a href="../../routing/specifying-a-routes-model/">Specifying a Route's Model</a></li><li class='toc-level-1 '><a href="../../routing/rendering-a-template/">Rendering a Template</a></li><li class='toc-level-1 '><a href="../../routing/redirection/">Redirecting</a></li><li class='toc-level-1 '><a href="../../routing/preventing-and-retrying-transitions/">Preventing and Retrying Transitions</a></li><li class='toc-level-1 '><a href="../../routing/loading-and-error-substates/">Loading / Error Substates</a></li><li class='toc-level-1 '><a href="../../routing/query-params/">Query Parameters</a></li><li class='toc-level-1 '><a href="../../routing/asynchronous-routing/">Asynchronous Routing</a></li></ol></li><li class='toc-level-0 '><a href="#">Templates</a><ol class='toc-level-1'><li class='toc-level-1 '><a href="../../templates/handlebars-basics/">Handlebars Basics</a></li><li class='toc-level-1 '><a href="../../templates/built-in-helpers/">Built-in Helpers</a></li><li class='toc-level-1 '><a href="../../templates/conditionals/">Conditionals</a></li><li class='toc-level-1 '><a href="../../templates/displaying-a-list-of-items/">Displaying a List of Items</a></li><li class='toc-level-1 '><a href="../../templates/displaying-the-keys-in-an-object/">Displaying the Keys in an Object</a></li><li class='toc-level-1 '><a href="../../templates/binding-element-attributes/">Binding Element Attributes</a></li><li class='toc-level-1 '><a href="../../templates/links/">Links</a></li><li class='toc-level-1 '><a href="../../templates/actions/">Actions</a></li><li class='toc-level-1 '><a href="../../templates/input-helpers/">Input Helpers</a></li><li class='toc-level-1 '><a href="../../templates/development-helpers/">Development Helpers</a></li><li class='toc-level-1 '><a href="../../templates/writing-helpers/">Writing Helpers</a></li></ol></li><li class='toc-level-0 '><a href="#">Components</a><ol class='toc-level-1'><li class='toc-level-1 '><a href="../../components/defining-a-component/">Defining a Component</a></li><li class='toc-level-1 '><a href="../../components/the-component-lifecycle/">The Component Lifecycle</a></li><li class='toc-level-1 '><a href="../../components/passing-properties-to-a-component/">Passing Properties to a Component</a></li><li class='toc-level-1 '><a href="../../components/wrapping-content-in-a-component/">Wrapping Content in a Component</a></li><li class='toc-level-1 '><a href="../../components/customizing-a-components-element/">Customizing a Component's Element</a></li><li class='toc-level-1 '><a href="../../components/block-params/">Using Block Params</a></li><li class='toc-level-1 '><a href="../../components/handling-events/">Handling Events</a></li><li class='toc-level-1 '><a href="../../components/triggering-changes-with-actions/">Triggering Changes with Actions</a></li></ol></li><li class='toc-level-0 '><a href="#">Controllers</a><ol class='toc-level-1'><li class='toc-level-1 '><a href="../../controllers/">Introdução</a></li></ol></li><li class='toc-level-0 '><a href="#">Models</a><ol class='toc-level-1'><li class='toc-level-1 '><a href="../../models/">Introduction</a></li><li class='toc-level-1 '><a href="../../models/defining-models/">Defining Models</a></li><li class='toc-level-1 '><a href="../../models/finding-records/">Finding Records</a></li><li class='toc-level-1 '><a href="../../models/creating-updating-and-deleting-records/">Creating, Updating and Deleting</a></li><li class='toc-level-1 '><a href="../../models/relationships/">Relationships</a></li><li class='toc-level-1 '><a href="../../models/pushing-records-into-the-store/">Pushing Records into the Store</a></li><li class='toc-level-1 '><a href="../../models/handling-metadata/">Handling Metadata</a></li><li class='toc-level-1 '><a href="../../models/customizing-adapters/">Customizing Adapters</a></li><li class='toc-level-1 '><a href="../../models/customizing-serializers/">Customizing Serializers</a></li></ol></li><li class='toc-level-0 '><a href="#">Application Concerns</a><ol class='toc-level-1'><li class='toc-level-1 '><a href="../../applications/applications-and-instances/">Applications and Instances</a></li><li class='toc-level-1 '><a href="../../applications/dependency-injection/">Dependency Injection</a></li><li class='toc-level-1 '><a href="../../applications/initializers/">Initializers</a></li><li class='toc-level-1 '><a href="../../applications/services/">Services</a></li><li class='toc-level-1 '><a href="../../applications/run-loop/">The Run Loop</a></li></ol></li><li class='toc-level-0 '><a href="#">Testing</a><ol class='toc-level-1'><li class='toc-level-1 '><a href="../../testing/">Introduction</a></li><li class='toc-level-1 '><a href="../../testing/acceptance/">Acceptance Tests</a></li><li class='toc-level-1 '><a href="../../testing/unit-testing-basics/">Unit Testing Basics</a></li><li class='toc-level-1 '><a href="../../testing/testing-components/">Testing Components</a></li><li class='toc-level-1 '><a href="../../testing/testing-helpers/">Testing Helpers</a></li><li class='toc-level-1 '><a href="../../testing/testing-controllers/">Testing Controllers</a></li><li class='toc-level-1 '><a href="../../testing/testing-routes/">Testing Routes</a></li><li class='toc-level-1 '><a href="../../testing/testing-models/">Testing Models</a></li></ol></li><li class='toc-level-0 '><a href="#">Ember Inspector</a><ol class='toc-level-1'><li class='toc-level-1 '><a href="../../ember-inspector/">Introduction</a></li><li class='toc-level-1 '><a href="../../ember-inspector/installation/">Installing the Inspector</a></li><li class='toc-level-1 '><a href="../../ember-inspector/object-inspector/">Object Inspector</a></li><li class='toc-level-1 '><a href="../../ember-inspector/view-tree/">The View Tree</a></li><li class='toc-level-1 '><a href="../../ember-inspector/routes/">Inspecting Routes</a></li><li class='toc-level-1 '><a href="../../ember-inspector/data/">Data Tab</a></li><li class='toc-level-1 '><a href="../../ember-inspector/deprecations/">Tackling Deprecations</a></li><li class='toc-level-1 '><a href="../../ember-inspector/info/">Library Info</a></li><li class='toc-level-1 '><a href="../../ember-inspector/promises/">Debugging Promises</a></li><li class='toc-level-1 '><a href="../../ember-inspector/container/">Inspecting Objects via the Container</a></li><li class='toc-level-1 '><a href="../../ember-inspector/render-performance/">Rendering Performance</a></li><li class='toc-level-1 '><a href="../../ember-inspector/troubleshooting/">Troubleshooting</a></li></ol></li><li class='toc-level-0 '><a href="#">Addons and Dependencies</a><ol class='toc-level-1'><li class='toc-level-1 '><a href="../../addons-and-dependencies/managing-dependencies/">Managing Dependencies</a></li></ol></li><li class='toc-level-0 '><a href="#">Configuring Ember.js</a><ol class='toc-level-1'><li class='toc-level-1 '><a href="../../configuring-ember/configuring-your-app/">Configuring Your App</a></li><li class='toc-level-1 '><a href="../../configuring-ember/configuring-ember-cli/">Configuring Ember CLI</a></li><li class='toc-level-1 '><a href="../../configuring-ember/handling-deprecations/">Handling Deprecations</a></li><li class='toc-level-1 '><a href="../../configuring-ember/disabling-prototype-extensions/">Disabling Prototype Extensions</a></li><li class='toc-level-1 '><a href="../../configuring-ember/specifying-url-type/">Specifying the URL Type</a></li><li class='toc-level-1 '><a href="../../configuring-ember/embedding-applications/">Embedding Applications</a></li><li class='toc-level-1 '><a href="../../configuring-ember/feature-flags/">Feature Flags</a></li><li class='toc-level-1 '><a href="../../configuring-ember/build-targets/">Build targets</a></li><li class='toc-level-1 '><a href="../../configuring-ember/debugging/">Debugging</a></li></ol></li><li class='toc-level-0 '><a href="#">Contributing to Ember.js</a><ol class='toc-level-1'><li class='toc-level-1 '><a href="../../contributing/adding-new-features/">Adding New Features</a></li><li class='toc-level-1 '><a href="../../contributing/repositories/">Repositories</a></li></ol></li><li class='toc-level-0 '><a href="#">Glossário</a><ol class='toc-level-1'><li class='toc-level-1 '><a href="../../glossary/web-development/">Desenvolvimento WEB</a></li></ol></li></ol></nav>
+</aside>
+
+            <article>
+              <h1>
+                Routes e Templates
+                <a href="https://github.com/ember-brasil/website/edit/master/source/guides/tutorial/routes-and-templates.md"
+                   target="_blank" class="edit-page icon-pencil">Melhorar esta página</a>
+              </h1>
+              <hr>
+
+              <p>No nosso aplicativo Super Rentals, queremos acessar a página inicial e exibir a lista de imóveis para alugar.
+A partir daí, precisamos conseguir visitar uma página sobre a empresa e outra com informações de contato.</p>
+<h2 class='anchorable-toc' id='toc_p-gina-sobre'>Página Sobre</h2>
+<p>Vamos começar construíndo nossa página &quot;sobre&quot;.</p>
+
+<p>Em Ember, quando queremos fazer uma nova página, precisamos criar uma <code>route</code> usando o Ember CLI. Para uma visão geral rápida de como o Ember estrutura as coisas, veja <a href="../../getting-started/core-concepts/">nosso diagrama na página de conceitos básicos</a>.</p>
+
+<p>Vamos usar Ember CLI para criar nossa &quot;route&quot; <code>about</code>.</p>
+<div class="highlight shell "><div class="ribbon"></div><div class="scroller"><table class="CodeRay"><tr>
+  <td class="line-numbers"><pre>1
+</pre></td>
+  <td class="code"><pre>ember generate route about
+</pre></td>
+</tr></table>
+</div></div>
+<p><em><strong>Observação</strong>: executando <code>ember help generate</code> listará diversos recursos que você pode utilizar, você também pode criar os seus futuramente.</em></p>
+
+<p>Após executar o comando, esse será o resultado:</p>
+<div class="highlight shell "><div class="ribbon"></div><div class="scroller"><table class="CodeRay"><tr>
+  <td class="line-numbers"><pre>1
+2
+3
+4
+5
+6
+7
+</pre></td>
+  <td class="code"><pre>installing route
+  create app/routes/about.js
+  create app/templates/about.hbs
+updating router
+  add route about
+installing route-test
+  create tests/unit/routes/about-test.js
+</pre></td>
+</tr></table>
+</div></div>
+<p>Uma Ember <code>route</code> é construída com três partes:</p>
+
+<ol>
+<li>Uma entrada no Ember <code>Router</code> (<code>/app/router.js</code>), que mapeia nosso o nome da route a uma URL</li>
+<li>Um arquivo de manipulador de route, que configura o que deve acontecer quando essa route é carregada <em><code>(app/routes/about.js)</code></em></li>
+<li>Um template da route, onde é exibido o conteúdo da página <em><code>(app/templates/about.hbs)</code></em></li>
+</ol>
+
+<p>Se você abrir <code>/app/router.js</code>, verá uma nova linha de código para a route <strong>about</strong>, chamanda <code>this.route(&#39;about&#39;)</code> na função <code>Router.map</code>. Essa nova linha de código diz ao roteador Ember para executar o nosso arquivo <code>/app/routes/about.js</code> quando um visitante acessa <code>/about</code>.</p>
+<div class="highlight javascript "><div class="ribbon"></div><div class="scroller"><?xml version="1.0"?>
+<table class="CodeRay">
+  <thead>
+    <tr>
+      <td colspan="2">app/router.js</td>
+    </tr>
+  </thead>
+<tr>
+  <td class="line-numbers"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+<span class="highlight-line added"><strong>10</strong></span>
+11
+12
+13</pre></td>
+  <td class="code"><pre><span class="reserved">import</span> Ember from <span class="string"><span class="delimiter">'</span><span class="content">ember</span><span class="delimiter">'</span></span>;
+<span class="reserved">import</span> config from <span class="string"><span class="delimiter">'</span><span class="content">./config/environment</span><span class="delimiter">'</span></span>;
+
+const Router = Ember.Router.extend({
+  <span class="key">location</span>: config.locationType,
+  <span class="key">rootURL</span>: config.rootURL
+});
+
+Router.map(<span class="keyword">function</span>() {
+<span class="highlight-line added">  <span class="local-variable">this</span>.route(<span class="string"><span class="delimiter">'</span><span class="content">about</span><span class="delimiter">'</span></span>);</span>
+});
+
+<span class="reserved">export</span> <span class="keyword">default</span> Router;</pre></td>
+</tr></table>
+</div></div>
+<p>Como a página sobre a empresa vai ter um conteúdo estático, não vamos ajustar o arquivo de manipulador de route <code>/app/routes/about.js</code> agora. Em vez disso, vamos abrir nosso arquivo de template <code>/app/templates/about.hbs</code> e adicionar algumas informações sobre Super Rentals:</p>
+<div class="highlight handlebars "><div class="ribbon"></div><div class="scroller"><table class="CodeRay">
+  <thead>
+    <tr>
+      <td colspan="2">app/templates/about.hbs</td>
+    </tr>
+  </thead>
+<tr>
+  <td class="line-numbers"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+</pre></td>
+  <td class="code"><pre><span class="tag">&lt;div</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">jumbo</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+  <span class="tag">&lt;div</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">right tomster</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span><span class="tag">&lt;/div&gt;</span>
+  <span class="tag">&lt;h2&gt;</span>About Super Rentals<span class="tag">&lt;/h2&gt;</span>
+  <span class="tag">&lt;p&gt;</span>
+    The Super Rentals website is a delightful project created to explore Ember.
+    By building a property rental site, we can simultaneously imagine traveling
+    AND building Ember applications.
+  <span class="tag">&lt;/p&gt;</span>
+<span class="tag">&lt;/div&gt;</span>
+</pre></td>
+</tr></table>
+</div></div>
+<p>Agora, execute <code>ember server</code> (ou<code>ember serve</code>, ou mesmo <code>ember s</code> para abreviar) em seu terminal para iniciar o servidor de desenvolvimento Ember e acesse <a href="http://localhost:4200/about"><code>http://localhost:4200/about</code></a> para ver nossa nova página em ação!</p>
+<h2 class='anchorable-toc' id='toc_p-gina-de-contato'>Página de contato</h2>
+<p>Agora vamos criar outra route com informações de contato.
+Mais uma vez, começaremos gerando uma route:</p>
+<div class="highlight shell "><div class="ribbon"></div><div class="scroller"><table class="CodeRay"><tr>
+  <td class="line-numbers"><pre>1
+</pre></td>
+  <td class="code"><pre>ember g route contact
+</pre></td>
+</tr></table>
+</div></div>
+<p>Mais uma vez, adicionamos uma nova route em <code>app/router.js</code> e criamos um manipulador de route em <code>app/routes/contact.js</code>.</p>
+
+<p>No template da route <code>/app/templates/contact.hbs</code>, vamos adicionar informações de contato:</p>
+<div class="highlight handlebars "><div class="ribbon"></div><div class="scroller"><table class="CodeRay">
+  <thead>
+    <tr>
+      <td colspan="2">app/templates/contact.hbs</td>
+    </tr>
+  </thead>
+<tr>
+  <td class="line-numbers"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+<strong>10</strong>
+11
+12
+13
+14
+15
+</pre></td>
+  <td class="code"><pre><span class="tag">&lt;div</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">jumbo</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+  <span class="tag">&lt;div</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">right tomster</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span><span class="tag">&lt;/div&gt;</span>
+  <span class="tag">&lt;h2&gt;</span>Contact Us<span class="tag">&lt;/h2&gt;</span>
+  <span class="tag">&lt;p&gt;</span>Super Rentals Representatives would love to help you<span class="tag">&lt;br&gt;</span>choose a destination or answer
+    any questions you may have.<span class="tag">&lt;/p&gt;</span>
+  <span class="tag">&lt;p&gt;</span>
+    Super Rentals HQ
+    <span class="tag">&lt;address&gt;</span>
+      1212 Test Address Avenue<span class="tag">&lt;br&gt;</span>
+      Testington, OR 97233
+    <span class="tag">&lt;/address&gt;</span>
+    <span class="tag">&lt;a</span> <span class="attribute-name">href</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">tel:503.555.1212</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>+1 (503) 555-1212<span class="tag">&lt;/a&gt;</span><span class="tag">&lt;br&gt;</span>
+    <span class="tag">&lt;a</span> <span class="attribute-name">href</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">mailto:superrentalsrep@emberjs.com</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>superrentalsrep@emberjs.com<span class="tag">&lt;/a&gt;</span>
+  <span class="tag">&lt;/p&gt;</span>
+<span class="tag">&lt;/div&gt;</span>
+</pre></td>
+</tr></table>
+</div></div>
+<p>Agora, quando você acessar <a href="http://localhost:4200/contact"><code>http://localhost:4200/contact</code></a>, será exibido a página de contato.</p>
+<h2 class='anchorable-toc' id='toc_navegando-entre-links-com-helper-link-to'>Navegando entre links com Helper {{link-to}}</h2>
+<p>Navegar entre os links se tornou uma dor agora, então vamos facilitar isso.
+Vamos colocar um link para a página de contato para a página sobre, e um link correspondente para a página sobre na página de contato.</p>
+
+<p>Para fazer isso, usaremos um Ember Helper <a href="../../templates/links/"><code>{{link-to}}</code></a> que facilita a navegação entre nossas páginas. Vamos ajustar o nosso arquivo <code>about.hbs</code>:</p>
+<div class="highlight handlebars "><div class="ribbon"></div><div class="scroller"><?xml version="1.0"?>
+<table class="CodeRay">
+  <thead>
+    <tr>
+      <td colspan="2">app/templates/about.hbs</td>
+    </tr>
+  </thead>
+<tr>
+  <td class="line-numbers"><pre>1
+2
+3
+4
+5
+6
+7
+8
+<span class="highlight-line added">9</span>
+<span class="highlight-line added"><strong>10</strong></span>
+<span class="highlight-line added">11</span>
+12</pre></td>
+  <td class="code"><pre><span class="tag">&lt;div</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">"</span><span class="content">jumbo</span><span class="delimiter">"</span></span><span class="tag">&gt;</span>
+  <span class="tag">&lt;div</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">"</span><span class="content">right tomster</span><span class="delimiter">"</span></span><span class="tag">&gt;</span><span class="tag">&lt;/div&gt;</span>
+  <span class="tag">&lt;h2&gt;</span>About Super Rentals<span class="tag">&lt;/h2&gt;</span>
+  <span class="tag">&lt;p&gt;</span>
+    The Super Rentals website is a delightful project created to explore Ember.
+    By building a property rental site, we can simultaneously imagine traveling
+    AND building Ember applications.
+  <span class="tag">&lt;/p&gt;</span>
+<span class="highlight-line added">  <span class="inline"><span class="inline-delimiter">{{#</span><span class="attribute-name">link-to</span> <span class="error">'</span><span class="attribute-name">contact</span><span class="error">'</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">"</span><span class="content">button</span><span class="delimiter">"</span></span><span class="inline-delimiter">}}</span></span></span>
+<span class="highlight-line added">    Contact Us</span>
+<span class="highlight-line added">  <span class="inline"><span class="inline-delimiter">{{/</span><span class="attribute-name">link-to</span><span class="inline-delimiter">}}</span></span></span>
+<span class="tag">&lt;/div&gt;</span></pre></td>
+</tr></table>
+</div></div>
+<p>Neste caso, estamos dizendo para o Helper <code>{{link-to}}</code> que queremos criar um link para a route: <code>contact</code>.
+Quando olhamos para a nossa página sobre <a href="http://localhost:4200/about"><code>http://localhost:4200/about</code></a>, agora temos um link funcionando para nossa página de contato:</p>
+
+<p><img src="../../images/routes-and-templates/ember-super-rentals-about.png" alt="super rentals about page screenshot"></p>
+
+<p>Agora, vamos adicionar um link correspondente à página de contatos, para que possamos navegar entre <code>about</code> e<code>contact</code>:</p>
+<div class="highlight handlebars "><div class="ribbon"></div><div class="scroller"><?xml version="1.0"?>
+<table class="CodeRay">
+  <thead>
+    <tr>
+      <td colspan="2">app/templates/contact.hbs</td>
+    </tr>
+  </thead>
+<tr>
+  <td class="line-numbers"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+<strong>10</strong>
+11
+12
+13
+14
+<span class="highlight-line added">15</span>
+<span class="highlight-line added">16</span>
+<span class="highlight-line added">17</span>
+18</pre></td>
+  <td class="code"><pre><span class="tag">&lt;div</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">"</span><span class="content">jumbo</span><span class="delimiter">"</span></span><span class="tag">&gt;</span>
+  <span class="tag">&lt;div</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">"</span><span class="content">right tomster</span><span class="delimiter">"</span></span><span class="tag">&gt;</span><span class="tag">&lt;/div&gt;</span>
+  <span class="tag">&lt;h2&gt;</span>Contact Us<span class="tag">&lt;/h2&gt;</span>
+  <span class="tag">&lt;p&gt;</span>Super Rentals Representatives would love to help you<span class="tag">&lt;br&gt;</span>choose a destination or answer
+    any questions you may have.<span class="tag">&lt;/p&gt;</span>
+  <span class="tag">&lt;p&gt;</span>
+    Super Rentals HQ
+    <span class="tag">&lt;address&gt;</span>
+      1212 Test Address Avenue<span class="tag">&lt;br&gt;</span>
+      Testington, OR 97233
+    <span class="tag">&lt;/address&gt;</span>
+    <span class="tag">&lt;a</span> <span class="attribute-name">href</span>=<span class="string"><span class="delimiter">"</span><span class="content">tel:503.555.1212</span><span class="delimiter">"</span></span><span class="tag">&gt;</span>+1 (503) 555-1212<span class="tag">&lt;/a&gt;</span><span class="tag">&lt;br&gt;</span>
+    <span class="tag">&lt;a</span> <span class="attribute-name">href</span>=<span class="string"><span class="delimiter">"</span><span class="content">mailto:superrentalsrep@emberjs.com</span><span class="delimiter">"</span></span><span class="tag">&gt;</span>superrentalsrep@emberjs.com<span class="tag">&lt;/a&gt;</span>
+  <span class="tag">&lt;/p&gt;</span>
+<span class="highlight-line added">  <span class="inline"><span class="inline-delimiter">{{#</span><span class="attribute-name">link-to</span> <span class="error">'</span><span class="attribute-name">about</span><span class="error">'</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">"</span><span class="content">button</span><span class="delimiter">"</span></span><span class="inline-delimiter">}}</span></span></span>
+<span class="highlight-line added">    About</span>
+<span class="highlight-line added">  <span class="inline"><span class="inline-delimiter">{{/</span><span class="attribute-name">link-to</span><span class="inline-delimiter">}}</span></span></span>
+<span class="tag">&lt;/div&gt;</span></pre></td>
+</tr></table>
+</div></div><h2 class='anchorable-toc' id='toc_p-gina-de-alugu-is'>Página de aluguéis</h2>
+<p>Além das nossas páginas <code>about</code> e <code>contact</code>, queremos listar os aluguéis que nossos clientes. Então, vamos adicionar uma terceira route e chamá-la de <code>rentals</code>:</p>
+<div class="highlight shell "><div class="ribbon"></div><div class="scroller"><table class="CodeRay"><tr>
+  <td class="line-numbers"><pre>1
+</pre></td>
+  <td class="code"><pre>ember g route rentals
+</pre></td>
+</tr></table>
+</div></div>
+<p>E então vamos atualizar nosso novo template (<code>/app/templates/rentals.hbs</code>) com algum conteúdo inicial.
+Voltaremos a esta página para adicionar as propriedades reais do aluguéis.</p>
+<div class="highlight handlebars "><div class="ribbon"></div><div class="scroller"><table class="CodeRay">
+  <thead>
+    <tr>
+      <td colspan="2">app/templates/rentals.hbs</td>
+    </tr>
+  </thead>
+<tr>
+  <td class="line-numbers"><pre>1
+2
+3
+4
+5
+6
+7
+8
+</pre></td>
+  <td class="code"><pre><span class="tag">&lt;div</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">jumbo</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+  <span class="tag">&lt;div</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">right tomster</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span><span class="tag">&lt;/div&gt;</span>
+  <span class="tag">&lt;h2&gt;</span>Welcome!<span class="tag">&lt;/h2&gt;</span>
+  <span class="tag">&lt;p&gt;</span>We hope you find exactly what you're looking for in a place to stay.<span class="tag">&lt;/p&gt;</span>
+  <span class="inline"><span class="inline-delimiter">{{#</span><span class="attribute-name">link-to</span> <span class="error">'</span><span class="attribute-name">about</span><span class="error">'</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">button</span><span class="delimiter">&quot;</span></span><span class="inline-delimiter">}}</span></span>
+    About Us
+  <span class="inline"><span class="inline-delimiter">{{/</span><span class="attribute-name">link-to</span><span class="inline-delimiter">}}</span></span>
+<span class="tag">&lt;/div&gt;</span>
+</pre></td>
+</tr></table>
+</div></div><h2 class='anchorable-toc' id='toc_p-gina-index'>Página index</h2>
+<p>Com nossas três routes criada, estamos prontos para adicionar uma route de index, que irá lidar com solicitações para o URI (<code>/</code>) do nosso site.
+Gostaríamos de fazer a página de aluguel na página principal do nosso aplicativo e já criamos uma route.
+Portanto, queremos que nossa route index simplesmente redirecione nosso cliente para a route <code>rentals</code> que já criamos.</p>
+
+<p>Usando o mesmo processo que fizemos anteriormente, primeiro devemos criar uma nova route chamada <code>index</code>.</p>
+<div class="highlight shell "><div class="ribbon"></div><div class="scroller"><table class="CodeRay"><tr>
+  <td class="line-numbers"><pre>1
+</pre></td>
+  <td class="code"><pre>ember g route index
+</pre></td>
+</tr></table>
+</div></div>
+<p>Esse é o resultado do comando para você olhar e se familiarizar:</p>
+<div class="highlight shell "><div class="ribbon"></div><div class="scroller"><table class="CodeRay"><tr>
+  <td class="line-numbers"><pre>1
+2
+3
+4
+5
+</pre></td>
+  <td class="code"><pre>installing route
+  create app/routes/index.js
+  create app/templates/index.hbs
+installing route-test
+  create tests/unit/routes/index-test.js
+</pre></td>
+</tr></table>
+</div></div>
+<p>Ao contrário dos outros manipuladores de routes que fizemos até agora, a route <code>index</code> é especial:
+<strong>NÃO</strong> requer uma entrada no mapeamento do roteador.
+Vamos aprender mais sobre por que a entrada não é necessária mais tarde quando olharmos para <a href="../subroutes">nested routes</a> do Ember.</p>
+
+<p>Tudo o que queremos fazer quando um usuário visita nossa URL (<code>/</code>) é redireciona-lo para <code>/rentals</code>.
+Para fazer isso, adicionaremos um código ao nosso manipulador de route <code>index</code>, implementando um hook de ciclo de vida da route, chamado <code>beforeModel</code>.</p>
+
+<p>Cada manipulador de route possui um conjunto de &quot;lifecycle hooks&quot;, que são funções invocadas em momentos específicos durante o carregamento de uma página.
+O hook <a href="http://emberjs.com/api/classes/Ember.Route.html#method_beforeModel"><code>beforeModel</code></a> é executado antes que os dados sejam obtidos pelo hook <code>model</code> e antes que a página seja renderizada.
+Veja <a href="../model-hook">a próxima seção</a> para obter uma explicação do hook <code>model</code>.</p>
+
+<p>Em nosso manipulador de route <code>index</code>, chamaremos a função <a href="http://emberjs.com/api/classes/Ember.Route.html#method_replaceWith"><code>replaceWith</code></a>.
+A função <code>replaceWith</code> é semelhante à função<code>transitionTo</code> da rota, sendo a diferença que <code>replaceWith</code> substituirá o URL atual no histórico do navegador, enquanto<code>transitionTo</code> irá adicionar ao histórico.
+Como queremos que nossa route de &quot;rentals&quot; seja nossa página inicial, usaremos a função <code>replaceWith</code>.</p>
+
+<p>Em nosso manipulador de route <code>index</code>, vamos chamar <code>replaceWith</code> em <code>beforeModel</code>.</p>
+<div class="highlight javascript "><div class="ribbon"></div><div class="scroller"><?xml version="1.0"?>
+<table class="CodeRay">
+  <thead>
+    <tr>
+      <td colspan="2">app/routes/index.js</td>
+    </tr>
+  </thead>
+<tr>
+  <td class="line-numbers"><pre>1
+2
+3
+<span class="highlight-line added">4</span>
+<span class="highlight-line added">5</span>
+<span class="highlight-line added">6</span>
+7</pre></td>
+  <td class="code"><pre><span class="reserved">import</span> Ember from <span class="string"><span class="delimiter">'</span><span class="content">ember</span><span class="delimiter">'</span></span>;
+
+<span class="reserved">export</span> <span class="keyword">default</span> Ember.Route.extend({
+<span class="highlight-line added">  beforeModel() {</span>
+<span class="highlight-line added">    <span class="local-variable">this</span>.replaceWith(<span class="string"><span class="delimiter">'</span><span class="content">rentals</span><span class="delimiter">'</span></span>);</span>
+<span class="highlight-line added">  }</span>
+});</pre></td>
+</tr></table>
+</div></div>
+<p>Agora, vamos acessar a route <code>/</code> e ver que ela vai redirecionar para <code>/rentals</code>.</p>
+<h2 class='anchorable-toc' id='toc_criando-uma-barra-de-navega-o'>Criando uma barra de navegação</h2>
+<p>Queremos agora criar uma barra de navegação que tenha o nome do nosso aplicativo e os links para nossas páginas internas.</p>
+
+<p>Para mostrar a mesma barra em cada página, vamos usar o template <code>/app/templates/application.hbs</code>.
+Vamos edita-lo novamente substituindo seu conteúdo por este:</p>
+<div class="highlight handlebars "><div class="ribbon"></div><div class="scroller"><table class="CodeRay">
+  <thead>
+    <tr>
+      <td colspan="2">app/templates/application.hbs</td>
+    </tr>
+  </thead>
+<tr>
+  <td class="line-numbers"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+<strong>10</strong>
+11
+12
+13
+14
+15
+16
+17
+18
+19
+<strong>20</strong>
+</pre></td>
+  <td class="code"><pre><span class="tag">&lt;div</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">container</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+  <span class="tag">&lt;div</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">menu</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+    <span class="inline"><span class="inline-delimiter">{{#</span><span class="attribute-name">link-to</span> <span class="error">'</span><span class="attribute-name">index</span><span class="error">'</span><span class="inline-delimiter">}}</span></span>
+      <span class="tag">&lt;h1&gt;</span>
+        <span class="tag">&lt;em&gt;</span>SuperRentals<span class="tag">&lt;/em&gt;</span>
+      <span class="tag">&lt;/h1&gt;</span>
+    <span class="inline"><span class="inline-delimiter">{{/</span><span class="attribute-name">link-to</span><span class="inline-delimiter">}}</span></span>
+    <span class="tag">&lt;div</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">links</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+      <span class="inline"><span class="inline-delimiter">{{#</span><span class="attribute-name">link-to</span> <span class="error">'</span><span class="attribute-name">about</span><span class="error">'</span><span class="inline-delimiter">}}</span></span>
+        About
+      <span class="inline"><span class="inline-delimiter">{{/</span><span class="attribute-name">link-to</span><span class="inline-delimiter">}}</span></span>
+      <span class="inline"><span class="inline-delimiter">{{#</span><span class="attribute-name">link-to</span> <span class="error">'</span><span class="attribute-name">contact</span><span class="error">'</span><span class="inline-delimiter">}}</span></span>
+        Contact
+      <span class="inline"><span class="inline-delimiter">{{/</span><span class="attribute-name">link-to</span><span class="inline-delimiter">}}</span></span>
+    <span class="tag">&lt;/div&gt;</span>
+  <span class="tag">&lt;/div&gt;</span>
+  <span class="tag">&lt;div</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">body</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+    <span class="inline"><span class="inline-delimiter">{{</span><span class="attribute-name">outlet</span><span class="inline-delimiter">}}</span></span>
+  <span class="tag">&lt;/div&gt;</span>
+<span class="tag">&lt;/div&gt;</span>
+</pre></td>
+</tr></table>
+</div></div>
+<p>Muito do código acima já conhecemos, mas o <code>{{outlet}}</code> dentro de <code>&lt;div class=&quot;body&quot;&gt;</code> é novo.
+O Helper <code>{{outlet}}</code> diz para o Ember onde o conteúdo das nossas routes (como <code>about</code> ou <code>contact</code>) deve ser mostrado.</p>
+
+<p>A partir deste ponto, devemos conseguir navegar entre as páginas <code>about</code>,<code>contact</code>, e <code>rentals</code>.</p>
+
+<p>Você pode agora optar seguir na <a href="../model-hook/">próxima página</a> ou fazer os testes de aceitação das páginas que acabamos de criar.</p>
+<h2 class='anchorable-toc' id='toc_implementando-testes-de-aceita-o'>Implementando testes de aceitação</h2>
+<p>Agora que temos várias páginas em nosso aplicativo, vamos ver como criar testes para elas.</p>
+
+<p>Como mencionado anteriormente na página <a href="../acceptance-test/">Planejando seu aplicativo</a>, um teste de aceitação do Ember automatiza a interação com o nosso aplicativo simulando uma navegação de um usuário real.</p>
+
+<p>Se você abrir o teste de aceitação que criamos (<code>/tests/acceptance/list-rentals-test.js</code>), você verá nossos objetivos, que incluem conseguir acessar as páginas <code>about</code> e <code>contact</code>. Vamos começar por lá.</p>
+
+<p>Primeiro, queremos testar que ao acessar <code>/</code> nosso aplicativo seja redirecionado corretamente para <code>/rentals</code>. Usaremos o Helper <code>visit</code> do Ember e, em seguida, verificamos se nossa URL atual é <code>/rentals</code>.</p>
+<div class="highlight javascript "><div class="ribbon"></div><div class="scroller"><?xml version="1.0"?>
+<table class="CodeRay">
+  <thead>
+    <tr>
+      <td colspan="2">/tests/acceptance/list-rentals-test.js</td>
+    </tr>
+  </thead>
+<tr>
+  <td class="line-numbers"><pre>1
+<span class="highlight-line added">2</span>
+<span class="highlight-line added">3</span>
+<span class="highlight-line added">4</span>
+<span class="highlight-line added">5</span>
+6</pre></td>
+  <td class="code"><pre>test(<span class="string"><span class="delimiter">'</span><span class="content">should show rentals as the home page</span><span class="delimiter">'</span></span>, <span class="keyword">function</span> (assert) {
+<span class="highlight-line added">  visit(<span class="string"><span class="delimiter">'</span><span class="content">/</span><span class="delimiter">'</span></span>);</span>
+<span class="highlight-line added">  andThen(<span class="keyword">function</span>() {</span>
+<span class="highlight-line added">    assert.equal(currentURL(), <span class="string"><span class="delimiter">'</span><span class="content">/rentals</span><span class="delimiter">'</span></span>, <span class="string"><span class="delimiter">'</span><span class="content">should redirect automatically</span><span class="delimiter">'</span></span>);</span>
+<span class="highlight-line added">  });</span>
+});</pre></td>
+</tr></table>
+</div></div>
+<p>Agora, execute os testes digitando <code>ember test --server</code> no terminal (ou <code>ember t -s</code>).</p>
+
+<p>Em vez de 7 falhas, agora deve ter 6 (5 falhas de aceitação e 1 ESLint).
+Você também pode executar o nosso teste específico, selecionando o teste chamado &quot;Acceptance | list rentals&quot; no campo de seleção &quot;Module&quot; na UI de teste.</p>
+
+<p>Você também pode marcar a opção &quot;Hide passed tests&quot; para mostrar os testes aprovados, juntamente com os testes que ainda estão falhando (porque ainda não os construímos).</p>
+
+<p><img src="../../images/routes-and-templates/routes-and-templates.gif" alt="6_fail"></p>
+<h3 class='anchorable-toc' id='toc_helpers-de-testes-do-ember'>Helpers de testes do Ember</h3>
+<p>Ember fornece uma variedade de helpers de teste de aceitação para tornar as tarefas comuns mais fáceis, como visitar links, preenchendo campos, clicando em links/botões e esperando que as páginas sejam exibidas.</p>
+
+<p>Esses são os helpers que usaremos com mais frequencia:</p>
+
+<ul>
+<li><a href="http://emberjs.com/api/classes/Ember.Test.html#method_visit"><code>visit</code></a> - visita um link do nosso aplicativo</li>
+<li><a href="http://emberjs.com/api/classes/Ember.Test.html#method_click"><code>click</code></a> - clica em um link/botão simulando um usuário</li>
+<li><a href="../../testing/acceptance/#toc_wait-helpers"><code>andThen</code></a> - espera que nossa página tenha terminando de carregar para fazer as verificações. No nosso teste abaixo, por exemplo, queremos aguardar após um <code>click</code> e verificar se a página correta foi carregada</li>
+<li><a href="http://emberjs.com/api/classes/Ember.Test.html#method_currentURL"><code>currentURL</code></a> - retorna a URL atual do nosso aplicativo</li>
+</ul>
+<h3 class='anchorable-toc' id='toc_testar-uma-visita-na-p-gina-de-contatos-e-sobre'>Testar uma visita na página de contatos e sobre</h3>
+<p>Agora vamos adicionar um código que simula um visitante que chega na nossa página inicial, clicando em um de nossos links e depois visitando uma nova página.</p>
+<div class="highlight javascript "><div class="ribbon"></div><div class="scroller"><?xml version="1.0"?>
+<table class="CodeRay">
+  <thead>
+    <tr>
+      <td colspan="2">/tests/acceptance/list-rentals-test.js</td>
+    </tr>
+  </thead>
+<tr>
+  <td class="line-numbers"><pre>1
+<span class="highlight-line added">2</span>
+<span class="highlight-line added">3</span>
+<span class="highlight-line added">4</span>
+<span class="highlight-line added">5</span>
+<span class="highlight-line added">6</span>
+7
+8
+9
+<span class="highlight-line added"><strong>10</strong></span>
+<span class="highlight-line added">11</span>
+<span class="highlight-line added">12</span>
+<span class="highlight-line added">13</span>
+<span class="highlight-line added">14</span>
+15</pre></td>
+  <td class="code"><pre>test(<span class="string"><span class="delimiter">'</span><span class="content">should link to information about the company.</span><span class="delimiter">'</span></span>, <span class="keyword">function</span> (assert) {
+<span class="highlight-line added">  visit(<span class="string"><span class="delimiter">'</span><span class="content">/</span><span class="delimiter">'</span></span>);</span>
+<span class="highlight-line added">  click(<span class="string"><span class="delimiter">'</span><span class="content">a:contains("About")</span><span class="delimiter">'</span></span>);</span>
+<span class="highlight-line added">  andThen(<span class="keyword">function</span>() {</span>
+<span class="highlight-line added">    assert.equal(currentURL(), <span class="string"><span class="delimiter">'</span><span class="content">/about</span><span class="delimiter">'</span></span>, <span class="string"><span class="delimiter">'</span><span class="content">should navigate to about</span><span class="delimiter">'</span></span>);</span>
+<span class="highlight-line added">  });</span>
+});
+
+test(<span class="string"><span class="delimiter">'</span><span class="content">should link to contact information</span><span class="delimiter">'</span></span>, <span class="keyword">function</span> (assert) {
+<span class="highlight-line added">  visit(<span class="string"><span class="delimiter">'</span><span class="content">/</span><span class="delimiter">'</span></span>);</span>
+<span class="highlight-line added">  click(<span class="string"><span class="delimiter">'</span><span class="content">a:contains("Contact")</span><span class="delimiter">'</span></span>);</span>
+<span class="highlight-line added">  andThen(<span class="keyword">function</span>() {</span>
+<span class="highlight-line added">    assert.equal(currentURL(), <span class="string"><span class="delimiter">'</span><span class="content">/contact</span><span class="delimiter">'</span></span>, <span class="string"><span class="delimiter">'</span><span class="content">should navigate to contact</span><span class="delimiter">'</span></span>);</span>
+<span class="highlight-line added">  });</span>
+});</pre></td>
+</tr></table>
+</div></div>
+<p>Nos testes acima, estamos usando <a href="https://api.qunitjs.com/assert/equal"><code>assert.equal()</code></a>. <code>assert.equal()</code> verifica se dois itens (nosso primeiro e segundo argumentos) são iguais. Se não são iguais, nosso teste falhará.</p>
+
+<p>O terceiro argumento opcional nos permite fornecer uma mensagem melhor, que será mostrada quando esse teste falhar.</p>
+
+<p>Nos nossos testes, também chamamos dois helpers (<code>visit</code> e <code>click</code>) um após o outro. Embora o Ember faça uma série de coisas quando fazemos essas chamadas, o Ember esconde essas complexidades, dando-nos estes <a href="../../testing/acceptance/#toc_asynchronous-helpers">asynchronous test helpers</a>.</p>
+
+<p>Se você deixou o <code>ember test</code> em execução, ele deve ter atualizado automaticamente para mostrar que os três testes relacionados à navegação já passaram.</p>
+
+<p>In the screen recording below, we run the tests, deselect &quot;Hide passed tests&quot;, and set the module to our acceptance test,
+revealing the 3 tests we got passing.</p>
+
+<p>No screenshot abaixo, executamos os testes, desmarque &quot;Hide passed tests&quot; e selecione o module para nosso testes de aceitação, temos agora 3 testes passando e 3 testes falhando.</p>
+
+<p><img src="../../images/routes-and-templates/ember-route-tests.gif" alt="passing navigation tests"></p>
+
+            </article>
+
+          </div>
+
+          <div class="footer">
+    <div class="container">
+
+      <div class="footer-statement">
+        <a href="https://ember-community-slackin.herokuapp.com/">Comunidade no Slack</a> &bull;
+        <a href="https://github.com/emberjs/ember.js">Github</a> &bull;
+        <a href="https://t.me/EmberBR">Telegram (Ember-BR)</a>
+      </div>
+
+      <div class="footer-statement footer-social">
+        <a href="http://twitter.com/emberjs"
+          title="Twitter">
+          <i class="icon-twitter"></i>
+        </a>
+        <a href="https://github.com/emberjs/ember.js"
+          title="GitHub">
+          <i class="icon-github"></i>
+        </a>
+        <a href="https://plus.google.com/communities/106387049790387471205"
+          title="Google+">
+          <i class="icon-gplus"></i>
+        </a>
+      </div>
+      <hr />
+      <div class="info">
+        <p>
+          Este site é parte de uma iniciativa da <b>Comunidade Brasileira Ember</b> e não tem nenhuma ligação direta com o projeto oficial. <br />
+          Ember é uma marca registrada da <a href="http://tilde.io">Tilde Inc.</a>.<br />
+          Para obter mais informações sobre licença de uso acesse <a href="http://emberjs.com/legal">Legal</a>.
+        </p>
+      </div>
+
+  </div>
+</div>
+
+
+          
+    </main>
+
+    <script type="text/javascript">
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-105665012-1', 'auto');
+    ga('send', 'pageview');
+</script>
+
+  </body>
+</html>

@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="theme-color" content="#e46652">
+
+    <title>Ember.js - Application Concerns: Dependency Injection</title>
+    <meta property="st:title" content="Application Concerns: Dependency Injection" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="../../../images/favicon.png" rel="icon" type="image/png" />
+    <!--[if lte IE 7 ]><link href="../../../stylesheets/fonts/fontello-ie7.css" rel="stylesheet" /><![endif]-->
+    <link href="../../../stylesheets/application.css" rel="stylesheet" />
+    <link href="//fonts.googleapis.com/css?family=Nunito:300,400,700" rel="stylesheet">
+    <!-- This TypeKit account is managed by @wifelette. Contact her with any issues. -->
+    <script src="https://use.typekit.net/stz3kpn.js"></script>
+    <script>try{Typekit.load({ async: true });}catch(e){}</script>
+
+    <link href="/blog/feed.xml" rel="alternate" type="application/atom+xml" title="Ember.js - Blog" />
+    
+  </head>
+
+  <body class="guides guides guides_applications guides_applications_dependency-injection guides_applications_dependency-injection_index">
+
+    <!--[if lt IE 9]>
+      <script src="../../../javascripts/common-old-ie.js"></script>
+    <![endif]-->
+    <!--[if gte IE 9]><!-->
+      <script src="../../../javascripts/common-modern.js"></script>
+    <!--<![endif]-->
+
+    <main>
+      <header class="header">
+  <nav role="navigation" aria-label="main">
+    <ul class="header-nav">
+      <li class="header-logo">
+        <a href="/"><span class="visually-hidden">Ember homepage</span></a>
+      </li>
+      <li>
+        <a href="/">Home</a>
+      </li>
+      <li>
+        <a href="/guides/">Documentação</a>
+      </li>
+      <li>
+        <a href="/contribuidores/">Contribuidores</a>
+      </li>
+      <li>
+        <a href="/quem-usa-ember">Quem usa Ember?</a>
+      </li>
+      <li>
+        <a href="http://emberjs.com/api">Ember API</a>
+      </li>
+    </ul>
+  </nav>
+</header>
+
+
+      
+        <div class="content">
+            <aside class="sidebar">
+  <nav class='toc-container' aria-label='table of contents'><ol class='toc-level-0 selected'><li class='toc-level-0 '><a href="#">Começando</a><ol class='toc-level-1'><li class='toc-level-1 '><a href="../../getting-started/quick-start/">Começo rápido</a></li><li class='toc-level-1 '><a href="../../getting-started/">Instalando Ember</a></li><li class='toc-level-1 '><a href="../../getting-started/core-concepts/">Conceitos fundamentais</a></li></ol></li><li class='toc-level-0 '><a href="#">Tutorial</a><ol class='toc-level-1'><li class='toc-level-1 '><a href="../../tutorial/ember-cli/">Começando</a></li><li class='toc-level-1 '><a href="../../tutorial/acceptance-test/">Planejando seu aplicativo</a></li><li class='toc-level-1 '><a href="../../tutorial/routes-and-templates/">Routes e Templates</a></li><li class='toc-level-1 '><a href="../../tutorial/model-hook/">Model Hook</a></li><li class='toc-level-1 '><a href="../../tutorial/installing-addons/">Instalando Addons</a></li><li class='toc-level-1 '><a href="../../tutorial/simple-component/">Construindo um componente simples</a></li><li class='toc-level-1 '><a href="../../tutorial/hbs-helper/">Criando um Helper para Handlebars</a></li><li class='toc-level-1 '><a href="../../tutorial/ember-data/">Usando Ember Data</a></li><li class='toc-level-1 '><a href="../../tutorial/autocomplete-component/">Criando um componente complexo</a></li><li class='toc-level-1 '><a href="../../tutorial/service/">Services e Utils</a></li><li class='toc-level-1 '><a href="../../tutorial/subroutes/">Adicionando rotas aninhadas</a></li><li class='toc-level-1 '><a href="../../tutorial/deploying/">Publicando seu App</a></li></ol></li><li class='toc-level-0 '><a href="#">The Object Model</a><ol class='toc-level-1'><li class='toc-level-1 '><a href="../../object-model/">Objects in Ember</a></li><li class='toc-level-1 '><a href="../../object-model/classes-and-instances/">Classes and Instances</a></li><li class='toc-level-1 '><a href="../../object-model/reopening-classes-and-instances/">Reopening Classes and Instances</a></li><li class='toc-level-1 '><a href="../../object-model/computed-properties/">Computed Properties</a></li><li class='toc-level-1 '><a href="../../object-model/computed-properties-and-aggregate-data/">Computed Properties and Aggregate Data</a></li><li class='toc-level-1 '><a href="../../object-model/observers/">Observers</a></li><li class='toc-level-1 '><a href="../../object-model/bindings/">Bindings</a></li><li class='toc-level-1 '><a href="../../object-model/enumerables/">Enumerables</a></li></ol></li><li class='toc-level-0 '><a href="#">Routing</a><ol class='toc-level-1'><li class='toc-level-1 '><a href="../../routing/">Introduction</a></li><li class='toc-level-1 '><a href="../../routing/defining-your-routes/">Defining Your Routes</a></li><li class='toc-level-1 '><a href="../../routing/specifying-a-routes-model/">Specifying a Route's Model</a></li><li class='toc-level-1 '><a href="../../routing/rendering-a-template/">Rendering a Template</a></li><li class='toc-level-1 '><a href="../../routing/redirection/">Redirecting</a></li><li class='toc-level-1 '><a href="../../routing/preventing-and-retrying-transitions/">Preventing and Retrying Transitions</a></li><li class='toc-level-1 '><a href="../../routing/loading-and-error-substates/">Loading / Error Substates</a></li><li class='toc-level-1 '><a href="../../routing/query-params/">Query Parameters</a></li><li class='toc-level-1 '><a href="../../routing/asynchronous-routing/">Asynchronous Routing</a></li></ol></li><li class='toc-level-0 '><a href="#">Templates</a><ol class='toc-level-1'><li class='toc-level-1 '><a href="../../templates/handlebars-basics/">Handlebars Basics</a></li><li class='toc-level-1 '><a href="../../templates/built-in-helpers/">Built-in Helpers</a></li><li class='toc-level-1 '><a href="../../templates/conditionals/">Conditionals</a></li><li class='toc-level-1 '><a href="../../templates/displaying-a-list-of-items/">Displaying a List of Items</a></li><li class='toc-level-1 '><a href="../../templates/displaying-the-keys-in-an-object/">Displaying the Keys in an Object</a></li><li class='toc-level-1 '><a href="../../templates/binding-element-attributes/">Binding Element Attributes</a></li><li class='toc-level-1 '><a href="../../templates/links/">Links</a></li><li class='toc-level-1 '><a href="../../templates/actions/">Actions</a></li><li class='toc-level-1 '><a href="../../templates/input-helpers/">Input Helpers</a></li><li class='toc-level-1 '><a href="../../templates/development-helpers/">Development Helpers</a></li><li class='toc-level-1 '><a href="../../templates/writing-helpers/">Writing Helpers</a></li></ol></li><li class='toc-level-0 '><a href="#">Components</a><ol class='toc-level-1'><li class='toc-level-1 '><a href="../../components/defining-a-component/">Defining a Component</a></li><li class='toc-level-1 '><a href="../../components/the-component-lifecycle/">The Component Lifecycle</a></li><li class='toc-level-1 '><a href="../../components/passing-properties-to-a-component/">Passing Properties to a Component</a></li><li class='toc-level-1 '><a href="../../components/wrapping-content-in-a-component/">Wrapping Content in a Component</a></li><li class='toc-level-1 '><a href="../../components/customizing-a-components-element/">Customizing a Component's Element</a></li><li class='toc-level-1 '><a href="../../components/block-params/">Using Block Params</a></li><li class='toc-level-1 '><a href="../../components/handling-events/">Handling Events</a></li><li class='toc-level-1 '><a href="../../components/triggering-changes-with-actions/">Triggering Changes with Actions</a></li></ol></li><li class='toc-level-0 '><a href="#">Controllers</a><ol class='toc-level-1'><li class='toc-level-1 '><a href="../../controllers/">Introdução</a></li></ol></li><li class='toc-level-0 '><a href="#">Models</a><ol class='toc-level-1'><li class='toc-level-1 '><a href="../../models/">Introduction</a></li><li class='toc-level-1 '><a href="../../models/defining-models/">Defining Models</a></li><li class='toc-level-1 '><a href="../../models/finding-records/">Finding Records</a></li><li class='toc-level-1 '><a href="../../models/creating-updating-and-deleting-records/">Creating, Updating and Deleting</a></li><li class='toc-level-1 '><a href="../../models/relationships/">Relationships</a></li><li class='toc-level-1 '><a href="../../models/pushing-records-into-the-store/">Pushing Records into the Store</a></li><li class='toc-level-1 '><a href="../../models/handling-metadata/">Handling Metadata</a></li><li class='toc-level-1 '><a href="../../models/customizing-adapters/">Customizing Adapters</a></li><li class='toc-level-1 '><a href="../../models/customizing-serializers/">Customizing Serializers</a></li></ol></li><li class='toc-level-0 selected'><a href="#">Application Concerns</a><ol class='toc-level-1 selected'><li class='toc-level-1 '><a href="../applications-and-instances/">Applications and Instances</a></li><li class='toc-level-1 selected'><a href="./">Dependency Injection</a></li><li class='toc-level-1 '><a href="../initializers/">Initializers</a></li><li class='toc-level-1 '><a href="../services/">Services</a></li><li class='toc-level-1 '><a href="../run-loop/">The Run Loop</a></li></ol></li><li class='toc-level-0 '><a href="#">Testing</a><ol class='toc-level-1'><li class='toc-level-1 '><a href="../../testing/">Introduction</a></li><li class='toc-level-1 '><a href="../../testing/acceptance/">Acceptance Tests</a></li><li class='toc-level-1 '><a href="../../testing/unit-testing-basics/">Unit Testing Basics</a></li><li class='toc-level-1 '><a href="../../testing/testing-components/">Testing Components</a></li><li class='toc-level-1 '><a href="../../testing/testing-helpers/">Testing Helpers</a></li><li class='toc-level-1 '><a href="../../testing/testing-controllers/">Testing Controllers</a></li><li class='toc-level-1 '><a href="../../testing/testing-routes/">Testing Routes</a></li><li class='toc-level-1 '><a href="../../testing/testing-models/">Testing Models</a></li></ol></li><li class='toc-level-0 '><a href="#">Ember Inspector</a><ol class='toc-level-1'><li class='toc-level-1 '><a href="../../ember-inspector/">Introduction</a></li><li class='toc-level-1 '><a href="../../ember-inspector/installation/">Installing the Inspector</a></li><li class='toc-level-1 '><a href="../../ember-inspector/object-inspector/">Object Inspector</a></li><li class='toc-level-1 '><a href="../../ember-inspector/view-tree/">The View Tree</a></li><li class='toc-level-1 '><a href="../../ember-inspector/routes/">Inspecting Routes</a></li><li class='toc-level-1 '><a href="../../ember-inspector/data/">Data Tab</a></li><li class='toc-level-1 '><a href="../../ember-inspector/deprecations/">Tackling Deprecations</a></li><li class='toc-level-1 '><a href="../../ember-inspector/info/">Library Info</a></li><li class='toc-level-1 '><a href="../../ember-inspector/promises/">Debugging Promises</a></li><li class='toc-level-1 '><a href="../../ember-inspector/container/">Inspecting Objects via the Container</a></li><li class='toc-level-1 '><a href="../../ember-inspector/render-performance/">Rendering Performance</a></li><li class='toc-level-1 '><a href="../../ember-inspector/troubleshooting/">Troubleshooting</a></li></ol></li><li class='toc-level-0 '><a href="#">Addons and Dependencies</a><ol class='toc-level-1'><li class='toc-level-1 '><a href="../../addons-and-dependencies/managing-dependencies/">Managing Dependencies</a></li></ol></li><li class='toc-level-0 '><a href="#">Configuring Ember.js</a><ol class='toc-level-1'><li class='toc-level-1 '><a href="../../configuring-ember/configuring-your-app/">Configuring Your App</a></li><li class='toc-level-1 '><a href="../../configuring-ember/configuring-ember-cli/">Configuring Ember CLI</a></li><li class='toc-level-1 '><a href="../../configuring-ember/handling-deprecations/">Handling Deprecations</a></li><li class='toc-level-1 '><a href="../../configuring-ember/disabling-prototype-extensions/">Disabling Prototype Extensions</a></li><li class='toc-level-1 '><a href="../../configuring-ember/specifying-url-type/">Specifying the URL Type</a></li><li class='toc-level-1 '><a href="../../configuring-ember/embedding-applications/">Embedding Applications</a></li><li class='toc-level-1 '><a href="../../configuring-ember/feature-flags/">Feature Flags</a></li><li class='toc-level-1 '><a href="../../configuring-ember/build-targets/">Build targets</a></li><li class='toc-level-1 '><a href="../../configuring-ember/debugging/">Debugging</a></li></ol></li><li class='toc-level-0 '><a href="#">Contributing to Ember.js</a><ol class='toc-level-1'><li class='toc-level-1 '><a href="../../contributing/adding-new-features/">Adding New Features</a></li><li class='toc-level-1 '><a href="../../contributing/repositories/">Repositories</a></li></ol></li><li class='toc-level-0 '><a href="#">Glossário</a><ol class='toc-level-1'><li class='toc-level-1 '><a href="../../glossary/web-development/">Desenvolvimento WEB</a></li></ol></li></ol></nav>
+</aside>
+
+            <article>
+              <h1>
+                Dependency Injection
+                <a href="https://github.com/ember-brasil/website/edit/master/source/guides/applications/dependency-injection.md"
+                   target="_blank" class="edit-page icon-pencil">Melhorar esta página</a>
+              </h1>
+              <hr>
+
+              <p>Ember applications utilize the <a href="https://en.wikipedia.org/wiki/Dependency_injection">dependency injection</a>
+(&quot;DI&quot;) design pattern to declare and instantiate classes of objects and dependencies between them.
+Applications and application instances each serve a role in Ember&#39;s DI implementation.</p>
+
+<p>An <a href="http://emberjs.com/api/classes/Ember.Application.html"><code>Ember.Application</code></a> serves as a &quot;registry&quot; for dependency declarations.
+Factories (i.e. classes) are registered with an application,
+as well as rules about &quot;injecting&quot; dependencies that are applied when objects are instantiated.</p>
+
+<p>An <a href="http://emberjs.com/api/classes/Ember.ApplicationInstance.html"><code>Ember.ApplicationInstance</code></a> serves as the &quot;owner&quot; for objects that are instantiated from registered factories.
+Application instances provide a means to &quot;look up&quot; (i.e. instantiate and / or retrieve) objects.</p>
+
+<blockquote>
+<p><em>Note: Although an <code>Application</code> serves as the primary registry for an app,
+each <code>ApplicationInstance</code> can also serve as a registry.
+Instance-level registrations are useful for providing instance-level customizations,
+such as A/B testing of a feature.</em></p>
+</blockquote>
+<h2 class='anchorable-toc' id='toc_factory-registrations'>Factory Registrations</h2>
+<p>A factory can represent any part of your application, like a <em>route</em>, <em>template</em>, or custom class.
+Every factory is registered with a particular key.
+For example, the index template is registered with the key <code>template:index</code>,
+and the application route is registered with the key <code>route:application</code>.</p>
+
+<p>Registration keys have two segments split by a colon (<code>:</code>).
+The first segment is the framework factory type, and the second is the name of the particular factory.
+Hence, the <code>index</code> template has the key <code>template:index</code>.
+Ember has several built-in factory types, such as <code>service</code>, <code>route</code>, <code>template</code>, and <code>component</code>.</p>
+
+<p>You can create your own factory type by simply registering a factory with the new type.
+For example, to create a <code>user</code> type,
+you&#39;d simply register your factory with <code>application.register(&#39;user:user-to-register&#39;)</code>.</p>
+
+<p>Factory registrations must be performed either in application
+or application instance initializers (with the former being much more common).</p>
+
+<p>For example, an application initializer could register a <code>Logger</code> factory with the key <code>logger:main</code>:</p>
+<div class="highlight javascript "><div class="ribbon"></div><div class="scroller"><table class="CodeRay">
+  <thead>
+    <tr>
+      <td colspan="2">app/initializers/logger.js</td>
+    </tr>
+  </thead>
+<tr>
+  <td class="line-numbers"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+<strong>10</strong>
+11
+12
+13
+14
+15
+16
+</pre></td>
+  <td class="code"><pre><span class="reserved">import</span> Ember from <span class="string"><span class="delimiter">'</span><span class="content">ember</span><span class="delimiter">'</span></span>;
+
+<span class="reserved">export</span> <span class="keyword">function</span> <span class="function">initialize</span>(application) {
+  let Logger = Ember.Object.extend({
+    log(m) {
+      console.log(m);
+    }
+  });
+
+  application.register(<span class="string"><span class="delimiter">'</span><span class="content">logger:main</span><span class="delimiter">'</span></span>, Logger);
+}
+
+<span class="reserved">export</span> <span class="keyword">default</span> {
+  <span class="key">name</span>: <span class="string"><span class="delimiter">'</span><span class="content">logger</span><span class="delimiter">'</span></span>,
+  <span class="key">initialize</span>: initialize
+};
+</pre></td>
+</tr></table>
+</div></div><h3 class='anchorable-toc' id='toc_registering-already-instantiated-objects'>Registering Already Instantiated Objects</h3>
+<p>By default, Ember will attempt to instantiate a registered factory when it is looked up.
+When registering an already instantiated object instead of a class,
+use the <code>instantiate: false</code> option to avoid attempts to re-instantiate it during lookups.</p>
+
+<p>In the following example, the <code>logger</code> is a plain JavaScript object that should
+be returned &quot;as is&quot; when it&#39;s looked up:</p>
+<div class="highlight javascript "><div class="ribbon"></div><div class="scroller"><table class="CodeRay">
+  <thead>
+    <tr>
+      <td colspan="2">app/initializers/logger.js</td>
+    </tr>
+  </thead>
+<tr>
+  <td class="line-numbers"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+<strong>10</strong>
+11
+12
+13
+14
+</pre></td>
+  <td class="code"><pre><span class="reserved">export</span> <span class="keyword">function</span> <span class="function">initialize</span>(application) {
+  let logger = {
+    log(m) {
+      console.log(m);
+    }
+  };
+
+  application.register(<span class="string"><span class="delimiter">'</span><span class="content">logger:main</span><span class="delimiter">'</span></span>, logger, { <span class="key">instantiate</span>: <span class="predefined-constant">false</span> });
+}
+
+<span class="reserved">export</span> <span class="keyword">default</span> {
+  <span class="key">name</span>: <span class="string"><span class="delimiter">'</span><span class="content">logger</span><span class="delimiter">'</span></span>,
+  <span class="key">initialize</span>: initialize
+};
+</pre></td>
+</tr></table>
+</div></div><h3 class='anchorable-toc' id='toc_registering-singletons-vs-non-singletons'>Registering Singletons vs. Non-Singletons</h3>
+<p>By default, registrations are treated as &quot;singletons&quot;.
+This simply means that an instance will be created when it is first looked up,
+and this same instance will be cached and returned from subsequent lookups.</p>
+
+<p>When you want fresh objects to be created for every lookup,
+register your factories as non-singletons using the <code>singleton: false</code> option.</p>
+
+<p>In the following example, the <code>Message</code> class is registered as a non-singleton:</p>
+<div class="highlight javascript "><div class="ribbon"></div><div class="scroller"><table class="CodeRay">
+  <thead>
+    <tr>
+      <td colspan="2">app/initializers/notification.js</td>
+    </tr>
+  </thead>
+<tr>
+  <td class="line-numbers"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+<strong>10</strong>
+11
+12
+13
+14
+</pre></td>
+  <td class="code"><pre><span class="reserved">import</span> Ember from <span class="string"><span class="delimiter">'</span><span class="content">ember</span><span class="delimiter">'</span></span>;
+
+<span class="reserved">export</span> <span class="keyword">function</span> <span class="function">initialize</span>(application) {
+  let Message = Ember.Object.extend({
+    <span class="key">text</span>: <span class="string"><span class="delimiter">'</span><span class="delimiter">'</span></span>
+  });
+
+  application.register(<span class="string"><span class="delimiter">'</span><span class="content">notification:message</span><span class="delimiter">'</span></span>, Message, { <span class="key">singleton</span>: <span class="predefined-constant">false</span> });
+}
+
+<span class="reserved">export</span> <span class="keyword">default</span> {
+  <span class="key">name</span>: <span class="string"><span class="delimiter">'</span><span class="content">notification</span><span class="delimiter">'</span></span>,
+  <span class="key">initialize</span>: initialize
+};
+</pre></td>
+</tr></table>
+</div></div><h2 class='anchorable-toc' id='toc_factory-injections'>Factory Injections</h2>
+<p>Once a factory is registered, it can be &quot;injected&quot; where it is needed.</p>
+
+<p>Factories can be injected into whole &quot;types&quot; of factories with <em>type injections</em>. For example:</p>
+<div class="highlight javascript "><div class="ribbon"></div><div class="scroller"><table class="CodeRay">
+  <thead>
+    <tr>
+      <td colspan="2">app/initializers/logger.js</td>
+    </tr>
+  </thead>
+<tr>
+  <td class="line-numbers"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+<strong>10</strong>
+11
+12
+13
+14
+15
+16
+17
+</pre></td>
+  <td class="code"><pre><span class="reserved">import</span> Ember from <span class="string"><span class="delimiter">'</span><span class="content">ember</span><span class="delimiter">'</span></span>;
+
+<span class="reserved">export</span> <span class="keyword">function</span> <span class="function">initialize</span>(application) {
+  let Logger = Ember.Object.extend({
+    log(m) {
+      console.log(m);
+    }
+  });
+
+  application.register(<span class="string"><span class="delimiter">'</span><span class="content">logger:main</span><span class="delimiter">'</span></span>, Logger);
+  application.inject(<span class="string"><span class="delimiter">'</span><span class="content">route</span><span class="delimiter">'</span></span>, <span class="string"><span class="delimiter">'</span><span class="content">logger</span><span class="delimiter">'</span></span>, <span class="string"><span class="delimiter">'</span><span class="content">logger:main</span><span class="delimiter">'</span></span>);
+}
+
+<span class="reserved">export</span> <span class="keyword">default</span> {
+  <span class="key">name</span>: <span class="string"><span class="delimiter">'</span><span class="content">logger</span><span class="delimiter">'</span></span>,
+  <span class="key">initialize</span>: initialize
+};
+</pre></td>
+</tr></table>
+</div></div>
+<p>As a result of this type injection,
+all factories of the type <code>route</code> will be instantiated with the property <code>logger</code> injected.
+The value of <code>logger</code> will come from the factory named <code>logger:main</code>.</p>
+
+<p>Routes in this example application can now access the injected logger:</p>
+<div class="highlight javascript "><div class="ribbon"></div><div class="scroller"><table class="CodeRay">
+  <thead>
+    <tr>
+      <td colspan="2">app/routes/index.js</td>
+    </tr>
+  </thead>
+<tr>
+  <td class="line-numbers"><pre>1
+2
+3
+4
+5
+6
+7
+8
+</pre></td>
+  <td class="code"><pre><span class="reserved">import</span> Ember from <span class="string"><span class="delimiter">'</span><span class="content">ember</span><span class="delimiter">'</span></span>;
+
+<span class="reserved">export</span> <span class="keyword">default</span> Ember.Route.extend({
+  activate() {
+    <span class="comment">// The logger property is injected into all routes</span>
+    <span class="local-variable">this</span>.get(<span class="string"><span class="delimiter">'</span><span class="content">logger</span><span class="delimiter">'</span></span>).log(<span class="string"><span class="delimiter">'</span><span class="content">Entered the index route!</span><span class="delimiter">'</span></span>);
+  }
+});
+</pre></td>
+</tr></table>
+</div></div>
+<p>Injections can also be made on a specific factory by using its full key:</p>
+<div class="highlight js "><div class="ribbon"></div><div class="scroller"><table class="CodeRay"><tr>
+  <td class="line-numbers"><pre>1
+</pre></td>
+  <td class="code"><pre>application.inject(<span class="string"><span class="delimiter">'</span><span class="content">route:index</span><span class="delimiter">'</span></span>, <span class="string"><span class="delimiter">'</span><span class="content">logger</span><span class="delimiter">'</span></span>, <span class="string"><span class="delimiter">'</span><span class="content">logger:main</span><span class="delimiter">'</span></span>);
+</pre></td>
+</tr></table>
+</div></div>
+<p>In this case, the logger will only be injected on the index route.</p>
+
+<p>Injections can be made into any class that requires instantiation.
+This includes all of Ember&#39;s major framework classes, such as components, helpers, routes, and the router.</p>
+<h3 class='anchorable-toc' id='toc_ad-hoc-injections'>Ad Hoc Injections</h3>
+<p>Dependency injections can also be declared directly on Ember classes using <code>Ember.inject</code>.
+Currently, <code>Ember.inject</code> supports injecting controllers (via <code>Ember.inject.controller</code>)
+and services (via <code>Ember.inject.service</code>).</p>
+
+<p>The following code injects the <code>shopping-cart</code> service on the <code>cart-contents</code> component as the property <code>cart</code>:</p>
+<div class="highlight javascript "><div class="ribbon"></div><div class="scroller"><table class="CodeRay">
+  <thead>
+    <tr>
+      <td colspan="2">app/components/cart-contents.js</td>
+    </tr>
+  </thead>
+<tr>
+  <td class="line-numbers"><pre>1
+2
+3
+4
+5
+</pre></td>
+  <td class="code"><pre><span class="reserved">import</span> Ember from <span class="string"><span class="delimiter">'</span><span class="content">ember</span><span class="delimiter">'</span></span>;
+
+<span class="reserved">export</span> <span class="keyword">default</span> Ember.Component.extend({
+  <span class="key">cart</span>: Ember.inject.service(<span class="string"><span class="delimiter">'</span><span class="content">shopping-cart</span><span class="delimiter">'</span></span>)
+});
+</pre></td>
+</tr></table>
+</div></div>
+<p>If you&#39;d like to inject a service with the same name as the property,
+simply leave off the service name (the dasherized version of the name will be used):</p>
+<div class="highlight javascript "><div class="ribbon"></div><div class="scroller"><table class="CodeRay">
+  <thead>
+    <tr>
+      <td colspan="2">app/components/cart-contents.js</td>
+    </tr>
+  </thead>
+<tr>
+  <td class="line-numbers"><pre>1
+2
+3
+4
+5
+</pre></td>
+  <td class="code"><pre><span class="reserved">import</span> Ember from <span class="string"><span class="delimiter">'</span><span class="content">ember</span><span class="delimiter">'</span></span>;
+
+<span class="reserved">export</span> <span class="keyword">default</span> Ember.Component.extend({
+  <span class="key">shoppingCart</span>: Ember.inject.service()
+});
+</pre></td>
+</tr></table>
+</div></div><h2 class='anchorable-toc' id='toc_factory-instance-lookups'>Factory Instance Lookups</h2>
+<p>To fetch an instantiated factory from the running application you can call the
+<a href="http://emberjs.com/api/classes/Ember.ApplicationInstance.html#method_lookup"><code>lookup</code></a> method on an application instance. This method takes a string
+to identify a factory and returns the appropriate object.</p>
+<div class="highlight javascript "><div class="ribbon"></div><div class="scroller"><table class="CodeRay"><tr>
+  <td class="line-numbers"><pre>1
+</pre></td>
+  <td class="code"><pre>applicationInstance.lookup(<span class="string"><span class="delimiter">'</span><span class="content">factory-type:factory-name</span><span class="delimiter">'</span></span>);
+</pre></td>
+</tr></table>
+</div></div>
+<p>The application instance is passed to Ember&#39;s instance initializer hooks and it
+is added as the &quot;owner&quot; of each object that was instantiated by the application
+instance.</p>
+<h3 class='anchorable-toc' id='toc_using-an-application-instance-within-an-instance-initializer'>Using an Application Instance Within an Instance Initializer</h3>
+<p>Instance initializers receive an application instance as an argument, providing
+an opportunity to look up an instance of a registered factory.</p>
+<div class="highlight javascript "><div class="ribbon"></div><div class="scroller"><table class="CodeRay">
+  <thead>
+    <tr>
+      <td colspan="2">app/instance-initializers/logger.js</td>
+    </tr>
+  </thead>
+<tr>
+  <td class="line-numbers"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+<strong>10</strong>
+</pre></td>
+  <td class="code"><pre><span class="reserved">export</span> <span class="keyword">function</span> <span class="function">initialize</span>(applicationInstance) {
+  let logger = applicationInstance.lookup(<span class="string"><span class="delimiter">'</span><span class="content">logger:main</span><span class="delimiter">'</span></span>);
+
+  logger.log(<span class="string"><span class="delimiter">'</span><span class="content">Hello from the instance initializer!</span><span class="delimiter">'</span></span>);
+}
+
+<span class="reserved">export</span> <span class="keyword">default</span> {
+  <span class="key">name</span>: <span class="string"><span class="delimiter">'</span><span class="content">logger</span><span class="delimiter">'</span></span>,
+  <span class="key">initialize</span>: initialize
+};
+</pre></td>
+</tr></table>
+</div></div><h3 class='anchorable-toc' id='toc_getting-an-application-instance-from-a-factory-instance'>Getting an Application Instance from a Factory Instance</h3>
+<p><a href="http://emberjs.com/api/#method_getOwner"><code>Ember.getOwner</code></a> will retrieve the application instance that &quot;owns&quot; an
+object. This means that framework objects like components, helpers, and routes
+can use <a href="http://emberjs.com/api/#method_getOwner"><code>Ember.getOwner</code></a> to perform lookups through their application
+instance at runtime.</p>
+
+<p>For example, this component plays songs with different audio services based
+on a song&#39;s <code>audioType</code>.</p>
+<div class="highlight javascript "><div class="ribbon"></div><div class="scroller"><table class="CodeRay">
+  <thead>
+    <tr>
+      <td colspan="2">app/components/play-audio.js</td>
+    </tr>
+  </thead>
+<tr>
+  <td class="line-numbers"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+<strong>10</strong>
+11
+12
+13
+14
+15
+16
+17
+18
+19
+<strong>20</strong>
+21
+22
+23
+</pre></td>
+  <td class="code"><pre><span class="reserved">import</span> Ember from <span class="string"><span class="delimiter">'</span><span class="content">ember</span><span class="delimiter">'</span></span>;
+const {
+  Component,
+  computed,
+  getOwner
+} = Ember;
+
+<span class="comment">// Usage:</span>
+<span class="comment">//</span>
+<span class="comment">//   {{play-audio song=song}}</span>
+<span class="comment">//</span>
+<span class="reserved">export</span> <span class="keyword">default</span> Component.extend({
+  <span class="key">audioService</span>: computed(<span class="string"><span class="delimiter">'</span><span class="content">song.audioType</span><span class="delimiter">'</span></span>, <span class="keyword">function</span>() {
+    let applicationInstance = getOwner(<span class="local-variable">this</span>);
+    let audioType = <span class="local-variable">this</span>.get(<span class="string"><span class="delimiter">'</span><span class="content">song.audioType</span><span class="delimiter">'</span></span>);
+    <span class="keyword">return</span> applicationInstance.lookup(<span class="error">`</span>service:audio-<span class="predefined">$</span>{audioType}<span class="error">`</span>);
+  }),
+
+  click() {
+    let player = <span class="local-variable">this</span>.get(<span class="string"><span class="delimiter">'</span><span class="content">audioService</span><span class="delimiter">'</span></span>);
+    player.play(<span class="local-variable">this</span>.get(<span class="string"><span class="delimiter">'</span><span class="content">song.file</span><span class="delimiter">'</span></span>));
+  }
+});
+</pre></td>
+</tr></table>
+</div></div>
+            </article>
+
+          </div>
+
+          <div class="footer">
+    <div class="container">
+
+      <div class="footer-statement">
+        <a href="https://ember-community-slackin.herokuapp.com/">Comunidade no Slack</a> &bull;
+        <a href="https://github.com/emberjs/ember.js">Github</a> &bull;
+        <a href="https://t.me/EmberBR">Telegram (Ember-BR)</a>
+      </div>
+
+      <div class="footer-statement footer-social">
+        <a href="http://twitter.com/emberjs"
+          title="Twitter">
+          <i class="icon-twitter"></i>
+        </a>
+        <a href="https://github.com/emberjs/ember.js"
+          title="GitHub">
+          <i class="icon-github"></i>
+        </a>
+        <a href="https://plus.google.com/communities/106387049790387471205"
+          title="Google+">
+          <i class="icon-gplus"></i>
+        </a>
+      </div>
+      <hr />
+      <div class="info">
+        <p>
+          Este site é parte de uma iniciativa da <b>Comunidade Brasileira Ember</b> e não tem nenhuma ligação direta com o projeto oficial. <br />
+          Ember é uma marca registrada da <a href="http://tilde.io">Tilde Inc.</a>.<br />
+          Para obter mais informações sobre licença de uso acesse <a href="http://emberjs.com/legal">Legal</a>.
+        </p>
+      </div>
+
+  </div>
+</div>
+
+
+          
+    </main>
+
+    <script type="text/javascript">
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-105665012-1', 'auto');
+    ga('send', 'pageview');
+</script>
+
+  </body>
+</html>

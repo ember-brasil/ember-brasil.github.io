@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="theme-color" content="#e46652">
+
+    <title>Ember.js - The Object Model: Classes and Instances</title>
+    <meta property="st:title" content="The Object Model: Classes and Instances" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="../../../images/favicon.png" rel="icon" type="image/png" />
+    <!--[if lte IE 7 ]><link href="../../../stylesheets/fonts/fontello-ie7.css" rel="stylesheet" /><![endif]-->
+    <link href="../../../stylesheets/application.css" rel="stylesheet" />
+    <link href="//fonts.googleapis.com/css?family=Nunito:300,400,700" rel="stylesheet">
+    <!-- This TypeKit account is managed by @wifelette. Contact her with any issues. -->
+    <script src="https://use.typekit.net/stz3kpn.js"></script>
+    <script>try{Typekit.load({ async: true });}catch(e){}</script>
+
+    <link href="/blog/feed.xml" rel="alternate" type="application/atom+xml" title="Ember.js - Blog" />
+    
+  </head>
+
+  <body class="guides guides guides_object-model guides_object-model_classes-and-instances guides_object-model_classes-and-instances_index">
+
+    <!--[if lt IE 9]>
+      <script src="../../../javascripts/common-old-ie.js"></script>
+    <![endif]-->
+    <!--[if gte IE 9]><!-->
+      <script src="../../../javascripts/common-modern.js"></script>
+    <!--<![endif]-->
+
+    <main>
+      <header class="header">
+  <nav role="navigation" aria-label="main">
+    <ul class="header-nav">
+      <li class="header-logo">
+        <a href="/"><span class="visually-hidden">Ember homepage</span></a>
+      </li>
+      <li>
+        <a href="/">Home</a>
+      </li>
+      <li>
+        <a href="/guides/">Documentação</a>
+      </li>
+      <li>
+        <a href="/contribuidores/">Contribuidores</a>
+      </li>
+      <li>
+        <a href="/quem-usa-ember">Quem usa Ember?</a>
+      </li>
+      <li>
+        <a href="http://emberjs.com/api">Ember API</a>
+      </li>
+    </ul>
+  </nav>
+</header>
+
+
+      
+        <div class="content">
+            <aside class="sidebar">
+  <nav class='toc-container' aria-label='table of contents'><ol class='toc-level-0 selected'><li class='toc-level-0 '><a href="#">Começando</a><ol class='toc-level-1'><li class='toc-level-1 '><a href="../../getting-started/quick-start/">Começo rápido</a></li><li class='toc-level-1 '><a href="../../getting-started/">Instalando Ember</a></li><li class='toc-level-1 '><a href="../../getting-started/core-concepts/">Conceitos fundamentais</a></li></ol></li><li class='toc-level-0 '><a href="#">Tutorial</a><ol class='toc-level-1'><li class='toc-level-1 '><a href="../../tutorial/ember-cli/">Começando</a></li><li class='toc-level-1 '><a href="../../tutorial/acceptance-test/">Planejando seu aplicativo</a></li><li class='toc-level-1 '><a href="../../tutorial/routes-and-templates/">Routes e Templates</a></li><li class='toc-level-1 '><a href="../../tutorial/model-hook/">Model Hook</a></li><li class='toc-level-1 '><a href="../../tutorial/installing-addons/">Instalando Addons</a></li><li class='toc-level-1 '><a href="../../tutorial/simple-component/">Construindo um componente simples</a></li><li class='toc-level-1 '><a href="../../tutorial/hbs-helper/">Criando um Helper para Handlebars</a></li><li class='toc-level-1 '><a href="../../tutorial/ember-data/">Usando Ember Data</a></li><li class='toc-level-1 '><a href="../../tutorial/autocomplete-component/">Criando um componente complexo</a></li><li class='toc-level-1 '><a href="../../tutorial/service/">Services e Utils</a></li><li class='toc-level-1 '><a href="../../tutorial/subroutes/">Adicionando rotas aninhadas</a></li><li class='toc-level-1 '><a href="../../tutorial/deploying/">Publicando seu App</a></li></ol></li><li class='toc-level-0 selected'><a href="#">The Object Model</a><ol class='toc-level-1 selected'><li class='toc-level-1 '><a href="../">Objects in Ember</a></li><li class='toc-level-1 selected'><a href="./">Classes and Instances</a></li><li class='toc-level-1 '><a href="../reopening-classes-and-instances/">Reopening Classes and Instances</a></li><li class='toc-level-1 '><a href="../computed-properties/">Computed Properties</a></li><li class='toc-level-1 '><a href="../computed-properties-and-aggregate-data/">Computed Properties and Aggregate Data</a></li><li class='toc-level-1 '><a href="../observers/">Observers</a></li><li class='toc-level-1 '><a href="../bindings/">Bindings</a></li><li class='toc-level-1 '><a href="../enumerables/">Enumerables</a></li></ol></li><li class='toc-level-0 '><a href="#">Routing</a><ol class='toc-level-1'><li class='toc-level-1 '><a href="../../routing/">Introduction</a></li><li class='toc-level-1 '><a href="../../routing/defining-your-routes/">Defining Your Routes</a></li><li class='toc-level-1 '><a href="../../routing/specifying-a-routes-model/">Specifying a Route's Model</a></li><li class='toc-level-1 '><a href="../../routing/rendering-a-template/">Rendering a Template</a></li><li class='toc-level-1 '><a href="../../routing/redirection/">Redirecting</a></li><li class='toc-level-1 '><a href="../../routing/preventing-and-retrying-transitions/">Preventing and Retrying Transitions</a></li><li class='toc-level-1 '><a href="../../routing/loading-and-error-substates/">Loading / Error Substates</a></li><li class='toc-level-1 '><a href="../../routing/query-params/">Query Parameters</a></li><li class='toc-level-1 '><a href="../../routing/asynchronous-routing/">Asynchronous Routing</a></li></ol></li><li class='toc-level-0 '><a href="#">Templates</a><ol class='toc-level-1'><li class='toc-level-1 '><a href="../../templates/handlebars-basics/">Handlebars Basics</a></li><li class='toc-level-1 '><a href="../../templates/built-in-helpers/">Built-in Helpers</a></li><li class='toc-level-1 '><a href="../../templates/conditionals/">Conditionals</a></li><li class='toc-level-1 '><a href="../../templates/displaying-a-list-of-items/">Displaying a List of Items</a></li><li class='toc-level-1 '><a href="../../templates/displaying-the-keys-in-an-object/">Displaying the Keys in an Object</a></li><li class='toc-level-1 '><a href="../../templates/binding-element-attributes/">Binding Element Attributes</a></li><li class='toc-level-1 '><a href="../../templates/links/">Links</a></li><li class='toc-level-1 '><a href="../../templates/actions/">Actions</a></li><li class='toc-level-1 '><a href="../../templates/input-helpers/">Input Helpers</a></li><li class='toc-level-1 '><a href="../../templates/development-helpers/">Development Helpers</a></li><li class='toc-level-1 '><a href="../../templates/writing-helpers/">Writing Helpers</a></li></ol></li><li class='toc-level-0 '><a href="#">Components</a><ol class='toc-level-1'><li class='toc-level-1 '><a href="../../components/defining-a-component/">Defining a Component</a></li><li class='toc-level-1 '><a href="../../components/the-component-lifecycle/">The Component Lifecycle</a></li><li class='toc-level-1 '><a href="../../components/passing-properties-to-a-component/">Passing Properties to a Component</a></li><li class='toc-level-1 '><a href="../../components/wrapping-content-in-a-component/">Wrapping Content in a Component</a></li><li class='toc-level-1 '><a href="../../components/customizing-a-components-element/">Customizing a Component's Element</a></li><li class='toc-level-1 '><a href="../../components/block-params/">Using Block Params</a></li><li class='toc-level-1 '><a href="../../components/handling-events/">Handling Events</a></li><li class='toc-level-1 '><a href="../../components/triggering-changes-with-actions/">Triggering Changes with Actions</a></li></ol></li><li class='toc-level-0 '><a href="#">Controllers</a><ol class='toc-level-1'><li class='toc-level-1 '><a href="../../controllers/">Introdução</a></li></ol></li><li class='toc-level-0 '><a href="#">Models</a><ol class='toc-level-1'><li class='toc-level-1 '><a href="../../models/">Introduction</a></li><li class='toc-level-1 '><a href="../../models/defining-models/">Defining Models</a></li><li class='toc-level-1 '><a href="../../models/finding-records/">Finding Records</a></li><li class='toc-level-1 '><a href="../../models/creating-updating-and-deleting-records/">Creating, Updating and Deleting</a></li><li class='toc-level-1 '><a href="../../models/relationships/">Relationships</a></li><li class='toc-level-1 '><a href="../../models/pushing-records-into-the-store/">Pushing Records into the Store</a></li><li class='toc-level-1 '><a href="../../models/handling-metadata/">Handling Metadata</a></li><li class='toc-level-1 '><a href="../../models/customizing-adapters/">Customizing Adapters</a></li><li class='toc-level-1 '><a href="../../models/customizing-serializers/">Customizing Serializers</a></li></ol></li><li class='toc-level-0 '><a href="#">Application Concerns</a><ol class='toc-level-1'><li class='toc-level-1 '><a href="../../applications/applications-and-instances/">Applications and Instances</a></li><li class='toc-level-1 '><a href="../../applications/dependency-injection/">Dependency Injection</a></li><li class='toc-level-1 '><a href="../../applications/initializers/">Initializers</a></li><li class='toc-level-1 '><a href="../../applications/services/">Services</a></li><li class='toc-level-1 '><a href="../../applications/run-loop/">The Run Loop</a></li></ol></li><li class='toc-level-0 '><a href="#">Testing</a><ol class='toc-level-1'><li class='toc-level-1 '><a href="../../testing/">Introduction</a></li><li class='toc-level-1 '><a href="../../testing/acceptance/">Acceptance Tests</a></li><li class='toc-level-1 '><a href="../../testing/unit-testing-basics/">Unit Testing Basics</a></li><li class='toc-level-1 '><a href="../../testing/testing-components/">Testing Components</a></li><li class='toc-level-1 '><a href="../../testing/testing-helpers/">Testing Helpers</a></li><li class='toc-level-1 '><a href="../../testing/testing-controllers/">Testing Controllers</a></li><li class='toc-level-1 '><a href="../../testing/testing-routes/">Testing Routes</a></li><li class='toc-level-1 '><a href="../../testing/testing-models/">Testing Models</a></li></ol></li><li class='toc-level-0 '><a href="#">Ember Inspector</a><ol class='toc-level-1'><li class='toc-level-1 '><a href="../../ember-inspector/">Introduction</a></li><li class='toc-level-1 '><a href="../../ember-inspector/installation/">Installing the Inspector</a></li><li class='toc-level-1 '><a href="../../ember-inspector/object-inspector/">Object Inspector</a></li><li class='toc-level-1 '><a href="../../ember-inspector/view-tree/">The View Tree</a></li><li class='toc-level-1 '><a href="../../ember-inspector/routes/">Inspecting Routes</a></li><li class='toc-level-1 '><a href="../../ember-inspector/data/">Data Tab</a></li><li class='toc-level-1 '><a href="../../ember-inspector/deprecations/">Tackling Deprecations</a></li><li class='toc-level-1 '><a href="../../ember-inspector/info/">Library Info</a></li><li class='toc-level-1 '><a href="../../ember-inspector/promises/">Debugging Promises</a></li><li class='toc-level-1 '><a href="../../ember-inspector/container/">Inspecting Objects via the Container</a></li><li class='toc-level-1 '><a href="../../ember-inspector/render-performance/">Rendering Performance</a></li><li class='toc-level-1 '><a href="../../ember-inspector/troubleshooting/">Troubleshooting</a></li></ol></li><li class='toc-level-0 '><a href="#">Addons and Dependencies</a><ol class='toc-level-1'><li class='toc-level-1 '><a href="../../addons-and-dependencies/managing-dependencies/">Managing Dependencies</a></li></ol></li><li class='toc-level-0 '><a href="#">Configuring Ember.js</a><ol class='toc-level-1'><li class='toc-level-1 '><a href="../../configuring-ember/configuring-your-app/">Configuring Your App</a></li><li class='toc-level-1 '><a href="../../configuring-ember/configuring-ember-cli/">Configuring Ember CLI</a></li><li class='toc-level-1 '><a href="../../configuring-ember/handling-deprecations/">Handling Deprecations</a></li><li class='toc-level-1 '><a href="../../configuring-ember/disabling-prototype-extensions/">Disabling Prototype Extensions</a></li><li class='toc-level-1 '><a href="../../configuring-ember/specifying-url-type/">Specifying the URL Type</a></li><li class='toc-level-1 '><a href="../../configuring-ember/embedding-applications/">Embedding Applications</a></li><li class='toc-level-1 '><a href="../../configuring-ember/feature-flags/">Feature Flags</a></li><li class='toc-level-1 '><a href="../../configuring-ember/build-targets/">Build targets</a></li><li class='toc-level-1 '><a href="../../configuring-ember/debugging/">Debugging</a></li></ol></li><li class='toc-level-0 '><a href="#">Contributing to Ember.js</a><ol class='toc-level-1'><li class='toc-level-1 '><a href="../../contributing/adding-new-features/">Adding New Features</a></li><li class='toc-level-1 '><a href="../../contributing/repositories/">Repositories</a></li></ol></li><li class='toc-level-0 '><a href="#">Glossário</a><ol class='toc-level-1'><li class='toc-level-1 '><a href="../../glossary/web-development/">Desenvolvimento WEB</a></li></ol></li></ol></nav>
+</aside>
+
+            <article>
+              <h1>
+                Classes and Instances
+                <a href="https://github.com/ember-brasil/website/edit/master/source/guides/object-model/classes-and-instances.md"
+                   target="_blank" class="edit-page icon-pencil">Melhorar esta página</a>
+              </h1>
+              <hr>
+
+              <p>As you learn about Ember, you&#39;ll see code like <code>Ember.Component.extend()</code> and
+<code>DS.Model.extend()</code>. Here, you&#39;ll learn about this <code>extend()</code> method, as well
+as other major features of the Ember object model.</p>
+<h3 class='anchorable-toc' id='toc_defining-classes'>Defining Classes</h3>
+<p>To define a new Ember <em>class</em>, call the <a href="http://emberjs.com/api/classes/Ember.Object.html#method_extend"><code>extend()</code></a> method on
+<a href="http://emberjs.com/api/classes/Ember.Object.html"><code>Ember.Object</code></a>:</p>
+<div class="highlight javascript "><div class="ribbon"></div><div class="scroller"><table class="CodeRay"><tr>
+  <td class="line-numbers"><pre>1
+2
+3
+4
+5
+</pre></td>
+  <td class="code"><pre>const Person = Ember.Object.extend({
+  say(thing) {
+    alert(thing);
+  }
+});
+</pre></td>
+</tr></table>
+</div></div>
+<p>This defines a new <code>Person</code> class with a <code>say()</code> method.</p>
+
+<p>You can also create a <em>subclass</em> from any existing class by calling
+its <code>extend()</code> method. For example, you might want to create a subclass
+of Ember&#39;s built-in <a href="http://emberjs.com/api/classes/Ember.Component.html"><code>Ember.Component</code></a> class:</p>
+<div class="highlight javascript "><div class="ribbon"></div><div class="scroller"><table class="CodeRay">
+  <thead>
+    <tr>
+      <td colspan="2">app/components/todo-item.js</td>
+    </tr>
+  </thead>
+<tr>
+  <td class="line-numbers"><pre>1
+2
+3
+4
+</pre></td>
+  <td class="code"><pre><span class="reserved">export</span> <span class="keyword">default</span> Ember.Component.extend({
+  <span class="key">classNameBindings</span>: [<span class="string"><span class="delimiter">'</span><span class="content">isUrgent</span><span class="delimiter">'</span></span>],
+  <span class="key">isUrgent</span>: <span class="predefined-constant">true</span>
+});
+</pre></td>
+</tr></table>
+</div></div><h3 class='anchorable-toc' id='toc_overriding-parent-class-methods'>Overriding Parent Class Methods</h3>
+<p>When defining a subclass, you can override methods but still access the
+implementation of your parent class by calling the special <code>_super()</code>
+method:</p>
+<div class="highlight javascript "><div class="ribbon"></div><div class="scroller"><table class="CodeRay"><tr>
+  <td class="line-numbers"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+<strong>10</strong>
+11
+12
+13
+14
+15
+16
+17
+18
+19
+</pre></td>
+  <td class="code"><pre>const Person = Ember.Object.extend({
+  say(thing) {
+    alert(<span class="error">`</span><span class="predefined">$</span>{<span class="local-variable">this</span>.get(<span class="string"><span class="delimiter">'</span><span class="content">name</span><span class="delimiter">'</span></span>)} says: <span class="predefined">$</span>{thing}<span class="error">`</span>);
+  }
+});
+
+const Soldier = Person.extend({
+  say(thing) {
+    <span class="comment">// this will call the method in the parent class (Person#say), appending</span>
+    <span class="comment">// the string ', sir!' to the variable `thing` passed in</span>
+    <span class="local-variable">this</span>._super(<span class="error">`</span><span class="predefined">$</span>{thing}, sir!<span class="error">`</span>);
+  }
+});
+
+let yehuda = Soldier.create({
+  <span class="key">name</span>: <span class="string"><span class="delimiter">'</span><span class="content">Yehuda Katz</span><span class="delimiter">'</span></span>
+});
+
+yehuda.say(<span class="string"><span class="delimiter">'</span><span class="content">Yes</span><span class="delimiter">'</span></span>); <span class="comment">// alerts &quot;Yehuda Katz says: Yes, sir!&quot;</span>
+</pre></td>
+</tr></table>
+</div></div>
+<p>In certain cases, you will want to pass arguments to <code>_super()</code> before or after overriding.</p>
+
+<p>This allows the original method to continue operating as it normally would.</p>
+
+<p>One common example is when overriding the <a href="http://emberjs.com/api/data/classes/DS.JSONAPISerializer.html#method_normalizeResponse"><code>normalizeResponse()</code></a> hook in one of Ember-Data&#39;s serializers.</p>
+
+<p>A handy shortcut for this is to use a &quot;spread operator&quot;, like <code>...arguments</code>:</p>
+<div class="highlight javascript "><div class="ribbon"></div><div class="scroller"><table class="CodeRay"><tr>
+  <td class="line-numbers"><pre>1
+2
+3
+4
+</pre></td>
+  <td class="code"><pre>normalizeResponse(store, primaryModelClass, payload, id, requestType)  {
+  <span class="comment">// Customize my JSON payload for Ember-Data</span>
+  <span class="keyword">return</span> <span class="local-variable">this</span>._super(...<span class="local-variable">arguments</span>);
+}
+</pre></td>
+</tr></table>
+</div></div>
+<p>The above example returns the original arguments (after your customizations) back to the parent class, so it can continue with its normal operations.</p>
+<h3 class='anchorable-toc' id='toc_creating-instances'>Creating Instances</h3>
+<p>Once you have defined a class, you can create new <em>instances</em> of that
+class by calling its <a href="http://emberjs.com/api/classes/Ember.Object.html#method_create"><code>create()</code></a> method. Any methods, properties and
+computed properties you defined on the class will be available to
+instances:</p>
+<div class="highlight javascript "><div class="ribbon"></div><div class="scroller"><table class="CodeRay"><tr>
+  <td class="line-numbers"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+</pre></td>
+  <td class="code"><pre>const Person = Ember.Object.extend({
+  say(thing) {
+    alert(<span class="error">`</span><span class="predefined">$</span>{<span class="local-variable">this</span>.get(<span class="string"><span class="delimiter">'</span><span class="content">name</span><span class="delimiter">'</span></span>)} says: <span class="predefined">$</span>{thing}<span class="error">`</span>);
+  }
+});
+
+let person = Person.create();
+
+person.say(<span class="string"><span class="delimiter">'</span><span class="content">Hello</span><span class="delimiter">'</span></span>); <span class="comment">// alerts &quot; says: Hello&quot;</span>
+</pre></td>
+</tr></table>
+</div></div>
+<p>When creating an instance, you can initialize the values of its properties
+by passing an optional hash to the <code>create()</code> method:</p>
+<div class="highlight javascript "><div class="ribbon"></div><div class="scroller"><table class="CodeRay"><tr>
+  <td class="line-numbers"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+<strong>10</strong>
+11
+</pre></td>
+  <td class="code"><pre>const Person = Ember.Object.extend({
+  helloWorld() {
+    alert(<span class="error">`</span>Hi, my name is <span class="predefined">$</span>{<span class="local-variable">this</span>.get(<span class="string"><span class="delimiter">'</span><span class="content">name</span><span class="delimiter">'</span></span>)}<span class="error">`</span>);
+  }
+});
+
+let tom = Person.create({
+  <span class="key">name</span>: <span class="string"><span class="delimiter">'</span><span class="content">Tom Dale</span><span class="delimiter">'</span></span>
+});
+
+tom.helloWorld(); <span class="comment">// alerts &quot;Hi, my name is Tom Dale&quot;</span>
+</pre></td>
+</tr></table>
+</div></div>
+<p>Note that for performance reasons, while calling <code>create()</code> you cannot redefine an instance&#39;s
+computed properties and should not redefine existing or define new methods. You should only set simple properties when calling
+<code>create()</code>. If you need to define or redefine methods or computed
+properties, create a new subclass and instantiate that.</p>
+
+<p>By convention, properties or variables that hold classes are
+PascalCased, while instances are not. So, for example, the variable
+<code>Person</code> would point to a class, while <code>person</code> would point to an instance
+(usually of the <code>Person</code> class). You should stick to these naming
+conventions in your Ember applications.</p>
+<h3 class='anchorable-toc' id='toc_initializing-instances'>Initializing Instances</h3>
+<p>When a new instance is created, its <a href="http://emberjs.com/api/classes/Ember.Object.html#method_init"><code>init()</code></a> method is invoked
+automatically. This is the ideal place to implement setup required on new
+instances:</p>
+<div class="highlight js "><div class="ribbon"></div><div class="scroller"><table class="CodeRay"><tr>
+  <td class="line-numbers"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+<strong>10</strong>
+11
+</pre></td>
+  <td class="code"><pre>const Person = Ember.Object.extend({
+  init() {
+    alert(<span class="error">`</span><span class="predefined">$</span>{<span class="local-variable">this</span>.get(<span class="string"><span class="delimiter">'</span><span class="content">name</span><span class="delimiter">'</span></span>)}, reporting <span class="keyword">for</span> duty!<span class="error">`</span>);
+  }
+});
+
+Person.create({
+  <span class="key">name</span>: <span class="string"><span class="delimiter">'</span><span class="content">Stefan Penner</span><span class="delimiter">'</span></span>
+});
+
+<span class="comment">// alerts &quot;Stefan Penner, reporting for duty!&quot;</span>
+</pre></td>
+</tr></table>
+</div></div>
+<p>If you are subclassing a framework class, like <code>Ember.Component</code>, and you
+override the <code>init()</code> method, make sure you call <code>this._super(...arguments)</code>!
+If you don&#39;t, a parent class may not have an opportunity to do important
+setup work, and you&#39;ll see strange behavior in your application.</p>
+
+<p>Arrays and objects defined directly on any <code>Ember.Object</code> are shared across all instances of that class.</p>
+<div class="highlight js "><div class="ribbon"></div><div class="scroller"><table class="CodeRay"><tr>
+  <td class="line-numbers"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+<strong>10</strong>
+11
+12
+13
+14
+15
+16
+17
+18
+19
+<strong>20</strong>
+</pre></td>
+  <td class="code"><pre>const Person = Ember.Object.extend({
+  <span class="key">shoppingList</span>: [<span class="string"><span class="delimiter">'</span><span class="content">eggs</span><span class="delimiter">'</span></span>, <span class="string"><span class="delimiter">'</span><span class="content">cheese</span><span class="delimiter">'</span></span>]
+});
+
+Person.create({
+  <span class="key">name</span>: <span class="string"><span class="delimiter">'</span><span class="content">Stefan Penner</span><span class="delimiter">'</span></span>,
+  addItem() {
+    <span class="local-variable">this</span>.get(<span class="string"><span class="delimiter">'</span><span class="content">shoppingList</span><span class="delimiter">'</span></span>).pushObject(<span class="string"><span class="delimiter">'</span><span class="content">bacon</span><span class="delimiter">'</span></span>);
+  }
+});
+
+Person.create({
+  <span class="key">name</span>: <span class="string"><span class="delimiter">'</span><span class="content">Robert Jackson</span><span class="delimiter">'</span></span>,
+  addItem() {
+    <span class="local-variable">this</span>.get(<span class="string"><span class="delimiter">'</span><span class="content">shoppingList</span><span class="delimiter">'</span></span>).pushObject(<span class="string"><span class="delimiter">'</span><span class="content">sausage</span><span class="delimiter">'</span></span>);
+  }
+});
+
+<span class="comment">// Stefan and Robert both trigger their addItem.</span>
+<span class="comment">// They both end up with: ['eggs', 'cheese', 'bacon', 'sausage']</span>
+</pre></td>
+</tr></table>
+</div></div>
+<p>To avoid this behavior, it is encouraged to initialize those arrays and object properties during <code>init()</code>. Doing so ensures each instance will be unique.</p>
+<div class="highlight js "><div class="ribbon"></div><div class="scroller"><table class="CodeRay"><tr>
+  <td class="line-numbers"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+<strong>10</strong>
+11
+12
+13
+14
+15
+16
+17
+18
+19
+<strong>20</strong>
+21
+22
+</pre></td>
+  <td class="code"><pre>const Person = Ember.Object.extend({
+  init() {
+    <span class="local-variable">this</span>.set(<span class="string"><span class="delimiter">'</span><span class="content">shoppingList</span><span class="delimiter">'</span></span>, [<span class="string"><span class="delimiter">'</span><span class="content">eggs</span><span class="delimiter">'</span></span>, <span class="string"><span class="delimiter">'</span><span class="content">cheese</span><span class="delimiter">'</span></span>]);
+  }
+});
+
+Person.create({
+  <span class="key">name</span>: <span class="string"><span class="delimiter">'</span><span class="content">Stefan Penner</span><span class="delimiter">'</span></span>,
+  addItem() {
+    <span class="local-variable">this</span>.get(<span class="string"><span class="delimiter">'</span><span class="content">shoppingList</span><span class="delimiter">'</span></span>).pushObject(<span class="string"><span class="delimiter">'</span><span class="content">bacon</span><span class="delimiter">'</span></span>);
+  }
+});
+
+Person.create({
+  <span class="key">name</span>: <span class="string"><span class="delimiter">'</span><span class="content">Robert Jackson</span><span class="delimiter">'</span></span>,
+  addItem() {
+    <span class="local-variable">this</span>.get(<span class="string"><span class="delimiter">'</span><span class="content">shoppingList</span><span class="delimiter">'</span></span>).pushObject(<span class="string"><span class="delimiter">'</span><span class="content">sausage</span><span class="delimiter">'</span></span>);
+  }
+});
+
+<span class="comment">// Stefan ['eggs', 'cheese', 'bacon']</span>
+<span class="comment">// Robert ['eggs', 'cheese', 'sausage']</span>
+</pre></td>
+</tr></table>
+</div></div><h3 class='anchorable-toc' id='toc_accessing-object-properties'>Accessing Object Properties</h3>
+<p>When accessing the properties of an object, use the <a href="http://emberjs.com/api/classes/Ember.Object.html#method_get"><code>get()</code></a>
+and <a href="http://emberjs.com/api/classes/Ember.Object.html#method_set"><code>set()</code></a> accessor methods:</p>
+<div class="highlight js "><div class="ribbon"></div><div class="scroller"><table class="CodeRay"><tr>
+  <td class="line-numbers"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+</pre></td>
+  <td class="code"><pre>const Person = Ember.Object.extend({
+  <span class="key">name</span>: <span class="string"><span class="delimiter">'</span><span class="content">Robert Jackson</span><span class="delimiter">'</span></span>
+});
+
+let person = Person.create();
+
+person.get(<span class="string"><span class="delimiter">'</span><span class="content">name</span><span class="delimiter">'</span></span>); <span class="comment">// 'Robert Jackson'</span>
+person.set(<span class="string"><span class="delimiter">'</span><span class="content">name</span><span class="delimiter">'</span></span>, <span class="string"><span class="delimiter">'</span><span class="content">Tobias Fünke</span><span class="delimiter">'</span></span>);
+person.get(<span class="string"><span class="delimiter">'</span><span class="content">name</span><span class="delimiter">'</span></span>); <span class="comment">// 'Tobias Fünke'</span>
+</pre></td>
+</tr></table>
+</div></div>
+<p>Make sure to use these accessor methods; otherwise, computed properties won&#39;t
+recalculate, observers won&#39;t fire, and templates won&#39;t update.</p>
+
+            </article>
+
+          </div>
+
+          <div class="footer">
+    <div class="container">
+
+      <div class="footer-statement">
+        <a href="https://ember-community-slackin.herokuapp.com/">Comunidade no Slack</a> &bull;
+        <a href="https://github.com/emberjs/ember.js">Github</a> &bull;
+        <a href="https://t.me/EmberBR">Telegram (Ember-BR)</a>
+      </div>
+
+      <div class="footer-statement footer-social">
+        <a href="http://twitter.com/emberjs"
+          title="Twitter">
+          <i class="icon-twitter"></i>
+        </a>
+        <a href="https://github.com/emberjs/ember.js"
+          title="GitHub">
+          <i class="icon-github"></i>
+        </a>
+        <a href="https://plus.google.com/communities/106387049790387471205"
+          title="Google+">
+          <i class="icon-gplus"></i>
+        </a>
+      </div>
+      <hr />
+      <div class="info">
+        <p>
+          Este site é parte de uma iniciativa da <b>Comunidade Brasileira Ember</b> e não tem nenhuma ligação direta com o projeto oficial. <br />
+          Ember é uma marca registrada da <a href="http://tilde.io">Tilde Inc.</a>.<br />
+          Para obter mais informações sobre licença de uso acesse <a href="http://emberjs.com/legal">Legal</a>.
+        </p>
+      </div>
+
+  </div>
+</div>
+
+
+          
+    </main>
+
+    <script type="text/javascript">
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-105665012-1', 'auto');
+    ga('send', 'pageview');
+</script>
+
+  </body>
+</html>

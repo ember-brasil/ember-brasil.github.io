@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="theme-color" content="#e46652">
+
+    <title>Ember.js - Configuring Ember.js: Handling Deprecations</title>
+    <meta property="st:title" content="Configuring Ember.js: Handling Deprecations" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="../../../images/favicon.png" rel="icon" type="image/png" />
+    <!--[if lte IE 7 ]><link href="../../../stylesheets/fonts/fontello-ie7.css" rel="stylesheet" /><![endif]-->
+    <link href="../../../stylesheets/application.css" rel="stylesheet" />
+    <link href="//fonts.googleapis.com/css?family=Nunito:300,400,700" rel="stylesheet">
+    <!-- This TypeKit account is managed by @wifelette. Contact her with any issues. -->
+    <script src="https://use.typekit.net/stz3kpn.js"></script>
+    <script>try{Typekit.load({ async: true });}catch(e){}</script>
+
+    <link href="/blog/feed.xml" rel="alternate" type="application/atom+xml" title="Ember.js - Blog" />
+    
+  </head>
+
+  <body class="guides guides guides_configuring-ember guides_configuring-ember_handling-deprecations guides_configuring-ember_handling-deprecations_index">
+
+    <!--[if lt IE 9]>
+      <script src="../../../javascripts/common-old-ie.js"></script>
+    <![endif]-->
+    <!--[if gte IE 9]><!-->
+      <script src="../../../javascripts/common-modern.js"></script>
+    <!--<![endif]-->
+
+    <main>
+      <header class="header">
+  <nav role="navigation" aria-label="main">
+    <ul class="header-nav">
+      <li class="header-logo">
+        <a href="/"><span class="visually-hidden">Ember homepage</span></a>
+      </li>
+      <li>
+        <a href="/">Home</a>
+      </li>
+      <li>
+        <a href="/guides/">Documentação</a>
+      </li>
+      <li>
+        <a href="/contribuidores/">Contribuidores</a>
+      </li>
+      <li>
+        <a href="/quem-usa-ember">Quem usa Ember?</a>
+      </li>
+      <li>
+        <a href="http://emberjs.com/api">Ember API</a>
+      </li>
+    </ul>
+  </nav>
+</header>
+
+
+      
+        <div class="content">
+            <aside class="sidebar">
+  <nav class='toc-container' aria-label='table of contents'><ol class='toc-level-0 selected'><li class='toc-level-0 '><a href="#">Começando</a><ol class='toc-level-1'><li class='toc-level-1 '><a href="../../getting-started/quick-start/">Começo rápido</a></li><li class='toc-level-1 '><a href="../../getting-started/">Instalando Ember</a></li><li class='toc-level-1 '><a href="../../getting-started/core-concepts/">Conceitos fundamentais</a></li></ol></li><li class='toc-level-0 '><a href="#">Tutorial</a><ol class='toc-level-1'><li class='toc-level-1 '><a href="../../tutorial/ember-cli/">Começando</a></li><li class='toc-level-1 '><a href="../../tutorial/acceptance-test/">Planejando seu aplicativo</a></li><li class='toc-level-1 '><a href="../../tutorial/routes-and-templates/">Routes e Templates</a></li><li class='toc-level-1 '><a href="../../tutorial/model-hook/">Model Hook</a></li><li class='toc-level-1 '><a href="../../tutorial/installing-addons/">Instalando Addons</a></li><li class='toc-level-1 '><a href="../../tutorial/simple-component/">Construindo um componente simples</a></li><li class='toc-level-1 '><a href="../../tutorial/hbs-helper/">Criando um Helper para Handlebars</a></li><li class='toc-level-1 '><a href="../../tutorial/ember-data/">Usando Ember Data</a></li><li class='toc-level-1 '><a href="../../tutorial/autocomplete-component/">Criando um componente complexo</a></li><li class='toc-level-1 '><a href="../../tutorial/service/">Services e Utils</a></li><li class='toc-level-1 '><a href="../../tutorial/subroutes/">Adicionando rotas aninhadas</a></li><li class='toc-level-1 '><a href="../../tutorial/deploying/">Publicando seu App</a></li></ol></li><li class='toc-level-0 '><a href="#">The Object Model</a><ol class='toc-level-1'><li class='toc-level-1 '><a href="../../object-model/">Objects in Ember</a></li><li class='toc-level-1 '><a href="../../object-model/classes-and-instances/">Classes and Instances</a></li><li class='toc-level-1 '><a href="../../object-model/reopening-classes-and-instances/">Reopening Classes and Instances</a></li><li class='toc-level-1 '><a href="../../object-model/computed-properties/">Computed Properties</a></li><li class='toc-level-1 '><a href="../../object-model/computed-properties-and-aggregate-data/">Computed Properties and Aggregate Data</a></li><li class='toc-level-1 '><a href="../../object-model/observers/">Observers</a></li><li class='toc-level-1 '><a href="../../object-model/bindings/">Bindings</a></li><li class='toc-level-1 '><a href="../../object-model/enumerables/">Enumerables</a></li></ol></li><li class='toc-level-0 '><a href="#">Routing</a><ol class='toc-level-1'><li class='toc-level-1 '><a href="../../routing/">Introduction</a></li><li class='toc-level-1 '><a href="../../routing/defining-your-routes/">Defining Your Routes</a></li><li class='toc-level-1 '><a href="../../routing/specifying-a-routes-model/">Specifying a Route's Model</a></li><li class='toc-level-1 '><a href="../../routing/rendering-a-template/">Rendering a Template</a></li><li class='toc-level-1 '><a href="../../routing/redirection/">Redirecting</a></li><li class='toc-level-1 '><a href="../../routing/preventing-and-retrying-transitions/">Preventing and Retrying Transitions</a></li><li class='toc-level-1 '><a href="../../routing/loading-and-error-substates/">Loading / Error Substates</a></li><li class='toc-level-1 '><a href="../../routing/query-params/">Query Parameters</a></li><li class='toc-level-1 '><a href="../../routing/asynchronous-routing/">Asynchronous Routing</a></li></ol></li><li class='toc-level-0 '><a href="#">Templates</a><ol class='toc-level-1'><li class='toc-level-1 '><a href="../../templates/handlebars-basics/">Handlebars Basics</a></li><li class='toc-level-1 '><a href="../../templates/built-in-helpers/">Built-in Helpers</a></li><li class='toc-level-1 '><a href="../../templates/conditionals/">Conditionals</a></li><li class='toc-level-1 '><a href="../../templates/displaying-a-list-of-items/">Displaying a List of Items</a></li><li class='toc-level-1 '><a href="../../templates/displaying-the-keys-in-an-object/">Displaying the Keys in an Object</a></li><li class='toc-level-1 '><a href="../../templates/binding-element-attributes/">Binding Element Attributes</a></li><li class='toc-level-1 '><a href="../../templates/links/">Links</a></li><li class='toc-level-1 '><a href="../../templates/actions/">Actions</a></li><li class='toc-level-1 '><a href="../../templates/input-helpers/">Input Helpers</a></li><li class='toc-level-1 '><a href="../../templates/development-helpers/">Development Helpers</a></li><li class='toc-level-1 '><a href="../../templates/writing-helpers/">Writing Helpers</a></li></ol></li><li class='toc-level-0 '><a href="#">Components</a><ol class='toc-level-1'><li class='toc-level-1 '><a href="../../components/defining-a-component/">Defining a Component</a></li><li class='toc-level-1 '><a href="../../components/the-component-lifecycle/">The Component Lifecycle</a></li><li class='toc-level-1 '><a href="../../components/passing-properties-to-a-component/">Passing Properties to a Component</a></li><li class='toc-level-1 '><a href="../../components/wrapping-content-in-a-component/">Wrapping Content in a Component</a></li><li class='toc-level-1 '><a href="../../components/customizing-a-components-element/">Customizing a Component's Element</a></li><li class='toc-level-1 '><a href="../../components/block-params/">Using Block Params</a></li><li class='toc-level-1 '><a href="../../components/handling-events/">Handling Events</a></li><li class='toc-level-1 '><a href="../../components/triggering-changes-with-actions/">Triggering Changes with Actions</a></li></ol></li><li class='toc-level-0 '><a href="#">Controllers</a><ol class='toc-level-1'><li class='toc-level-1 '><a href="../../controllers/">Introdução</a></li></ol></li><li class='toc-level-0 '><a href="#">Models</a><ol class='toc-level-1'><li class='toc-level-1 '><a href="../../models/">Introduction</a></li><li class='toc-level-1 '><a href="../../models/defining-models/">Defining Models</a></li><li class='toc-level-1 '><a href="../../models/finding-records/">Finding Records</a></li><li class='toc-level-1 '><a href="../../models/creating-updating-and-deleting-records/">Creating, Updating and Deleting</a></li><li class='toc-level-1 '><a href="../../models/relationships/">Relationships</a></li><li class='toc-level-1 '><a href="../../models/pushing-records-into-the-store/">Pushing Records into the Store</a></li><li class='toc-level-1 '><a href="../../models/handling-metadata/">Handling Metadata</a></li><li class='toc-level-1 '><a href="../../models/customizing-adapters/">Customizing Adapters</a></li><li class='toc-level-1 '><a href="../../models/customizing-serializers/">Customizing Serializers</a></li></ol></li><li class='toc-level-0 '><a href="#">Application Concerns</a><ol class='toc-level-1'><li class='toc-level-1 '><a href="../../applications/applications-and-instances/">Applications and Instances</a></li><li class='toc-level-1 '><a href="../../applications/dependency-injection/">Dependency Injection</a></li><li class='toc-level-1 '><a href="../../applications/initializers/">Initializers</a></li><li class='toc-level-1 '><a href="../../applications/services/">Services</a></li><li class='toc-level-1 '><a href="../../applications/run-loop/">The Run Loop</a></li></ol></li><li class='toc-level-0 '><a href="#">Testing</a><ol class='toc-level-1'><li class='toc-level-1 '><a href="../../testing/">Introduction</a></li><li class='toc-level-1 '><a href="../../testing/acceptance/">Acceptance Tests</a></li><li class='toc-level-1 '><a href="../../testing/unit-testing-basics/">Unit Testing Basics</a></li><li class='toc-level-1 '><a href="../../testing/testing-components/">Testing Components</a></li><li class='toc-level-1 '><a href="../../testing/testing-helpers/">Testing Helpers</a></li><li class='toc-level-1 '><a href="../../testing/testing-controllers/">Testing Controllers</a></li><li class='toc-level-1 '><a href="../../testing/testing-routes/">Testing Routes</a></li><li class='toc-level-1 '><a href="../../testing/testing-models/">Testing Models</a></li></ol></li><li class='toc-level-0 '><a href="#">Ember Inspector</a><ol class='toc-level-1'><li class='toc-level-1 '><a href="../../ember-inspector/">Introduction</a></li><li class='toc-level-1 '><a href="../../ember-inspector/installation/">Installing the Inspector</a></li><li class='toc-level-1 '><a href="../../ember-inspector/object-inspector/">Object Inspector</a></li><li class='toc-level-1 '><a href="../../ember-inspector/view-tree/">The View Tree</a></li><li class='toc-level-1 '><a href="../../ember-inspector/routes/">Inspecting Routes</a></li><li class='toc-level-1 '><a href="../../ember-inspector/data/">Data Tab</a></li><li class='toc-level-1 '><a href="../../ember-inspector/deprecations/">Tackling Deprecations</a></li><li class='toc-level-1 '><a href="../../ember-inspector/info/">Library Info</a></li><li class='toc-level-1 '><a href="../../ember-inspector/promises/">Debugging Promises</a></li><li class='toc-level-1 '><a href="../../ember-inspector/container/">Inspecting Objects via the Container</a></li><li class='toc-level-1 '><a href="../../ember-inspector/render-performance/">Rendering Performance</a></li><li class='toc-level-1 '><a href="../../ember-inspector/troubleshooting/">Troubleshooting</a></li></ol></li><li class='toc-level-0 '><a href="#">Addons and Dependencies</a><ol class='toc-level-1'><li class='toc-level-1 '><a href="../../addons-and-dependencies/managing-dependencies/">Managing Dependencies</a></li></ol></li><li class='toc-level-0 selected'><a href="#">Configuring Ember.js</a><ol class='toc-level-1 selected'><li class='toc-level-1 '><a href="../configuring-your-app/">Configuring Your App</a></li><li class='toc-level-1 '><a href="../configuring-ember-cli/">Configuring Ember CLI</a></li><li class='toc-level-1 selected'><a href="./">Handling Deprecations</a></li><li class='toc-level-1 '><a href="../disabling-prototype-extensions/">Disabling Prototype Extensions</a></li><li class='toc-level-1 '><a href="../specifying-url-type/">Specifying the URL Type</a></li><li class='toc-level-1 '><a href="../embedding-applications/">Embedding Applications</a></li><li class='toc-level-1 '><a href="../feature-flags/">Feature Flags</a></li><li class='toc-level-1 '><a href="../build-targets/">Build targets</a></li><li class='toc-level-1 '><a href="../debugging/">Debugging</a></li></ol></li><li class='toc-level-0 '><a href="#">Contributing to Ember.js</a><ol class='toc-level-1'><li class='toc-level-1 '><a href="../../contributing/adding-new-features/">Adding New Features</a></li><li class='toc-level-1 '><a href="../../contributing/repositories/">Repositories</a></li></ol></li><li class='toc-level-0 '><a href="#">Glossário</a><ol class='toc-level-1'><li class='toc-level-1 '><a href="../../glossary/web-development/">Desenvolvimento WEB</a></li></ol></li></ol></nav>
+</aside>
+
+            <article>
+              <h1>
+                Handling Deprecations
+                <a href="https://github.com/ember-brasil/website/edit/master/source/guides/configuring-ember/handling-deprecations.md"
+                   target="_blank" class="edit-page icon-pencil">Melhorar esta página</a>
+              </h1>
+              <hr>
+
+              <p>A valuable attribute of the Ember framework is its use of <a href="http://semver.org/">Semantic Versioning</a> to aid projects in keeping up with
+changes to the framework.  Before any functionality or API is removed it first goes through a deprecation period where the functionality is
+still supported, but usage of it generates a warning logged to the browser console.  These warnings can pile up between major releases to a point where the amount of
+deprecation warnings that scroll through the console becomes overwhelming.</p>
+
+<p><img width="675px" title="Deprecations Clouding up the Browser JavaScript Console" src="../../images/guides/configuring-ember/handling-deprecations/deprecations-in-console.png"/></p>
+
+<p>Fortunately, Ember provides a way for projects to deal with deprecations in an organized and efficient manner.</p>
+<h2 class='anchorable-toc' id='toc_filtering-deprecations'>Filtering Deprecations</h2>
+<p>When your project has a lot of deprecations, you can start by filtering out deprecations that do not have to be addressed right away.  You
+can use the <a href="http://emberjs.com/api/classes/Ember.Debug.html#method_registerDeprecationHandler">deprecation handlers</a> API to check for what
+release a deprecated feature will be removed.  An example handler is shown below that filters out all deprecations that are not going away
+in release 2.0.0.</p>
+<div class="highlight javascript "><div class="ribbon"></div><div class="scroller"><table class="CodeRay">
+  <thead>
+    <tr>
+      <td colspan="2">app/initializers/main.js</td>
+    </tr>
+  </thead>
+<tr>
+  <td class="line-numbers"><pre>1
+2
+3
+4
+5
+6
+7
+8
+</pre></td>
+  <td class="code"><pre><span class="keyword">if</span> (Ember.Debug &amp;&amp; <span class="keyword">typeof</span> Ember.Debug.registerDeprecationHandler === <span class="string"><span class="delimiter">'</span><span class="content">function</span><span class="delimiter">'</span></span>) {
+    Ember.Debug.registerDeprecationHandler((message, options, next) =&gt; {
+        <span class="keyword">if</span> (options &amp;&amp; options.until &amp;&amp; options.until !== <span class="string"><span class="delimiter">'</span><span class="content">2.0.0</span><span class="delimiter">'</span></span>) {
+            <span class="keyword">return</span>;
+        }
+        next(message, options);
+    });
+}
+</pre></td>
+</tr></table>
+</div></div>
+<p>The deprecation handler API was released in Ember 2.1.  If you would like to leverage this API in a prior release of Ember you can install
+the <a href="http://emberobserver.com/addons/ember-debug-handlers-polyfill">ember-debug-handlers-polyfill</a> addon into your project.</p>
+<h2 class='anchorable-toc' id='toc_deprecation-workflow'>Deprecation Workflow</h2>
+<p>Once you&#39;ve removed deprecations that you may not need to immediately address, you may still be left with many deprecations.  Also, your remaining
+deprecations may only occur in very specific scenarios that are not obvious.  How then should you go about finding and fixing these?  This
+is where the <a href="http://emberobserver.com/addons/ember-cli-deprecation-workflow">ember-cli-deprecation-workflow</a> addon can be extremely helpful.</p>
+
+<p>Once installed, the addon works in 3 steps:</p>
+<h3 class='anchorable-toc' id='toc_1-gather-deprecations-into-one-source'>1. Gather deprecations into one source</h3>
+<p>The ember-cli-deprecation-workflow addon provides a command that will collect deprecations from your console and generate JavaScript code listing
+its findings.</p>
+
+<p>To collect deprecations, first run your in-browser test suite by starting your development server and navigating to <a href="http://localhost:4200/tests"><code>http://localhost:4200/tests</code></a>.  If your test suite isn&#39;t fully covering your app&#39;s functionality, you may also
+manually exercise functionality within your app where needed.  Once you&#39;ve exercised the app to your satisfaction, run the following command within
+your browser console: <code>deprecationWorkflow.flushDeprecations()</code>.  This will print to the console JavaScript code, which you should then copy to a
+new file in your project called <code>/config/deprecation-workflow.js</code></p>
+
+<p><img width="675px" title="Generated Deprecation Code from Browser Console" src="../../images/guides/configuring-ember/handling-deprecations/generate-deprecation-code.png"/></p>
+
+<p>Here&#39;s an example of a deprecation-workflow file after generated from the console:</p>
+<div class="highlight javascript "><div class="ribbon"></div><div class="scroller"><table class="CodeRay">
+  <thead>
+    <tr>
+      <td colspan="2">/config/deprecation-workflow.js</td>
+    </tr>
+  </thead>
+<tr>
+  <td class="line-numbers"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+<strong>10</strong>
+11
+</pre></td>
+  <td class="code"><pre>window.deprecationWorkflow = window.deprecationWorkflow || {};
+window.deprecationWorkflow.config = {
+  <span class="key">workflow</span>: [
+    { <span class="key">handler</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">silence</span><span class="delimiter">&quot;</span></span>, <span class="key">matchMessage</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">Ember.Handlebars.registerHelper is deprecated, please refactor to Ember.Helper.helper.</span><span class="delimiter">&quot;</span></span> },
+    { <span class="key">handler</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">silence</span><span class="delimiter">&quot;</span></span>, <span class="key">matchMessage</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">`lookup` was called on a Registry. The `initializer` API no longer receives a container, and you should use an `instanceInitializer` to look up objects from the container.</span><span class="delimiter">&quot;</span></span> },
+    { <span class="key">handler</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">silence</span><span class="delimiter">&quot;</span></span>, <span class="key">matchMessage</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">Using `Ember.HTMLBars.makeBoundHelper` is deprecated. Please refactor to using `Ember.Helper` or `Ember.Helper.helper`.</span><span class="delimiter">&quot;</span></span> },
+    { <span class="key">handler</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">silence</span><span class="delimiter">&quot;</span></span>, <span class="key">matchMessage</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">Accessing 'template' in &lt;web-directory@component:x-select::ember1381&gt; is deprecated. To determine if a block was specified to &lt;web-directory@component:x-select::ember1381&gt; please use '{{#if hasBlock}}' in the components layout.</span><span class="delimiter">&quot;</span></span> },
+    { <span class="key">handler</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">silence</span><span class="delimiter">&quot;</span></span>, <span class="key">matchMessage</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">Accessing 'template' in &lt;web-directory@component:x-select::ember1402&gt; is deprecated. To determine if a block was specified to &lt;web-directory@component:x-select::ember1402&gt; please use '{{#if hasBlock}}' in the components layout.</span><span class="delimiter">&quot;</span></span> },
+    { <span class="key">handler</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">silence</span><span class="delimiter">&quot;</span></span>, <span class="key">matchMessage</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">Accessing 'template' in &lt;web-directory@component:x-select::ember1407&gt; is deprecated. To determine if a block was specified to &lt;web-directory@component:x-select::ember1407&gt; please use '{{#if hasBlock}}' in the components layout.</span><span class="delimiter">&quot;</span></span> }
+  ]
+};
+</pre></td>
+</tr></table>
+</div></div>
+<p>You might notice that you have a lot of duplicated messages in your workflow file, like the 3 messages in the above example that start with
+<code>Accessing &#39;template&#39; in...</code>.  This is because some of the deprecation messages provide context to the specific deprecation, making them
+different than the same deprecation in other parts of the app.  If you want to consolidate the
+duplication, you can use a simple regular expression with a wildcard (<code>.*</code>) for the part of the message that varies per instance.</p>
+
+<p>Below is the same deprecation-workflow file as above, now with a regular expression on line 7 to remove some redundant messages. Note that the double quotes around <code>matchMessage</code> have also been replaced with forward slashes.</p>
+<div class="highlight javascript "><div class="ribbon"></div><div class="scroller"><table class="CodeRay">
+  <thead>
+    <tr>
+      <td colspan="2">/config/deprecation-workflow.js</td>
+    </tr>
+  </thead>
+<tr>
+  <td class="line-numbers"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+</pre></td>
+  <td class="code"><pre>window.deprecationWorkflow = window.deprecationWorkflow || {};
+window.deprecationWorkflow.config = {
+  <span class="key">workflow</span>: [
+    { <span class="key">handler</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">silence</span><span class="delimiter">&quot;</span></span>, <span class="key">matchMessage</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">Ember.Handlebars.registerHelper is deprecated, please refactor to Ember.Helper.helper.</span><span class="delimiter">&quot;</span></span> },
+    { <span class="key">handler</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">silence</span><span class="delimiter">&quot;</span></span>, <span class="key">matchMessage</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">`lookup` was called on a Registry. The `initializer` API no longer receives a container, and you should use an `instanceInitializer` to look up objects from the container.</span><span class="delimiter">&quot;</span></span> },
+    { <span class="key">handler</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">silence</span><span class="delimiter">&quot;</span></span>, <span class="key">matchMessage</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">Using `Ember.HTMLBars.makeBoundHelper` is deprecated. Please refactor to using `Ember.Helper` or `Ember.Helper.helper`.</span><span class="delimiter">&quot;</span></span> },
+    { <span class="key">handler</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">silence</span><span class="delimiter">&quot;</span></span>, <span class="key">matchMessage</span>: <span class="regexp"><span class="delimiter">/</span><span class="content">Accessing 'template' in .* is deprecated. To determine if a block was specified to .* please use '{{#if hasBlock}}' in the components layout.</span><span class="delimiter">/</span></span> }
+  ]
+};
+</pre></td>
+</tr></table>
+</div></div>
+<p>Rerun your test suite as you make updates to your workflow file and you should validate that your deprecations are gone. Once that is completed,
+you can proceed with enhancing your application without the sea of deprecation warnings clouding your log.</p>
+<h3 class='anchorable-toc' id='toc_2-turn-on-a-deprecation'>2. &quot;Turn on&quot; a deprecation</h3>
+<p>Once you have built your <code>deprecation-workflow.js</code> file and your deprecations are silenced, you can begin to work on deprecations one by one
+at your own leisure.  To find deprecations, you can change the handler value of that message to either <code>throw</code> or <code>log</code>.  Throw will
+throw an actual exception when the deprecation is encountered, so that tests that use the deprecated feature will fail.  Choosing to log will
+simply log a warning to the console as before.  These settings give you some flexibility on how you want to go about fixing the
+deprecations.</p>
+
+<p>The code below is the deprecation-workflow file with the first deprecation set to throw an exception on occurrence.  The image demonstrates what
+that deprecation looks like when you run your tests.</p>
+<div class="highlight javascript "><div class="ribbon"></div><div class="scroller"><table class="CodeRay">
+  <thead>
+    <tr>
+      <td colspan="2">/config/deprecation-workflow.js</td>
+    </tr>
+  </thead>
+<tr>
+  <td class="line-numbers"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+</pre></td>
+  <td class="code"><pre>window.deprecationWorkflow = window.deprecationWorkflow || {};
+window.deprecationWorkflow.config = {
+  <span class="key">workflow</span>: [
+    { <span class="key">handler</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">throw</span><span class="delimiter">&quot;</span></span>, <span class="key">matchMessage</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">Ember.Handlebars.registerHelper is deprecated, please refactor to Ember.Helper.helper.</span><span class="delimiter">&quot;</span></span> },
+    { <span class="key">handler</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">silence</span><span class="delimiter">&quot;</span></span>, <span class="key">matchMessage</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">`lookup` was called on a Registry. The `initializer` API no longer receives a container, and you should use an `instanceInitializer` to look up objects from the container.</span><span class="delimiter">&quot;</span></span> },
+    { <span class="key">handler</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">silence</span><span class="delimiter">&quot;</span></span>, <span class="key">matchMessage</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">Using `Ember.HTMLBars.makeBoundHelper` is deprecated. Please refactor to using `Ember.Helper` or `Ember.Helper.helper`.</span><span class="delimiter">&quot;</span></span> },
+    { <span class="key">handler</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">silence</span><span class="delimiter">&quot;</span></span>, <span class="key">matchMessage</span>: <span class="regexp"><span class="delimiter">/</span><span class="content">Accessing 'template' in .* is deprecated. To determine if a block was specified to .* please use '{{#if hasBlock}}' in the components layout.</span><span class="delimiter">/</span></span> }
+  ]
+};
+</pre></td>
+</tr></table>
+</div></div>
+<p><img width="675px" src="../../images/guides/configuring-ember/handling-deprecations/failed-test-from-deprecation.png"/></p>
+<h3 class='anchorable-toc' id='toc_3-fix-and-repeat'>3. Fix and Repeat</h3>
+<p>After fixing a deprecation and getting your scenarios working again, you might want to leave the deprecation message in the workflow file with the
+throw handler enabled.  This will ensure you haven&#39;t missed anything, and ensure no new deprecated calls of that type are introduced to your project.
+Next, it&#39;s just a matter of going down the list, updating the handler, and fixing each remaining deprecation.</p>
+
+<p>In the end, your deprecations can be fully turned on as &quot;throw&quot; and you should be able to use your application without error.  At this point, you can
+go ahead and update your Ember version!  When you upgrade, be sure you remove the deprecations you&#39;ve fixed from the deprecation workflow file,
+so that you can start the process over for the next release.</p>
+<h2 class='anchorable-toc' id='toc_silencing-deprecation-warnings-during-compile'>Silencing Deprecation Warnings During Compile</h2>
+<p>As you upgrade between releases, you might also notice that your terminal log begins to stream template-related deprecation warnings during the compile process, making
+it difficult to review your compilation logs.</p>
+
+<p><img width="675px" src="../../images/guides/configuring-ember/handling-deprecations/compile-deprecations.png" title="Compile Deprecations Clouding Log"/></p>
+
+<p>If you are using the deprecation workflow process above, you will likely prefer to gather these warnings during runtime execution instead.  The way to hide these
+warnings during compile is to install the <a href="http://emberobserver.com/addons/ember-cli-template-lint">ember-cli-template-lint</a> addon.  It suppresses
+template deprecation warnings during compile in favor of showing them in the browser console during test suite execution or application usage.</p>
+<h2 class='anchorable-toc' id='toc_deprecation-handling-in-ember-inspector'>Deprecation Handling in Ember Inspector</h2>
+<p>Ember Inspector also provides deprecation handling capability.  It can work complimentary to ember-cli-deprecation-workflow.  As you unsilence deprecations to
+fix them, the inspector can allow you to more quickly find where in your code a deprecation occurs when you run into it at runtime, reducing the amount of
+stack trace browsing you have to do.  For more information on using deprecation handling in Ember Inspector, see its <a href="../../ember-inspector/deprecations/">guides section</a>.</p>
+
+            </article>
+
+          </div>
+
+          <div class="footer">
+    <div class="container">
+
+      <div class="footer-statement">
+        <a href="https://ember-community-slackin.herokuapp.com/">Comunidade no Slack</a> &bull;
+        <a href="https://github.com/emberjs/ember.js">Github</a> &bull;
+        <a href="https://t.me/EmberBR">Telegram (Ember-BR)</a>
+      </div>
+
+      <div class="footer-statement footer-social">
+        <a href="http://twitter.com/emberjs"
+          title="Twitter">
+          <i class="icon-twitter"></i>
+        </a>
+        <a href="https://github.com/emberjs/ember.js"
+          title="GitHub">
+          <i class="icon-github"></i>
+        </a>
+        <a href="https://plus.google.com/communities/106387049790387471205"
+          title="Google+">
+          <i class="icon-gplus"></i>
+        </a>
+      </div>
+      <hr />
+      <div class="info">
+        <p>
+          Este site é parte de uma iniciativa da <b>Comunidade Brasileira Ember</b> e não tem nenhuma ligação direta com o projeto oficial. <br />
+          Ember é uma marca registrada da <a href="http://tilde.io">Tilde Inc.</a>.<br />
+          Para obter mais informações sobre licença de uso acesse <a href="http://emberjs.com/legal">Legal</a>.
+        </p>
+      </div>
+
+  </div>
+</div>
+
+
+          
+    </main>
+
+    <script type="text/javascript">
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-105665012-1', 'auto');
+    ga('send', 'pageview');
+</script>
+
+  </body>
+</html>

@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="theme-color" content="#e46652">
+
+    <title>Ember.js - Application Concerns: The Run Loop</title>
+    <meta property="st:title" content="Application Concerns: The Run Loop" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="../../../images/favicon.png" rel="icon" type="image/png" />
+    <!--[if lte IE 7 ]><link href="../../../stylesheets/fonts/fontello-ie7.css" rel="stylesheet" /><![endif]-->
+    <link href="../../../stylesheets/application.css" rel="stylesheet" />
+    <link href="//fonts.googleapis.com/css?family=Nunito:300,400,700" rel="stylesheet">
+    <!-- This TypeKit account is managed by @wifelette. Contact her with any issues. -->
+    <script src="https://use.typekit.net/stz3kpn.js"></script>
+    <script>try{Typekit.load({ async: true });}catch(e){}</script>
+
+    <link href="/blog/feed.xml" rel="alternate" type="application/atom+xml" title="Ember.js - Blog" />
+    
+  </head>
+
+  <body class="guides guides guides_applications guides_applications_run-loop guides_applications_run-loop_index">
+
+    <!--[if lt IE 9]>
+      <script src="../../../javascripts/common-old-ie.js"></script>
+    <![endif]-->
+    <!--[if gte IE 9]><!-->
+      <script src="../../../javascripts/common-modern.js"></script>
+    <!--<![endif]-->
+
+    <main>
+      <header class="header">
+  <nav role="navigation" aria-label="main">
+    <ul class="header-nav">
+      <li class="header-logo">
+        <a href="/"><span class="visually-hidden">Ember homepage</span></a>
+      </li>
+      <li>
+        <a href="/">Home</a>
+      </li>
+      <li>
+        <a href="/guides/">Documentação</a>
+      </li>
+      <li>
+        <a href="/contribuidores/">Contribuidores</a>
+      </li>
+      <li>
+        <a href="/quem-usa-ember">Quem usa Ember?</a>
+      </li>
+      <li>
+        <a href="http://emberjs.com/api">Ember API</a>
+      </li>
+    </ul>
+  </nav>
+</header>
+
+
+      
+        <div class="content">
+            <aside class="sidebar">
+  <nav class='toc-container' aria-label='table of contents'><ol class='toc-level-0 selected'><li class='toc-level-0 '><a href="#">Começando</a><ol class='toc-level-1'><li class='toc-level-1 '><a href="../../getting-started/quick-start/">Começo rápido</a></li><li class='toc-level-1 '><a href="../../getting-started/">Instalando Ember</a></li><li class='toc-level-1 '><a href="../../getting-started/core-concepts/">Conceitos fundamentais</a></li></ol></li><li class='toc-level-0 '><a href="#">Tutorial</a><ol class='toc-level-1'><li class='toc-level-1 '><a href="../../tutorial/ember-cli/">Começando</a></li><li class='toc-level-1 '><a href="../../tutorial/acceptance-test/">Planejando seu aplicativo</a></li><li class='toc-level-1 '><a href="../../tutorial/routes-and-templates/">Routes e Templates</a></li><li class='toc-level-1 '><a href="../../tutorial/model-hook/">Model Hook</a></li><li class='toc-level-1 '><a href="../../tutorial/installing-addons/">Instalando Addons</a></li><li class='toc-level-1 '><a href="../../tutorial/simple-component/">Construindo um componente simples</a></li><li class='toc-level-1 '><a href="../../tutorial/hbs-helper/">Criando um Helper para Handlebars</a></li><li class='toc-level-1 '><a href="../../tutorial/ember-data/">Usando Ember Data</a></li><li class='toc-level-1 '><a href="../../tutorial/autocomplete-component/">Criando um componente complexo</a></li><li class='toc-level-1 '><a href="../../tutorial/service/">Services e Utils</a></li><li class='toc-level-1 '><a href="../../tutorial/subroutes/">Adicionando rotas aninhadas</a></li><li class='toc-level-1 '><a href="../../tutorial/deploying/">Publicando seu App</a></li></ol></li><li class='toc-level-0 '><a href="#">The Object Model</a><ol class='toc-level-1'><li class='toc-level-1 '><a href="../../object-model/">Objects in Ember</a></li><li class='toc-level-1 '><a href="../../object-model/classes-and-instances/">Classes and Instances</a></li><li class='toc-level-1 '><a href="../../object-model/reopening-classes-and-instances/">Reopening Classes and Instances</a></li><li class='toc-level-1 '><a href="../../object-model/computed-properties/">Computed Properties</a></li><li class='toc-level-1 '><a href="../../object-model/computed-properties-and-aggregate-data/">Computed Properties and Aggregate Data</a></li><li class='toc-level-1 '><a href="../../object-model/observers/">Observers</a></li><li class='toc-level-1 '><a href="../../object-model/bindings/">Bindings</a></li><li class='toc-level-1 '><a href="../../object-model/enumerables/">Enumerables</a></li></ol></li><li class='toc-level-0 '><a href="#">Routing</a><ol class='toc-level-1'><li class='toc-level-1 '><a href="../../routing/">Introduction</a></li><li class='toc-level-1 '><a href="../../routing/defining-your-routes/">Defining Your Routes</a></li><li class='toc-level-1 '><a href="../../routing/specifying-a-routes-model/">Specifying a Route's Model</a></li><li class='toc-level-1 '><a href="../../routing/rendering-a-template/">Rendering a Template</a></li><li class='toc-level-1 '><a href="../../routing/redirection/">Redirecting</a></li><li class='toc-level-1 '><a href="../../routing/preventing-and-retrying-transitions/">Preventing and Retrying Transitions</a></li><li class='toc-level-1 '><a href="../../routing/loading-and-error-substates/">Loading / Error Substates</a></li><li class='toc-level-1 '><a href="../../routing/query-params/">Query Parameters</a></li><li class='toc-level-1 '><a href="../../routing/asynchronous-routing/">Asynchronous Routing</a></li></ol></li><li class='toc-level-0 '><a href="#">Templates</a><ol class='toc-level-1'><li class='toc-level-1 '><a href="../../templates/handlebars-basics/">Handlebars Basics</a></li><li class='toc-level-1 '><a href="../../templates/built-in-helpers/">Built-in Helpers</a></li><li class='toc-level-1 '><a href="../../templates/conditionals/">Conditionals</a></li><li class='toc-level-1 '><a href="../../templates/displaying-a-list-of-items/">Displaying a List of Items</a></li><li class='toc-level-1 '><a href="../../templates/displaying-the-keys-in-an-object/">Displaying the Keys in an Object</a></li><li class='toc-level-1 '><a href="../../templates/binding-element-attributes/">Binding Element Attributes</a></li><li class='toc-level-1 '><a href="../../templates/links/">Links</a></li><li class='toc-level-1 '><a href="../../templates/actions/">Actions</a></li><li class='toc-level-1 '><a href="../../templates/input-helpers/">Input Helpers</a></li><li class='toc-level-1 '><a href="../../templates/development-helpers/">Development Helpers</a></li><li class='toc-level-1 '><a href="../../templates/writing-helpers/">Writing Helpers</a></li></ol></li><li class='toc-level-0 '><a href="#">Components</a><ol class='toc-level-1'><li class='toc-level-1 '><a href="../../components/defining-a-component/">Defining a Component</a></li><li class='toc-level-1 '><a href="../../components/the-component-lifecycle/">The Component Lifecycle</a></li><li class='toc-level-1 '><a href="../../components/passing-properties-to-a-component/">Passing Properties to a Component</a></li><li class='toc-level-1 '><a href="../../components/wrapping-content-in-a-component/">Wrapping Content in a Component</a></li><li class='toc-level-1 '><a href="../../components/customizing-a-components-element/">Customizing a Component's Element</a></li><li class='toc-level-1 '><a href="../../components/block-params/">Using Block Params</a></li><li class='toc-level-1 '><a href="../../components/handling-events/">Handling Events</a></li><li class='toc-level-1 '><a href="../../components/triggering-changes-with-actions/">Triggering Changes with Actions</a></li></ol></li><li class='toc-level-0 '><a href="#">Controllers</a><ol class='toc-level-1'><li class='toc-level-1 '><a href="../../controllers/">Introdução</a></li></ol></li><li class='toc-level-0 '><a href="#">Models</a><ol class='toc-level-1'><li class='toc-level-1 '><a href="../../models/">Introduction</a></li><li class='toc-level-1 '><a href="../../models/defining-models/">Defining Models</a></li><li class='toc-level-1 '><a href="../../models/finding-records/">Finding Records</a></li><li class='toc-level-1 '><a href="../../models/creating-updating-and-deleting-records/">Creating, Updating and Deleting</a></li><li class='toc-level-1 '><a href="../../models/relationships/">Relationships</a></li><li class='toc-level-1 '><a href="../../models/pushing-records-into-the-store/">Pushing Records into the Store</a></li><li class='toc-level-1 '><a href="../../models/handling-metadata/">Handling Metadata</a></li><li class='toc-level-1 '><a href="../../models/customizing-adapters/">Customizing Adapters</a></li><li class='toc-level-1 '><a href="../../models/customizing-serializers/">Customizing Serializers</a></li></ol></li><li class='toc-level-0 selected'><a href="#">Application Concerns</a><ol class='toc-level-1 selected'><li class='toc-level-1 '><a href="../applications-and-instances/">Applications and Instances</a></li><li class='toc-level-1 '><a href="../dependency-injection/">Dependency Injection</a></li><li class='toc-level-1 '><a href="../initializers/">Initializers</a></li><li class='toc-level-1 '><a href="../services/">Services</a></li><li class='toc-level-1 selected'><a href="./">The Run Loop</a></li></ol></li><li class='toc-level-0 '><a href="#">Testing</a><ol class='toc-level-1'><li class='toc-level-1 '><a href="../../testing/">Introduction</a></li><li class='toc-level-1 '><a href="../../testing/acceptance/">Acceptance Tests</a></li><li class='toc-level-1 '><a href="../../testing/unit-testing-basics/">Unit Testing Basics</a></li><li class='toc-level-1 '><a href="../../testing/testing-components/">Testing Components</a></li><li class='toc-level-1 '><a href="../../testing/testing-helpers/">Testing Helpers</a></li><li class='toc-level-1 '><a href="../../testing/testing-controllers/">Testing Controllers</a></li><li class='toc-level-1 '><a href="../../testing/testing-routes/">Testing Routes</a></li><li class='toc-level-1 '><a href="../../testing/testing-models/">Testing Models</a></li></ol></li><li class='toc-level-0 '><a href="#">Ember Inspector</a><ol class='toc-level-1'><li class='toc-level-1 '><a href="../../ember-inspector/">Introduction</a></li><li class='toc-level-1 '><a href="../../ember-inspector/installation/">Installing the Inspector</a></li><li class='toc-level-1 '><a href="../../ember-inspector/object-inspector/">Object Inspector</a></li><li class='toc-level-1 '><a href="../../ember-inspector/view-tree/">The View Tree</a></li><li class='toc-level-1 '><a href="../../ember-inspector/routes/">Inspecting Routes</a></li><li class='toc-level-1 '><a href="../../ember-inspector/data/">Data Tab</a></li><li class='toc-level-1 '><a href="../../ember-inspector/deprecations/">Tackling Deprecations</a></li><li class='toc-level-1 '><a href="../../ember-inspector/info/">Library Info</a></li><li class='toc-level-1 '><a href="../../ember-inspector/promises/">Debugging Promises</a></li><li class='toc-level-1 '><a href="../../ember-inspector/container/">Inspecting Objects via the Container</a></li><li class='toc-level-1 '><a href="../../ember-inspector/render-performance/">Rendering Performance</a></li><li class='toc-level-1 '><a href="../../ember-inspector/troubleshooting/">Troubleshooting</a></li></ol></li><li class='toc-level-0 '><a href="#">Addons and Dependencies</a><ol class='toc-level-1'><li class='toc-level-1 '><a href="../../addons-and-dependencies/managing-dependencies/">Managing Dependencies</a></li></ol></li><li class='toc-level-0 '><a href="#">Configuring Ember.js</a><ol class='toc-level-1'><li class='toc-level-1 '><a href="../../configuring-ember/configuring-your-app/">Configuring Your App</a></li><li class='toc-level-1 '><a href="../../configuring-ember/configuring-ember-cli/">Configuring Ember CLI</a></li><li class='toc-level-1 '><a href="../../configuring-ember/handling-deprecations/">Handling Deprecations</a></li><li class='toc-level-1 '><a href="../../configuring-ember/disabling-prototype-extensions/">Disabling Prototype Extensions</a></li><li class='toc-level-1 '><a href="../../configuring-ember/specifying-url-type/">Specifying the URL Type</a></li><li class='toc-level-1 '><a href="../../configuring-ember/embedding-applications/">Embedding Applications</a></li><li class='toc-level-1 '><a href="../../configuring-ember/feature-flags/">Feature Flags</a></li><li class='toc-level-1 '><a href="../../configuring-ember/build-targets/">Build targets</a></li><li class='toc-level-1 '><a href="../../configuring-ember/debugging/">Debugging</a></li></ol></li><li class='toc-level-0 '><a href="#">Contributing to Ember.js</a><ol class='toc-level-1'><li class='toc-level-1 '><a href="../../contributing/adding-new-features/">Adding New Features</a></li><li class='toc-level-1 '><a href="../../contributing/repositories/">Repositories</a></li></ol></li><li class='toc-level-0 '><a href="#">Glossário</a><ol class='toc-level-1'><li class='toc-level-1 '><a href="../../glossary/web-development/">Desenvolvimento WEB</a></li></ol></li></ol></nav>
+</aside>
+
+            <article>
+              <h1>
+                The Run Loop
+                <a href="https://github.com/ember-brasil/website/edit/master/source/guides/applications/run-loop.md"
+                   target="_blank" class="edit-page icon-pencil">Melhorar esta página</a>
+              </h1>
+              <hr>
+
+              <p>Ember&#39;s internals and most of the code you will write in your applications takes place in a run loop.
+The run loop is used to batch, and order (or reorder) work in a way that is most effective and efficient.</p>
+
+<p>It does so by scheduling work on specific queues.
+These queues have a priority, and are processed to completion in priority order.</p>
+
+<p>For basic Ember app development scenarios, you don&#39;t need to understand the run loop or use it directly.
+All common paths are paved nicely for you and don&#39;t require working with the run loop directly.</p>
+
+<p>The most common case for using the run loop is integrating with a non-Ember API
+that includes some sort of asynchronous callback.
+For example:</p>
+
+<ul>
+<li>DOM update and event callbacks</li>
+<li><code>setTimeout</code> and <code>setInterval</code> callbacks</li>
+<li><code>postMessage</code> and <code>messageChannel</code> event handlers</li>
+<li>AJAX callbacks</li>
+<li>Websocket callbacks</li>
+</ul>
+<h2 class='anchorable-toc' id='toc_why-is-the-run-loop-useful'>Why is the run loop useful?</h2>
+<p>Very often, batching similar work has benefits.
+Web browsers do something quite similar by batching changes to the DOM.</p>
+
+<p>Consider the following HTML snippet:</p>
+<div class="highlight html "><div class="ribbon"></div><div class="scroller"><table class="CodeRay"><tr>
+  <td class="line-numbers"><pre>1
+2
+3
+</pre></td>
+  <td class="code"><pre><span class="tag">&lt;div</span> <span class="attribute-name">id</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">foo</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span><span class="tag">&lt;/div&gt;</span>
+<span class="tag">&lt;div</span> <span class="attribute-name">id</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">bar</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span><span class="tag">&lt;/div&gt;</span>
+<span class="tag">&lt;div</span> <span class="attribute-name">id</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">baz</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span><span class="tag">&lt;/div&gt;</span>
+</pre></td>
+</tr></table>
+</div></div>
+<p>and executing the following code:</p>
+<div class="highlight javascript "><div class="ribbon"></div><div class="scroller"><table class="CodeRay"><tr>
+  <td class="line-numbers"><pre>1
+2
+3
+4
+5
+6
+7
+8
+</pre></td>
+  <td class="code"><pre>foo.style.height = <span class="string"><span class="delimiter">'</span><span class="content">500px</span><span class="delimiter">'</span></span> <span class="comment">// write</span>
+foo.offsetHeight <span class="comment">// read (recalculate style, layout, expensive!)</span>
+
+bar.style.height = <span class="string"><span class="delimiter">'</span><span class="content">400px</span><span class="delimiter">'</span></span> <span class="comment">// write</span>
+bar.offsetHeight <span class="comment">// read (recalculate style, layout, expensive!)</span>
+
+baz.style.height = <span class="string"><span class="delimiter">'</span><span class="content">200px</span><span class="delimiter">'</span></span> <span class="comment">// write</span>
+baz.offsetHeight <span class="comment">// read (recalculate style, layout, expensive!)</span>
+</pre></td>
+</tr></table>
+</div></div>
+<p>In this example, the sequence of code forced the browser to recalculate style, and relayout after each step.
+However, if we were able to batch similar jobs together,
+the browser would have only needed to recalculate the style and layout once.</p>
+<div class="highlight javascript "><div class="ribbon"></div><div class="scroller"><table class="CodeRay"><tr>
+  <td class="line-numbers"><pre>1
+2
+3
+4
+5
+6
+7
+</pre></td>
+  <td class="code"><pre>foo.style.height = <span class="string"><span class="delimiter">'</span><span class="content">500px</span><span class="delimiter">'</span></span> <span class="comment">// write</span>
+bar.style.height = <span class="string"><span class="delimiter">'</span><span class="content">400px</span><span class="delimiter">'</span></span> <span class="comment">// write</span>
+baz.style.height = <span class="string"><span class="delimiter">'</span><span class="content">200px</span><span class="delimiter">'</span></span> <span class="comment">// write</span>
+
+foo.offsetHeight <span class="comment">// read (recalculate style, layout, expensive!)</span>
+bar.offsetHeight <span class="comment">// read (fast since style and layout are already known)</span>
+baz.offsetHeight <span class="comment">// read (fast since style and layout are already known)</span>
+</pre></td>
+</tr></table>
+</div></div>
+<p>Interestingly, this pattern holds true for many other types of work.
+Essentially, batching similar work allows for better pipelining, and further optimization.</p>
+
+<p>Let&#39;s look at a similar example that is optimized in Ember, starting with a <code>User</code> object:</p>
+<div class="highlight javascript "><div class="ribbon"></div><div class="scroller"><table class="CodeRay"><tr>
+  <td class="line-numbers"><pre>1
+2
+3
+4
+5
+6
+7
+</pre></td>
+  <td class="code"><pre>let User = Ember.Object.extend({
+  <span class="key">firstName</span>: <span class="predefined-constant">null</span>,
+  <span class="key">lastName</span>: <span class="predefined-constant">null</span>,
+  <span class="key">fullName</span>: Ember.computed(<span class="string"><span class="delimiter">'</span><span class="content">firstName</span><span class="delimiter">'</span></span>, <span class="string"><span class="delimiter">'</span><span class="content">lastName</span><span class="delimiter">'</span></span>, <span class="keyword">function</span>() {
+    <span class="keyword">return</span> <span class="error">`</span><span class="predefined">$</span>{<span class="local-variable">this</span>.get(<span class="string"><span class="delimiter">'</span><span class="content">firstName</span><span class="delimiter">'</span></span>)} <span class="predefined">$</span>{<span class="local-variable">this</span>.get(<span class="string"><span class="delimiter">'</span><span class="content">lastName</span><span class="delimiter">'</span></span>)}<span class="error">`</span>;
+  })
+});
+</pre></td>
+</tr></table>
+</div></div>
+<p>and a template to display its attributes:</p>
+<div class="highlight handlebars "><div class="ribbon"></div><div class="scroller"><table class="CodeRay"><tr>
+  <td class="line-numbers"><pre>1
+2
+</pre></td>
+  <td class="code"><pre><span class="inline"><span class="inline-delimiter">{{</span><span class="attribute-name">firstName</span><span class="inline-delimiter">}}</span></span>
+<span class="inline"><span class="inline-delimiter">{{</span><span class="attribute-name">fullName</span><span class="inline-delimiter">}}</span></span>
+</pre></td>
+</tr></table>
+</div></div>
+<p>If we execute the following code without the run loop:</p>
+<div class="highlight javascript "><div class="ribbon"></div><div class="scroller"><table class="CodeRay"><tr>
+  <td class="line-numbers"><pre>1
+2
+3
+4
+5
+6
+</pre></td>
+  <td class="code"><pre>let user = User.create({ <span class="key">firstName</span>: <span class="string"><span class="delimiter">'</span><span class="content">Tom</span><span class="delimiter">'</span></span>, <span class="key">lastName</span>: <span class="string"><span class="delimiter">'</span><span class="content">Huda</span><span class="delimiter">'</span></span> });
+user.set(<span class="string"><span class="delimiter">'</span><span class="content">firstName</span><span class="delimiter">'</span></span>, <span class="string"><span class="delimiter">'</span><span class="content">Yehuda</span><span class="delimiter">'</span></span>);
+<span class="comment">// {{firstName}} and {{fullName}} are updated</span>
+
+user.set(<span class="string"><span class="delimiter">'</span><span class="content">lastName</span><span class="delimiter">'</span></span>, <span class="string"><span class="delimiter">'</span><span class="content">Katz</span><span class="delimiter">'</span></span>);
+<span class="comment">// {{lastName}} and {{fullName}} are updated</span>
+</pre></td>
+</tr></table>
+</div></div>
+<p>We see that the browser will rerender the template twice.</p>
+
+<p>However, if we have the run loop in the above code,
+the browser will only rerender the template once the attributes have all been set.</p>
+<div class="highlight javascript "><div class="ribbon"></div><div class="scroller"><table class="CodeRay"><tr>
+  <td class="line-numbers"><pre>1
+2
+3
+4
+5
+</pre></td>
+  <td class="code"><pre>let user = User.create({ <span class="key">firstName</span>: <span class="string"><span class="delimiter">'</span><span class="content">Tom</span><span class="delimiter">'</span></span>, <span class="key">lastName</span>: <span class="string"><span class="delimiter">'</span><span class="content">Huda</span><span class="delimiter">'</span></span> });
+user.set(<span class="string"><span class="delimiter">'</span><span class="content">firstName</span><span class="delimiter">'</span></span>, <span class="string"><span class="delimiter">'</span><span class="content">Yehuda</span><span class="delimiter">'</span></span>);
+user.set(<span class="string"><span class="delimiter">'</span><span class="content">lastName</span><span class="delimiter">'</span></span>, <span class="string"><span class="delimiter">'</span><span class="content">Katz</span><span class="delimiter">'</span></span>);
+user.set(<span class="string"><span class="delimiter">'</span><span class="content">firstName</span><span class="delimiter">'</span></span>, <span class="string"><span class="delimiter">'</span><span class="content">Tom</span><span class="delimiter">'</span></span>);
+user.set(<span class="string"><span class="delimiter">'</span><span class="content">lastName</span><span class="delimiter">'</span></span>, <span class="string"><span class="delimiter">'</span><span class="content">Huda</span><span class="delimiter">'</span></span>);
+</pre></td>
+</tr></table>
+</div></div>
+<p>In the above example with the run loop, since the user&#39;s attributes end up at the same values as before execution,
+the template will not even rerender!</p>
+
+<p>It is of course possible to optimize these scenarios on a case-by-case basis,
+but getting them for free is much nicer.
+Using the run loop, we can apply these classes of optimizations not only for each scenario, but holistically app-wide.</p>
+<h2 class='anchorable-toc' id='toc_how-does-the-run-loop-work-in-ember'>How does the Run Loop work in Ember?</h2>
+<p>As mentioned earlier, we schedule work (in the form of function invocations) on queues,
+and these queues are processed to completion in priority order.</p>
+
+<p>What are the queues, and what is their priority order?</p>
+<div class="highlight javascript "><div class="ribbon"></div><div class="scroller"><table class="CodeRay"><tr>
+  <td class="line-numbers"><pre>1
+2
+</pre></td>
+  <td class="code"><pre>Ember.run.queues
+<span class="comment">// =&gt; [&quot;sync&quot;, &quot;actions&quot;, &quot;routerTransitions&quot;, &quot;render&quot;, &quot;afterRender&quot;, &quot;destroy&quot;]</span>
+</pre></td>
+</tr></table>
+</div></div>
+<p>Because the priority is first to last, the &quot;sync&quot; queue has higher priority than the &quot;render&quot; or &quot;destroy&quot; queue.</p>
+<h2 class='anchorable-toc' id='toc_what-happens-in-these-queues'>What happens in these queues?</h2>
+<ul>
+<li>The <code>sync</code> queue contains binding synchronization jobs.</li>
+<li>The <code>actions</code> queue is the general work queue and will typically contain scheduled tasks e.g. promises.</li>
+<li>The <code>routerTransitions</code> queue contains transition jobs in the router.</li>
+<li>The <code>render</code> queue contains jobs meant for rendering, these will typically update the DOM.</li>
+<li>The <code>afterRender</code> queue contains jobs meant to be run after all previously scheduled render tasks are complete.
+This is often good for 3rd-party DOM manipulation libraries,
+that should only be run after an entire tree of DOM has been updated.</li>
+<li>The <code>destroy</code> queue contains jobs to finish the teardown of objects other jobs have scheduled to destroy.</li>
+</ul>
+<h2 class='anchorable-toc' id='toc_in-what-order-are-jobs-executed-on-the-queues'>In what order are jobs executed on the queues?</h2>
+<p>The algorithm works this way:</p>
+
+<ol>
+<li>Let the highest priority queue with pending jobs be: <code>CURRENT_QUEUE</code>,
+if there are no queues with pending jobs the run loop is complete</li>
+<li>Let a new temporary queue be defined as <code>WORK_QUEUE</code></li>
+<li>Move jobs from <code>CURRENT_QUEUE</code> into <code>WORK_QUEUE</code></li>
+<li>Process all the jobs sequentially in <code>WORK_QUEUE</code></li>
+<li>Return to Step 1</li>
+</ol>
+<h2 class='anchorable-toc' id='toc_an-example-of-the-internals'>An example of the internals</h2>
+<p>Rather than writing the higher level app code that internally invokes the various run loop scheduling functions,
+we have stripped away the covers, and shown the raw run-loop interactions.</p>
+
+<p>Working with this API directly is not common in most Ember apps,
+but understanding this example will help you to understand the run-loops algorithm,
+which will make you a better Ember developer.</p>
+
+<iframe src="https://s3.amazonaws.com/emberjs.com/run-loop-guide/index.html" width="678" height="410" style="border:1px solid rgb(170, 170, 170);margin-bottom:1.5em;"></iframe>
+<h2 class='anchorable-toc' id='toc_how-do-i-tell-ember-to-start-a-run-loop'>How do I tell Ember to start a run loop?</h2>
+<p>You should begin a run loop when the callback fires.</p>
+
+<p>The <code>Ember.run</code> method can be used to create a run loop.
+In this example, jQuery and <code>Ember.run</code> are used to handle a click event and run some Ember code.</p>
+
+<p>This example uses the <code>=&gt;</code> function syntax, which is a <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions">new ES2015 syntax for callback functions</a>
+that provides a lexical <code>this</code>.
+If this syntax is new,
+think of it as a function that has the same <code>this</code> as the context it is defined in.</p>
+<div class="highlight javascript "><div class="ribbon"></div><div class="scroller"><table class="CodeRay"><tr>
+  <td class="line-numbers"><pre>1
+2
+3
+4
+5
+</pre></td>
+  <td class="code"><pre><span class="predefined">$</span>(<span class="string"><span class="delimiter">'</span><span class="content">a</span><span class="delimiter">'</span></span>).click(() =&gt; {
+  Ember.run(() =&gt; {  <span class="comment">// begin loop</span>
+    <span class="comment">// Code that results in jobs being scheduled goes here</span>
+  }); <span class="comment">// end loop, jobs are flushed and executed</span>
+});
+</pre></td>
+</tr></table>
+</div></div><h2 class='anchorable-toc' id='toc_what-happens-if-i-forget-to-start-a-run-loop-in-an-async-handler'>What happens if I forget to start a run loop in an async handler?</h2>
+<p>As mentioned above, you should wrap any non-Ember async callbacks in <code>Ember.run</code>.
+If you don&#39;t, Ember will try to approximate a beginning and end for you.
+Consider the following callback:</p>
+<div class="highlight javascript "><div class="ribbon"></div><div class="scroller"><table class="CodeRay"><tr>
+  <td class="line-numbers"><pre>1
+2
+3
+4
+5
+6
+7
+</pre></td>
+  <td class="code"><pre><span class="predefined">$</span>(<span class="string"><span class="delimiter">'</span><span class="content">a</span><span class="delimiter">'</span></span>).click(() =&gt; {
+  console.log(<span class="string"><span class="delimiter">'</span><span class="content">Doing things...</span><span class="delimiter">'</span></span>);
+
+  Ember.run.schedule(<span class="string"><span class="delimiter">'</span><span class="content">actions</span><span class="delimiter">'</span></span>, () =&gt; {
+    <span class="comment">// Do more things</span>
+  });
+});
+</pre></td>
+</tr></table>
+</div></div>
+<p>The run loop API calls that <em>schedule</em> work, i.e. <a href="http://emberjs.com/api/classes/Ember.run.html#method_schedule"><code>run.schedule</code></a>, <a href="http://emberjs.com/api/classes/Ember.run.html#method_scheduleOnce"><code>run.scheduleOnce</code></a>,
+<a href="http://emberjs.com/api/classes/Ember.run.html#method_once"><code>run.once</code></a> have the property that they will approximate a run loop for you if one does not already exist.
+These automatically created run loops we call <em>autoruns</em>.</p>
+
+<p>Here is some pseudocode to describe what happens using the example above:</p>
+<div class="highlight javascript "><div class="ribbon"></div><div class="scroller"><table class="CodeRay"><tr>
+  <td class="line-numbers"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+<strong>10</strong>
+11
+12
+13
+14
+15
+16
+17
+18
+19
+<strong>20</strong>
+21
+22
+23
+24
+25
+26
+27
+28
+29
+<strong>30</strong>
+31
+</pre></td>
+  <td class="code"><pre><span class="predefined">$</span>(<span class="string"><span class="delimiter">'</span><span class="content">a</span><span class="delimiter">'</span></span>).click(() =&gt; {
+  <span class="comment">// 1. autoruns do not change the execution of arbitrary code in a callback.</span>
+  <span class="comment">//    This code is still run when this callback is executed and will not be</span>
+  <span class="comment">//    scheduled on an autorun.</span>
+  console.log(<span class="string"><span class="delimiter">'</span><span class="content">Doing things...</span><span class="delimiter">'</span></span>);
+
+  Ember.run.schedule(<span class="string"><span class="delimiter">'</span><span class="content">actions</span><span class="delimiter">'</span></span>, () =&gt; {
+    <span class="comment">// 2. schedule notices that there is no currently available run loop so it</span>
+    <span class="comment">//    creates one. It schedules it to close and flush queues on the next</span>
+    <span class="comment">//    turn of the JS event loop.</span>
+    <span class="keyword">if</span> (! Ember.run.hasOpenRunLoop()) {
+      Ember.run.begin();
+      nextTick(() =&gt; {
+        Ember.run.end()
+      }, <span class="integer">0</span>);
+    }
+
+    <span class="comment">// 3. There is now a run loop available so schedule adds its item to the</span>
+    <span class="comment">//    given queue</span>
+    Ember.run.schedule(<span class="string"><span class="delimiter">'</span><span class="content">actions</span><span class="delimiter">'</span></span>, () =&gt; {
+      <span class="comment">// Do more things</span>
+    });
+
+  });
+
+  <span class="comment">// 4. This schedule sees the autorun created by schedule above as an available</span>
+  <span class="comment">//    run loop and adds its item to the given queue.</span>
+  Ember.run.schedule(<span class="string"><span class="delimiter">'</span><span class="content">afterRender</span><span class="delimiter">'</span></span>, () =&gt; {
+    <span class="comment">// Do yet more things</span>
+  });
+});
+</pre></td>
+</tr></table>
+</div></div>
+<p>Although autoruns are convenient, they are suboptimal.
+The current JS frame is allowed to end before the run loop is flushed,
+which sometimes means the browser will take the opportunity to do other things, like garbage collection.
+GC running in between data changing and DOM rerendering can cause visual lag and should be minimized.</p>
+
+<p>Relying on autoruns is not a rigorous or efficient way to use the run loop.
+Wrapping event handlers manually are preferred.</p>
+<h2 class='anchorable-toc' id='toc_how-is-run-loop-behaviour-different-when-testing'>How is run loop behaviour different when testing?</h2>
+<p>When your application is in <em>testing mode</em> then Ember will throw an error if you try to schedule work
+without an available run loop.</p>
+
+<p>Autoruns are disabled in testing for several reasons:</p>
+
+<ol>
+<li>Autoruns are Embers way of not punishing you in production if you forget to open a run loop
+before you schedule callbacks on it.
+While this is useful in production, these are still situations that should be revealed in testing
+to help you find and fix them.</li>
+<li>Some of Ember&#39;s test helpers are promises that wait for the run loop to empty before resolving.
+If your application has code that runs <em>outside</em> a run loop,
+these will resolve too early and give erroneous test failures which are difficult to find.
+Disabling autoruns help you identify these scenarios and helps both your testing and your application!</li>
+</ol>
+<h2 class='anchorable-toc' id='toc_where-can-i-find-more-information'>Where can I find more information?</h2>
+<p>Check out the <a href="http://emberjs.com/api/classes/Ember.run.html">Ember.run</a> API documentation,
+as well as the <a href="https://github.com/ebryn/backburner.js/">Backburner library</a> that powers the run loop.</p>
+
+            </article>
+
+          </div>
+
+          <div class="footer">
+    <div class="container">
+
+      <div class="footer-statement">
+        <a href="https://ember-community-slackin.herokuapp.com/">Comunidade no Slack</a> &bull;
+        <a href="https://github.com/emberjs/ember.js">Github</a> &bull;
+        <a href="https://t.me/EmberBR">Telegram (Ember-BR)</a>
+      </div>
+
+      <div class="footer-statement footer-social">
+        <a href="http://twitter.com/emberjs"
+          title="Twitter">
+          <i class="icon-twitter"></i>
+        </a>
+        <a href="https://github.com/emberjs/ember.js"
+          title="GitHub">
+          <i class="icon-github"></i>
+        </a>
+        <a href="https://plus.google.com/communities/106387049790387471205"
+          title="Google+">
+          <i class="icon-gplus"></i>
+        </a>
+      </div>
+      <hr />
+      <div class="info">
+        <p>
+          Este site é parte de uma iniciativa da <b>Comunidade Brasileira Ember</b> e não tem nenhuma ligação direta com o projeto oficial. <br />
+          Ember é uma marca registrada da <a href="http://tilde.io">Tilde Inc.</a>.<br />
+          Para obter mais informações sobre licença de uso acesse <a href="http://emberjs.com/legal">Legal</a>.
+        </p>
+      </div>
+
+  </div>
+</div>
+
+
+          
+    </main>
+
+    <script type="text/javascript">
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-105665012-1', 'auto');
+    ga('send', 'pageview');
+</script>
+
+  </body>
+</html>

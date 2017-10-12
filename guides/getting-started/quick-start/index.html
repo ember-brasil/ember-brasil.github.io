@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="theme-color" content="#e46652">
+
+    <title>Ember.js - Começando: Começo rápido</title>
+    <meta property="st:title" content="Começando: Começo rápido" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="../../../images/favicon.png" rel="icon" type="image/png" />
+    <!--[if lte IE 7 ]><link href="../../../stylesheets/fonts/fontello-ie7.css" rel="stylesheet" /><![endif]-->
+    <link href="../../../stylesheets/application.css" rel="stylesheet" />
+    <link href="//fonts.googleapis.com/css?family=Nunito:300,400,700" rel="stylesheet">
+    <!-- This TypeKit account is managed by @wifelette. Contact her with any issues. -->
+    <script src="https://use.typekit.net/stz3kpn.js"></script>
+    <script>try{Typekit.load({ async: true });}catch(e){}</script>
+
+    <link href="/blog/feed.xml" rel="alternate" type="application/atom+xml" title="Ember.js - Blog" />
+    
+  </head>
+
+  <body class="guides guides guides_getting-started guides_getting-started_quick-start guides_getting-started_quick-start_index">
+
+    <!--[if lt IE 9]>
+      <script src="../../../javascripts/common-old-ie.js"></script>
+    <![endif]-->
+    <!--[if gte IE 9]><!-->
+      <script src="../../../javascripts/common-modern.js"></script>
+    <!--<![endif]-->
+
+    <main>
+      <header class="header">
+  <nav role="navigation" aria-label="main">
+    <ul class="header-nav">
+      <li class="header-logo">
+        <a href="/"><span class="visually-hidden">Ember homepage</span></a>
+      </li>
+      <li>
+        <a href="/">Home</a>
+      </li>
+      <li>
+        <a href="/guides/">Documentação</a>
+      </li>
+      <li>
+        <a href="/contribuidores/">Contribuidores</a>
+      </li>
+      <li>
+        <a href="/quem-usa-ember">Quem usa Ember?</a>
+      </li>
+      <li>
+        <a href="http://emberjs.com/api">Ember API</a>
+      </li>
+    </ul>
+  </nav>
+</header>
+
+
+      
+        <div class="content">
+            <aside class="sidebar">
+  <nav class='toc-container' aria-label='table of contents'><ol class='toc-level-0 selected'><li class='toc-level-0 selected'><a href="#">Começando</a><ol class='toc-level-1 selected'><li class='toc-level-1 selected'><a href="./">Começo rápido</a></li><li class='toc-level-1 '><a href="../">Instalando Ember</a></li><li class='toc-level-1 '><a href="../core-concepts/">Conceitos fundamentais</a></li></ol></li><li class='toc-level-0 '><a href="#">Tutorial</a><ol class='toc-level-1'><li class='toc-level-1 '><a href="../../tutorial/ember-cli/">Começando</a></li><li class='toc-level-1 '><a href="../../tutorial/acceptance-test/">Planejando seu aplicativo</a></li><li class='toc-level-1 '><a href="../../tutorial/routes-and-templates/">Routes e Templates</a></li><li class='toc-level-1 '><a href="../../tutorial/model-hook/">Model Hook</a></li><li class='toc-level-1 '><a href="../../tutorial/installing-addons/">Instalando Addons</a></li><li class='toc-level-1 '><a href="../../tutorial/simple-component/">Construindo um componente simples</a></li><li class='toc-level-1 '><a href="../../tutorial/hbs-helper/">Criando um Helper para Handlebars</a></li><li class='toc-level-1 '><a href="../../tutorial/ember-data/">Usando Ember Data</a></li><li class='toc-level-1 '><a href="../../tutorial/autocomplete-component/">Criando um componente complexo</a></li><li class='toc-level-1 '><a href="../../tutorial/service/">Services e Utils</a></li><li class='toc-level-1 '><a href="../../tutorial/subroutes/">Adicionando rotas aninhadas</a></li><li class='toc-level-1 '><a href="../../tutorial/deploying/">Publicando seu App</a></li></ol></li><li class='toc-level-0 '><a href="#">The Object Model</a><ol class='toc-level-1'><li class='toc-level-1 '><a href="../../object-model/">Objects in Ember</a></li><li class='toc-level-1 '><a href="../../object-model/classes-and-instances/">Classes and Instances</a></li><li class='toc-level-1 '><a href="../../object-model/reopening-classes-and-instances/">Reopening Classes and Instances</a></li><li class='toc-level-1 '><a href="../../object-model/computed-properties/">Computed Properties</a></li><li class='toc-level-1 '><a href="../../object-model/computed-properties-and-aggregate-data/">Computed Properties and Aggregate Data</a></li><li class='toc-level-1 '><a href="../../object-model/observers/">Observers</a></li><li class='toc-level-1 '><a href="../../object-model/bindings/">Bindings</a></li><li class='toc-level-1 '><a href="../../object-model/enumerables/">Enumerables</a></li></ol></li><li class='toc-level-0 '><a href="#">Routing</a><ol class='toc-level-1'><li class='toc-level-1 '><a href="../../routing/">Introduction</a></li><li class='toc-level-1 '><a href="../../routing/defining-your-routes/">Defining Your Routes</a></li><li class='toc-level-1 '><a href="../../routing/specifying-a-routes-model/">Specifying a Route's Model</a></li><li class='toc-level-1 '><a href="../../routing/rendering-a-template/">Rendering a Template</a></li><li class='toc-level-1 '><a href="../../routing/redirection/">Redirecting</a></li><li class='toc-level-1 '><a href="../../routing/preventing-and-retrying-transitions/">Preventing and Retrying Transitions</a></li><li class='toc-level-1 '><a href="../../routing/loading-and-error-substates/">Loading / Error Substates</a></li><li class='toc-level-1 '><a href="../../routing/query-params/">Query Parameters</a></li><li class='toc-level-1 '><a href="../../routing/asynchronous-routing/">Asynchronous Routing</a></li></ol></li><li class='toc-level-0 '><a href="#">Templates</a><ol class='toc-level-1'><li class='toc-level-1 '><a href="../../templates/handlebars-basics/">Handlebars Basics</a></li><li class='toc-level-1 '><a href="../../templates/built-in-helpers/">Built-in Helpers</a></li><li class='toc-level-1 '><a href="../../templates/conditionals/">Conditionals</a></li><li class='toc-level-1 '><a href="../../templates/displaying-a-list-of-items/">Displaying a List of Items</a></li><li class='toc-level-1 '><a href="../../templates/displaying-the-keys-in-an-object/">Displaying the Keys in an Object</a></li><li class='toc-level-1 '><a href="../../templates/binding-element-attributes/">Binding Element Attributes</a></li><li class='toc-level-1 '><a href="../../templates/links/">Links</a></li><li class='toc-level-1 '><a href="../../templates/actions/">Actions</a></li><li class='toc-level-1 '><a href="../../templates/input-helpers/">Input Helpers</a></li><li class='toc-level-1 '><a href="../../templates/development-helpers/">Development Helpers</a></li><li class='toc-level-1 '><a href="../../templates/writing-helpers/">Writing Helpers</a></li></ol></li><li class='toc-level-0 '><a href="#">Components</a><ol class='toc-level-1'><li class='toc-level-1 '><a href="../../components/defining-a-component/">Defining a Component</a></li><li class='toc-level-1 '><a href="../../components/the-component-lifecycle/">The Component Lifecycle</a></li><li class='toc-level-1 '><a href="../../components/passing-properties-to-a-component/">Passing Properties to a Component</a></li><li class='toc-level-1 '><a href="../../components/wrapping-content-in-a-component/">Wrapping Content in a Component</a></li><li class='toc-level-1 '><a href="../../components/customizing-a-components-element/">Customizing a Component's Element</a></li><li class='toc-level-1 '><a href="../../components/block-params/">Using Block Params</a></li><li class='toc-level-1 '><a href="../../components/handling-events/">Handling Events</a></li><li class='toc-level-1 '><a href="../../components/triggering-changes-with-actions/">Triggering Changes with Actions</a></li></ol></li><li class='toc-level-0 '><a href="#">Controllers</a><ol class='toc-level-1'><li class='toc-level-1 '><a href="../../controllers/">Introdução</a></li></ol></li><li class='toc-level-0 '><a href="#">Models</a><ol class='toc-level-1'><li class='toc-level-1 '><a href="../../models/">Introduction</a></li><li class='toc-level-1 '><a href="../../models/defining-models/">Defining Models</a></li><li class='toc-level-1 '><a href="../../models/finding-records/">Finding Records</a></li><li class='toc-level-1 '><a href="../../models/creating-updating-and-deleting-records/">Creating, Updating and Deleting</a></li><li class='toc-level-1 '><a href="../../models/relationships/">Relationships</a></li><li class='toc-level-1 '><a href="../../models/pushing-records-into-the-store/">Pushing Records into the Store</a></li><li class='toc-level-1 '><a href="../../models/handling-metadata/">Handling Metadata</a></li><li class='toc-level-1 '><a href="../../models/customizing-adapters/">Customizing Adapters</a></li><li class='toc-level-1 '><a href="../../models/customizing-serializers/">Customizing Serializers</a></li></ol></li><li class='toc-level-0 '><a href="#">Application Concerns</a><ol class='toc-level-1'><li class='toc-level-1 '><a href="../../applications/applications-and-instances/">Applications and Instances</a></li><li class='toc-level-1 '><a href="../../applications/dependency-injection/">Dependency Injection</a></li><li class='toc-level-1 '><a href="../../applications/initializers/">Initializers</a></li><li class='toc-level-1 '><a href="../../applications/services/">Services</a></li><li class='toc-level-1 '><a href="../../applications/run-loop/">The Run Loop</a></li></ol></li><li class='toc-level-0 '><a href="#">Testing</a><ol class='toc-level-1'><li class='toc-level-1 '><a href="../../testing/">Introduction</a></li><li class='toc-level-1 '><a href="../../testing/acceptance/">Acceptance Tests</a></li><li class='toc-level-1 '><a href="../../testing/unit-testing-basics/">Unit Testing Basics</a></li><li class='toc-level-1 '><a href="../../testing/testing-components/">Testing Components</a></li><li class='toc-level-1 '><a href="../../testing/testing-helpers/">Testing Helpers</a></li><li class='toc-level-1 '><a href="../../testing/testing-controllers/">Testing Controllers</a></li><li class='toc-level-1 '><a href="../../testing/testing-routes/">Testing Routes</a></li><li class='toc-level-1 '><a href="../../testing/testing-models/">Testing Models</a></li></ol></li><li class='toc-level-0 '><a href="#">Ember Inspector</a><ol class='toc-level-1'><li class='toc-level-1 '><a href="../../ember-inspector/">Introduction</a></li><li class='toc-level-1 '><a href="../../ember-inspector/installation/">Installing the Inspector</a></li><li class='toc-level-1 '><a href="../../ember-inspector/object-inspector/">Object Inspector</a></li><li class='toc-level-1 '><a href="../../ember-inspector/view-tree/">The View Tree</a></li><li class='toc-level-1 '><a href="../../ember-inspector/routes/">Inspecting Routes</a></li><li class='toc-level-1 '><a href="../../ember-inspector/data/">Data Tab</a></li><li class='toc-level-1 '><a href="../../ember-inspector/deprecations/">Tackling Deprecations</a></li><li class='toc-level-1 '><a href="../../ember-inspector/info/">Library Info</a></li><li class='toc-level-1 '><a href="../../ember-inspector/promises/">Debugging Promises</a></li><li class='toc-level-1 '><a href="../../ember-inspector/container/">Inspecting Objects via the Container</a></li><li class='toc-level-1 '><a href="../../ember-inspector/render-performance/">Rendering Performance</a></li><li class='toc-level-1 '><a href="../../ember-inspector/troubleshooting/">Troubleshooting</a></li></ol></li><li class='toc-level-0 '><a href="#">Addons and Dependencies</a><ol class='toc-level-1'><li class='toc-level-1 '><a href="../../addons-and-dependencies/managing-dependencies/">Managing Dependencies</a></li></ol></li><li class='toc-level-0 '><a href="#">Configuring Ember.js</a><ol class='toc-level-1'><li class='toc-level-1 '><a href="../../configuring-ember/configuring-your-app/">Configuring Your App</a></li><li class='toc-level-1 '><a href="../../configuring-ember/configuring-ember-cli/">Configuring Ember CLI</a></li><li class='toc-level-1 '><a href="../../configuring-ember/handling-deprecations/">Handling Deprecations</a></li><li class='toc-level-1 '><a href="../../configuring-ember/disabling-prototype-extensions/">Disabling Prototype Extensions</a></li><li class='toc-level-1 '><a href="../../configuring-ember/specifying-url-type/">Specifying the URL Type</a></li><li class='toc-level-1 '><a href="../../configuring-ember/embedding-applications/">Embedding Applications</a></li><li class='toc-level-1 '><a href="../../configuring-ember/feature-flags/">Feature Flags</a></li><li class='toc-level-1 '><a href="../../configuring-ember/build-targets/">Build targets</a></li><li class='toc-level-1 '><a href="../../configuring-ember/debugging/">Debugging</a></li></ol></li><li class='toc-level-0 '><a href="#">Contributing to Ember.js</a><ol class='toc-level-1'><li class='toc-level-1 '><a href="../../contributing/adding-new-features/">Adding New Features</a></li><li class='toc-level-1 '><a href="../../contributing/repositories/">Repositories</a></li></ol></li><li class='toc-level-0 '><a href="#">Glossário</a><ol class='toc-level-1'><li class='toc-level-1 '><a href="../../glossary/web-development/">Desenvolvimento WEB</a></li></ol></li></ol></nav>
+</aside>
+
+            <article>
+              <h1>
+                Começo rápido
+                <a href="https://github.com/ember-brasil/website/edit/master/source/guides/getting-started/quick-start.md"
+                   target="_blank" class="edit-page icon-pencil">Melhorar esta página</a>
+              </h1>
+              <hr>
+
+              <p>Este guia vai te ensinar como construir, do zero, uma aplicação simples usando Ember.</p>
+
+<p>Nós vamos cobrir estas etapas:</p>
+
+<ol>
+<li>Instalando o Ember.</li>
+<li>Criando uma nova aplicação.</li>
+<li>Definindo uma rota.</li>
+<li>Escrevendo um componente de UI (User Interface / Interface do Usuário).</li>
+<li>Construindo (building) sua aplicação para ser instalado (deployed) em produção.</li>
+</ol>
+<h2 class='anchorable-toc' id='toc_instalando-o-ember'>Instalando o Ember</h2>
+<p>Você pode instalar o Ember com um único comando usando npm, o gerenciador de pacotes do Node.js.
+Digite o seguinte comando em seu terminal:</p>
+<div class="highlight sh "><div class="ribbon"></div><div class="scroller"><table class="CodeRay"><tr>
+  <td class="line-numbers"><pre>1
+</pre></td>
+  <td class="code"><pre>npm install -g ember-cli
+</pre></td>
+</tr></table>
+</div></div>
+<p>Não tem npm instalado? <a href="https://docs.npmjs.com/getting-started/installing-node">Aprenda como instalar o Node.js e npm aqui</a>.
+Para uma lista completa das dependências necessárias para um projeto Ember CLI, consulte nosso guia de <a href="../../getting-started/">instalação de Ember</a>.</p>
+<h2 class='anchorable-toc' id='toc_criando-uma-nova-aplica-o'>Criando uma nova aplicação</h2>
+<p>Uma vez instalado Ember através do npm, você terá acesso a um novo comando em seu terminal: <code>ember</code>.
+Você pode usar o comando <code>ember new</code> para criar uma nova aplicação.</p>
+<div class="highlight sh "><div class="ribbon"></div><div class="scroller"><table class="CodeRay"><tr>
+  <td class="line-numbers"><pre>1
+</pre></td>
+  <td class="code"><pre>ember new ember-quickstart
+</pre></td>
+</tr></table>
+</div></div>
+<p>Este comando irá criar um novo diretório chamado <code>ember-quickstart</code>
+e configurar uma nova aplicação Ember dentro dela. De cara, seu aplicativo irá incluir:</p>
+
+<ul>
+<li>Um servidor para desenvolvimento.</li>
+<li>Compilação de Template.</li>
+<li>Minificação de arquivos JavaScript e CSS.</li>
+<li>Funcionalidades ES2015 através da biblioteca Babel.</li>
+</ul>
+
+<p>Ao fornecer, em um pacote integrado, tudo que você precisa para construir aplicações web prontas para produção,
+Ember faz com que seja uma moleza começar novos projetos.</p>
+
+<p>Vamos ver se tudo está funcionando corretamente. No seu terminal acesse o diretório da aplicação criada
+e inicie o servidor de desenvolvimento, digitando:</p>
+<div class="highlight sh "><div class="ribbon"></div><div class="scroller"><table class="CodeRay"><tr>
+  <td class="line-numbers"><pre>1
+2
+</pre></td>
+  <td class="code"><pre>cd ember-quickstart
+ember server
+</pre></td>
+</tr></table>
+</div></div>
+<p>Após alguns segundos, você deverá ver a seguinte saída no seu terminal:</p>
+<div class="highlight text "><div class="ribbon"></div><div class="scroller"><table class="CodeRay"><tr>
+  <td class="line-numbers"><pre>1
+2
+</pre></td>
+  <td class="code"><pre>Livereload server on http://localhost:49152
+Serving on http://localhost:4200/
+</pre></td>
+</tr></table>
+</div></div>
+<p>(Se quiser parar o servidor a qualquer momento, pressione Ctrl-C no seu terminal)</p>
+
+<p>Acesse <a href="http://localhost:4200"><code>http://localhost:4200</code></a> no seu navegador.
+Você deverá ver uma página de boas-vindas do Ember. Parabéns!
+Você acabou de criar sua primeira aplicação em Ember.</p>
+
+<p>Vamos criar um novo template, usando o comando <code>ember generate</code>.</p>
+<div class="highlight sh "><div class="ribbon"></div><div class="scroller"><table class="CodeRay"><tr>
+  <td class="line-numbers"><pre>1
+</pre></td>
+  <td class="code"><pre>ember generate template application
+</pre></td>
+</tr></table>
+</div></div>
+<p>O template <code>application</code> estará sempre na tela, enquanto o usuário tiver com sua aplicação carregada.
+No seu editor, abra <code>app/templates/application.hbs</code> e adicione o seguinte:</p>
+<div class="highlight handlebars "><div class="ribbon"></div><div class="scroller"><table class="CodeRay">
+  <thead>
+    <tr>
+      <td colspan="2">app/templates/application.hbs</td>
+    </tr>
+  </thead>
+<tr>
+  <td class="line-numbers"><pre>1
+2
+3
+</pre></td>
+  <td class="code"><pre><span class="tag">&lt;h1&gt;</span>PeopleTracker<span class="tag">&lt;/h1&gt;</span>
+
+<span class="inline"><span class="inline-delimiter">{{</span><span class="attribute-name">outlet</span><span class="inline-delimiter">}}</span></span>
+</pre></td>
+</tr></table>
+</div></div>
+<p>Observe que o Ember detecta o novo arquivo e automaticamente recarrega
+a página para você em segundo plano. Você verá que a página de boas-vindas
+foi substituída por &quot;PeopleTracker&quot;. Você também adicionou um <code>{{outlet}}</code> para esta página, o que significa que qualquer rota aninhada será processada neste local.</p>
+<h2 class='anchorable-toc' id='toc_definindo-uma-rota'>Definindo uma Rota</h2>
+<p>Vamos fazer uma aplicação que mostra a lista de cientistas. Para fazer isso,
+o primeiro passo é criar uma route. Por enquanto, você pode pensar em Routes como
+sendo diferentes páginas que compõe sua aplicação.</p>
+
+<p>Ember possui <em>generators</em> que automatizam códigos que são usados repetidamente em tarefas comuns.
+Para criar uma route de cientistas, digite em seu terminal:</p>
+<div class="highlight sh "><div class="ribbon"></div><div class="scroller"><table class="CodeRay"><tr>
+  <td class="line-numbers"><pre>1
+</pre></td>
+  <td class="code"><pre>ember generate route scientists
+</pre></td>
+</tr></table>
+</div></div>
+<p>Você verá uma saída como essa em seu terminal:</p>
+<div class="highlight text "><div class="ribbon"></div><div class="scroller"><table class="CodeRay"><tr>
+  <td class="line-numbers"><pre>1
+2
+3
+4
+5
+6
+7
+</pre></td>
+  <td class="code"><pre>installing route
+  create app/routes/scientists.js
+  create app/templates/scientists.hbs
+updating router
+  add route scientists
+installing route-test
+  create tests/unit/routes/scientists-test.js
+</pre></td>
+</tr></table>
+</div></div>
+<p>Isso é o Ember dizendo que criou:</p>
+
+<ol>
+<li>Um template a ser exibido quando o usuário acessa a URL <code>/scientists</code>.</li>
+<li>Um objeto <code>Route</code> (Rota) que busca o model usado por esse template.</li>
+<li>Uma inserção da rota de <code>scientists</code> no router da aplicação (localizado em <code>app/router.js</code>).</li>
+<li>Um teste unitário para esta rota.</li>
+</ol>
+
+<p>Abra o template recém-criado em <code>app/templates/scientists.hbs</code> e adicione o seguinte HTML:</p>
+<div class="highlight handlebars "><div class="ribbon"></div><div class="scroller"><table class="CodeRay">
+  <thead>
+    <tr>
+      <td colspan="2">app/templates/scientists.hbs</td>
+    </tr>
+  </thead>
+<tr>
+  <td class="line-numbers"><pre>1
+</pre></td>
+  <td class="code"><pre><span class="tag">&lt;h2&gt;</span>List of Scientists<span class="tag">&lt;/h2&gt;</span>
+</pre></td>
+</tr></table>
+</div></div>
+<p>No seu navegador, acesse
+<a href="http://localhost:4200/scientists"><code>http://localhost:4200/scientists</code></a>. Você verá a tag <code>&lt;h2&gt;</code>
+que você colocou no template <code>scientists.hbs</code>, logo abaixo da tag
+<code>&lt;h1&gt;</code> do template <code>application.hbs</code>.</p>
+
+<p>Agora que temos o template <code>scientists</code> sendo renderizado, vamos dar a ele alguns
+dados para mostrar. Para isso especificamos um <em>model</em> para aquela rota
+editando o arquivo <code>app/routes/scientists.js</code>.</p>
+
+<p>Vamos pegar o código criado para nós pelo generator e adicionar o método <code>model()</code>
+ao <code>Route</code>:</p>
+<div class="highlight javascript "><div class="ribbon"></div><div class="scroller"><?xml version="1.0"?>
+<table class="CodeRay">
+  <thead>
+    <tr>
+      <td colspan="2">app/routes/scientists.js</td>
+    </tr>
+  </thead>
+<tr>
+  <td class="line-numbers"><pre>1
+2
+3
+<span class="highlight-line added">4</span>
+<span class="highlight-line added">5</span>
+<span class="highlight-line added">6</span>
+7</pre></td>
+  <td class="code"><pre><span class="reserved">import</span> Ember from <span class="string"><span class="delimiter">'</span><span class="content">ember</span><span class="delimiter">'</span></span>;
+
+<span class="reserved">export</span> <span class="keyword">default</span> Ember.Route.extend({
+<span class="highlight-line added">  model() {</span>
+<span class="highlight-line added">    <span class="keyword">return</span> [<span class="string"><span class="delimiter">'</span><span class="content">Marie Curie</span><span class="delimiter">'</span></span>, <span class="string"><span class="delimiter">'</span><span class="content">Mae Jemison</span><span class="delimiter">'</span></span>, <span class="string"><span class="delimiter">'</span><span class="content">Albert Hofmann</span><span class="delimiter">'</span></span>];</span>
+<span class="highlight-line added">  }</span>
+});</pre></td>
+</tr></table>
+</div></div>
+<p>(Este código exemplifica usos das funcionalidades mais recentes do JavaScript, algumas talvez você não esteja muito familiarizados.
+Saiba mais com este <a href="https://ponyfoo.com/articles/es6">resumo das funcionalidades mais novas do JavaScript</a>).</p>
+
+<p>No método <code>model()</code> de uma rota, você retorna qualquer dado que queira tornar
+disponível para o template. Se precisar buscar dados assíncronamente, o
+método <code>model()</code> suporta qualquer biblioteca que use <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">JavaScript Promises</a>.</p>
+
+<p>Agora vamos dizer ao Ember como transformar aquele array de strings em HTML. Abra
+o template <code>scientists</code> e adicione um código Handlebars que itera o array e o imprima:</p>
+<div class="highlight handlebars "><div class="ribbon"></div><div class="scroller"><?xml version="1.0"?>
+<table class="CodeRay">
+  <thead>
+    <tr>
+      <td colspan="2">app/templates/scientists.hbs</td>
+    </tr>
+  </thead>
+<tr>
+  <td class="line-numbers"><pre>1
+2
+<span class="highlight-line added">3</span>
+<span class="highlight-line added">4</span>
+<span class="highlight-line added">5</span>
+<span class="highlight-line added">6</span>
+<span class="highlight-line added">7</span></pre></td>
+  <td class="code"><pre><span class="tag">&lt;h2&gt;</span>List of Scientists<span class="tag">&lt;/h2&gt;</span>
+
+<span class="highlight-line added"><span class="tag">&lt;ul&gt;</span></span>
+<span class="highlight-line added">  <span class="inline"><span class="inline-delimiter">{{#</span><span class="attribute-name">each</span> <span class="attribute-name">model</span> <span class="attribute-name">as</span> <span class="error">|</span><span class="attribute-name">scientist</span><span class="error">|</span><span class="inline-delimiter">}}</span></span></span>
+<span class="highlight-line added">    <span class="tag">&lt;li&gt;</span><span class="inline"><span class="inline-delimiter">{{</span><span class="attribute-name">scientist</span><span class="inline-delimiter">}}</span></span><span class="tag">&lt;/li&gt;</span></span>
+<span class="highlight-line added">  <span class="inline"><span class="inline-delimiter">{{/</span><span class="attribute-name">each</span><span class="inline-delimiter">}}</span></span></span>
+<span class="highlight-line added"><span class="tag">&lt;/ul&gt;</span></span></pre></td>
+</tr></table>
+</div></div>
+<p>Aqui, usamos o helper <code>each</code> para executar um loop sobre cada item do array
+que fornecemos no <code>model()</code> hook e imprimímos o valor dentro de um elemento <code>&lt;li&gt;</code>.</p>
+<h2 class='anchorable-toc' id='toc_criando-um-ui-component'>Criando um UI Component</h2>
+<p>Conforme sua aplicação cresce e você percebe que está repetindo elementos de interface
+em diversas páginas (ou usando o mesmo elemento várias vezes na mesma página), o
+Ember facilita a criação de componentes reutilizáveis.</p>
+
+<p>Vamos criar um component <code>people-list</code> que podemos usar
+para mostrar uma lista de pessoas em vários lugares.</p>
+
+<p>Como de costume, há um generator que facilita essa criação para nós. Crie um
+novo component digitando em seu terminal:</p>
+<div class="highlight sh "><div class="ribbon"></div><div class="scroller"><table class="CodeRay"><tr>
+  <td class="line-numbers"><pre>1
+</pre></td>
+  <td class="code"><pre>ember generate component people-list
+</pre></td>
+</tr></table>
+</div></div>
+<p>Copie e cole o template de <code>scientists</code> no template do component <code>people-list</code>
+e edite-o para ter a seguinte aparência:</p>
+<div class="highlight handlebars "><div class="ribbon"></div><div class="scroller"><table class="CodeRay">
+  <thead>
+    <tr>
+      <td colspan="2">app/templates/components/people-list.hbs</td>
+    </tr>
+  </thead>
+<tr>
+  <td class="line-numbers"><pre>1
+2
+3
+4
+5
+6
+7
+</pre></td>
+  <td class="code"><pre><span class="tag">&lt;h2&gt;</span><span class="inline"><span class="inline-delimiter">{{</span><span class="attribute-name">title</span><span class="inline-delimiter">}}</span></span><span class="tag">&lt;/h2&gt;</span>
+
+<span class="tag">&lt;ul&gt;</span>
+  <span class="inline"><span class="inline-delimiter">{{#</span><span class="attribute-name">each</span> <span class="attribute-name">people</span> <span class="attribute-name">as</span> <span class="error">|</span><span class="attribute-name">person</span><span class="error">|</span><span class="inline-delimiter">}}</span></span>
+    <span class="tag">&lt;li&gt;</span><span class="inline"><span class="inline-delimiter">{{</span><span class="attribute-name">person</span><span class="inline-delimiter">}}</span></span><span class="tag">&lt;/li&gt;</span>
+  <span class="inline"><span class="inline-delimiter">{{/</span><span class="attribute-name">each</span><span class="inline-delimiter">}}</span></span>
+<span class="tag">&lt;/ul&gt;</span>
+</pre></td>
+</tr></table>
+</div></div>
+<p>Observe que mudamos o título de uma string fixa (&quot;List of Scientists&quot;)
+para uma propriedade dinâmica (<code>{{title}}</code>). Nós também renomeamos <code>scientist</code>
+para um termo mais genérico chamado <code>person</code>, diminuindo o acoplamento do nosso
+component onde ele é usado.</p>
+
+<p>Salve esse template e volte para o template de <code>scientists</code>. Troque todo
+o nosso código anterior para a nossa nova versão componentizada. Components são como
+tags HTML, mas ao invés de usarem angle brackets (<code>&lt;tag&gt;</code>) eles usam
+double curly braces (<code>{{component}}</code>). Vamos definir em nosso component:</p>
+
+<ol>
+<li>Qual o título usar, através do atributo <code>title</code>.</li>
+<li>Qual array de pessoas usar, através do atributo <code>people</code>. Nós
+iremos passar o <code>model</code> desta rota, como uma lista de pessoas.</li>
+</ol>
+<div class="highlight handlebars "><div class="ribbon"></div><div class="scroller"><?xml version="1.0"?>
+<table class="CodeRay">
+  <thead>
+    <tr>
+      <td colspan="2">app/templates/scientists.hbs</td>
+    </tr>
+  </thead>
+<tr>
+  <td class="line-numbers"><pre><span class="highlight-line removed">1</span>
+<span class="highlight-line removed">2</span>
+<span class="highlight-line removed">3</span>
+<span class="highlight-line removed">4</span>
+<span class="highlight-line removed">5</span>
+<span class="highlight-line removed">6</span>
+<span class="highlight-line removed">7</span>
+<span class="highlight-line added">8</span></pre></td>
+  <td class="code"><pre><span class="highlight-line removed"><span class="tag">&lt;h2&gt;</span>List of Scientists<span class="tag">&lt;/h2&gt;</span></span>
+<span class="highlight-line removed"/>
+<span class="highlight-line removed"><span class="tag">&lt;ul&gt;</span></span>
+<span class="highlight-line removed">  <span class="inline"><span class="inline-delimiter">{{#</span><span class="attribute-name">each</span> <span class="attribute-name">model</span> <span class="attribute-name">as</span> <span class="error">|</span><span class="attribute-name">scientist</span><span class="error">|</span><span class="inline-delimiter">}}</span></span></span>
+<span class="highlight-line removed">    <span class="tag">&lt;li&gt;</span><span class="inline"><span class="inline-delimiter">{{</span><span class="attribute-name">scientist</span><span class="inline-delimiter">}}</span></span><span class="tag">&lt;/li&gt;</span></span>
+<span class="highlight-line removed">  <span class="inline"><span class="inline-delimiter">{{/</span><span class="attribute-name">each</span><span class="inline-delimiter">}}</span></span></span>
+<span class="highlight-line removed"><span class="tag">&lt;/ul&gt;</span></span>
+<span class="highlight-line added"><span class="inline"><span class="inline-delimiter">{{</span><span class="attribute-name">people-list</span> <span class="attribute-name">title</span>=<span class="string"><span class="delimiter">"</span><span class="content">List of Scientists</span><span class="delimiter">"</span></span> <span class="attribute-name">people</span>=<span class="attribute-value">model</span><span class="inline-delimiter">}}</span></span></span></pre></td>
+</tr></table>
+</div></div>
+<p>Volte para o seu navegador e você verá que a interface parece idêntica.
+A única diferença é que agora nós componentizamos nossa lista em uma
+versão que é mais reutilizável e mais passível de manutenção.</p>
+
+<p>Você pode ver isso se você criar uma nova rota que mostra uma lista diferente de <code>people</code>.
+Vamos deixar isso como um desafio para você:
+tente criar uma route de <code>programmers</code> que mostra uma lista de programadores famosos.
+Re-usando o component <code>people-list</code>, você pode fazer isso com praticamente quase nenhum código.</p>
+<h2 class='anchorable-toc' id='toc_eventos-de-clique'>Eventos de clique</h2>
+<p>Até o momento, sua aplicação está apenas listando dados mas não há nenhuma forma do
+usuário interagir com essa informação.
+Em aplicações web, muitas vezes você precisa saber quando o usuário executou um
+evento de click ou hover. Ember torna essa tarefa muito fácil.
+Primeiro adicione um helper <code>action</code> à tag <code>li</code> em nosso component <code>people-list</code>.</p>
+<div class="highlight handlebars "><div class="ribbon"></div><div class="scroller"><?xml version="1.0"?>
+<table class="CodeRay">
+  <thead>
+    <tr>
+      <td colspan="2">app/templates/components/people-list.hbs</td>
+    </tr>
+  </thead>
+<tr>
+  <td class="line-numbers"><pre>1
+2
+3
+4
+<span class="highlight-line removed">5</span>
+<span class="highlight-line added">6</span>
+7
+8</pre></td>
+  <td class="code"><pre><span class="tag">&lt;h2&gt;</span><span class="inline"><span class="inline-delimiter">{{</span><span class="attribute-name">title</span><span class="inline-delimiter">}}</span></span><span class="tag">&lt;/h2&gt;</span>
+
+<span class="tag">&lt;ul&gt;</span>
+  <span class="inline"><span class="inline-delimiter">{{#</span><span class="attribute-name">each</span> <span class="attribute-name">people</span> <span class="attribute-name">as</span> <span class="error">|</span><span class="attribute-name">person</span><span class="error">|</span><span class="inline-delimiter">}}</span></span>
+<span class="highlight-line removed">    <span class="tag">&lt;li&gt;</span><span class="inline"><span class="inline-delimiter">{{</span><span class="attribute-name">person</span><span class="inline-delimiter">}}</span></span><span class="tag">&lt;/li&gt;</span></span>
+<span class="highlight-line added">    <span class="tag">&lt;li</span> <span class="inline"><span class="inline-delimiter">{{</span><span class="attribute-name">action</span> <span class="error">"</span><span class="attribute-name">showPerson</span><span class="error">"</span> <span class="attribute-name">person</span><span class="inline-delimiter">}}</span></span><span class="tag">&gt;</span><span class="inline"><span class="inline-delimiter">{{</span><span class="attribute-name">person</span><span class="inline-delimiter">}}</span></span><span class="tag">&lt;/li&gt;</span></span>
+  <span class="inline"><span class="inline-delimiter">{{/</span><span class="attribute-name">each</span><span class="inline-delimiter">}}</span></span>
+<span class="tag">&lt;/ul&gt;</span></pre></td>
+</tr></table>
+</div></div>
+<p>O helper <code>action</code> permite você adicionar event listeners aos elementos e chamar funções nomeadas.
+Por padrão, o helper <code>action</code> adiciona automaticamente um event listener de <code>click</code>,
+mas pode ser utilizado para &quot;ouvir&quot; qualquer evento naquele elemento.
+Agora, quando o elemento <code>li</code> é clicado, uma função <code>showPerson</code> será chamada do objeto
+<code>actions</code> no component <code>people-list</code>.
+Pense nisso como se estivéssemos chamando <code>this.actions.showPerson(person)</code> a partir de nosso template.</p>
+
+<p>Para lidar com a chamada dessa função, você precisa modificar o component <code>people-list</code>
+para adicionar a função a ser chamada.
+No componente, adicione um objeto <code>actions</code> com uma função <code>showPerson</code> que
+exibe o primeiro argumento através de um alert.</p>
+<div class="highlight javascript "><div class="ribbon"></div><div class="scroller"><?xml version="1.0"?>
+<table class="CodeRay">
+  <thead>
+    <tr>
+      <td colspan="2">app/components/people-list.js</td>
+    </tr>
+  </thead>
+<tr>
+  <td class="line-numbers"><pre>1
+2
+3
+<span class="highlight-line added">4</span>
+<span class="highlight-line added">5</span>
+<span class="highlight-line added">6</span>
+<span class="highlight-line added">7</span>
+<span class="highlight-line added">8</span>
+9</pre></td>
+  <td class="code"><pre><span class="reserved">import</span> Ember from <span class="string"><span class="delimiter">'</span><span class="content">ember</span><span class="delimiter">'</span></span>;
+
+<span class="reserved">export</span> <span class="keyword">default</span> Ember.Component.extend({
+<span class="highlight-line added">  <span class="key">actions</span>: {</span>
+<span class="highlight-line added">    showPerson(person) {</span>
+<span class="highlight-line added">      alert(person);</span>
+<span class="highlight-line added">    }</span>
+<span class="highlight-line added">  }</span>
+});</pre></td>
+</tr></table>
+</div></div>
+<p>Agora no navegador, quando o usuário clica no nome de um cientista, essa função é chamada
+e o nome da pessoa é exibido via um alert.</p>
+<h2 class='anchorable-toc' id='toc_building-para-produ-o'>Building para produção</h2>
+<p>Agora que escrevemos nossa aplicação e verificamos que funciona
+em modo de desenvolvimento, é hora de prepará-lo para o deploy. Para fazer isso,
+execute o seguinte comando em seu terminal:</p>
+<div class="highlight sh "><div class="ribbon"></div><div class="scroller"><table class="CodeRay"><tr>
+  <td class="line-numbers"><pre>1
+</pre></td>
+  <td class="code"><pre>ember build --env production
+</pre></td>
+</tr></table>
+</div></div>
+<p>O comando <code>build</code> agrupa todos os assets que compõe sua
+aplicação&mdash;JavaScript, templates, CSS, fontes web, imagens, e
+muito mais.</p>
+
+<p>Nesse caso, dissemos ao Ember para fazer o build para o ambiente de produção
+através da flag <code>--env</code>. Isso cria um pacote otimizado que está pronto para upload
+para o seu servidor de hospedagem. Uma vez que o build termina, você encontrará
+todos os assets concatenados e minificados no diretório <code>dist/</code> da sua aplicação.</p>
+
+<p>A comunidade Ember valoriza a colaboração e cria ferramentas comuns que
+todos dependem. Se você estiver interessado em &quot;deployar&quot; sua aplicação
+para produção de forma rápida e confiável, confira o addon <a href="http://ember-cli-deploy.com/">Ember CLI
+Deploy</a>.</p>
+
+<p>Se você fizer o deploy da sua aplicação em um servidor web Apache, primeiro crie um novo virtual host para a aplicação.
+Para garantir que todas as rotas sejam tratadas pelo index.html,
+adicione a seguinte diretiva à configuração do virtual host da aplicação <code>FallbackResource index.html</code></p>
+
+            </article>
+
+          </div>
+
+          <div class="footer">
+    <div class="container">
+
+      <div class="footer-statement">
+        <a href="https://ember-community-slackin.herokuapp.com/">Comunidade no Slack</a> &bull;
+        <a href="https://github.com/emberjs/ember.js">Github</a> &bull;
+        <a href="https://t.me/EmberBR">Telegram (Ember-BR)</a>
+      </div>
+
+      <div class="footer-statement footer-social">
+        <a href="http://twitter.com/emberjs"
+          title="Twitter">
+          <i class="icon-twitter"></i>
+        </a>
+        <a href="https://github.com/emberjs/ember.js"
+          title="GitHub">
+          <i class="icon-github"></i>
+        </a>
+        <a href="https://plus.google.com/communities/106387049790387471205"
+          title="Google+">
+          <i class="icon-gplus"></i>
+        </a>
+      </div>
+      <hr />
+      <div class="info">
+        <p>
+          Este site é parte de uma iniciativa da <b>Comunidade Brasileira Ember</b> e não tem nenhuma ligação direta com o projeto oficial. <br />
+          Ember é uma marca registrada da <a href="http://tilde.io">Tilde Inc.</a>.<br />
+          Para obter mais informações sobre licença de uso acesse <a href="http://emberjs.com/legal">Legal</a>.
+        </p>
+      </div>
+
+  </div>
+</div>
+
+
+          
+    </main>
+
+    <script type="text/javascript">
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-105665012-1', 'auto');
+    ga('send', 'pageview');
+</script>
+
+  </body>
+</html>
